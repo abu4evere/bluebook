@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Start Code</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <style>
+    :root {
+      --yellow: #ffd900;
+      --gray-bg: #d8e5dc;
+      --text-color: #1a1a1a;
+      --border-color: #ccc;
+    }
+
     * {
       box-sizing: border-box;
     }
+
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: Arial, sans-serif;
-      background-color: #d8e5dc;
+      font-family: 'Noto Sans', sans-serif;
+      background-color: var(--gray-bg);
       display: flex;
       flex-direction: column;
+      color: var(--text-color);
     }
 
     header {
       background-color: white;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid var(--border-color);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -46,20 +56,22 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 50px 20px;
+      justify-content: center;
+      padding: 20px;
       text-align: center;
     }
 
     main h1 {
       font-size: 26px;
-      margin-bottom: 10px;
+      font-weight: 600;
+      margin-bottom: 12px;
     }
 
     main p {
       font-size: 16px;
       max-width: 600px;
-      margin: 0 auto 30px;
       line-height: 1.5;
+      margin-bottom: 30px;
     }
 
     .code-input {
@@ -69,29 +81,40 @@
     }
 
     .code-input input {
-      width: 52px;
-      height: 60px;
+      width: 56px;
+      height: 64px;
       font-size: 28px;
       text-align: center;
-      border: 2px solid #000;
-      border-radius: 8px;
-      background: white;
+      border: 2px solid black;
+      border-radius: 10px;
+      background-color: white;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .code-input input:focus {
+      border-color: #666;
     }
 
     .btn {
-      background-color: #ffd900;
+      background-color: var(--yellow);
       padding: 14px 36px;
       font-size: 16px;
       font-weight: bold;
       border: none;
       border-radius: 32px;
       cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #f5c700;
     }
 
     footer {
       text-align: center;
-      padding: 30px 10px 20px;
       font-size: 14px;
+      padding: 30px 10px 20px;
     }
 
     footer a {
@@ -109,18 +132,15 @@
 
   <main>
     <h1>Start Code</h1>
-    <p>
-      Enter your start code now to begin testing. Good luck!<br><br>
-      The start code contains <strong>numbers only.</strong>
-    </p>
+    <p>Enter your start code now to begin testing. Good luck!<br><br>The start code contains <strong>numbers only.</strong></p>
 
     <div class="code-input">
-      <input type="text" maxlength="1">
-      <input type="text" maxlength="1">
-      <input type="text" maxlength="1">
-      <input type="text" maxlength="1">
-      <input type="text" maxlength="1">
-      <input type="text" maxlength="1">
+      <input type="text" inputmode="numeric" maxlength="1" />
+      <input type="text" inputmode="numeric" maxlength="1" />
+      <input type="text" inputmode="numeric" maxlength="1" />
+      <input type="text" inputmode="numeric" maxlength="1" />
+      <input type="text" inputmode="numeric" maxlength="1" />
+      <input type="text" inputmode="numeric" maxlength="1" />
     </div>
 
     <button class="btn" onclick="startTest()">Start Test</button>
@@ -131,29 +151,49 @@
   </footer>
 
   <script>
-    const inputs = document.querySelectorAll('.code-input input');
-  
+    const inputs = document.querySelectorAll(".code-input input");
+
     inputs.forEach((input, index) => {
-      input.addEventListener('input', () => {
-        input.value = input.value.replace(/\D/, ''); // Allow digits only
-        if (input.value && index < inputs.length - 1) {
+      input.addEventListener("input", (e) => {
+        const value = e.target.value.replace(/\D/g, "");
+        input.value = value;
+
+        if (value && index < inputs.length - 1) {
           inputs[index + 1].focus();
         }
       });
-  
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && !input.value && index > 0) {
+
+      input.addEventListener("keydown", (e) => {
+        const key = e.key;
+
+        if (key === "Backspace" && input.value === "" && index > 0) {
           inputs[index - 1].focus();
         }
+
+        if (key === "ArrowLeft" && index > 0) {
+          inputs[index - 1].focus();
+        }
+
+        if (key === "ArrowRight" && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+
+      input.addEventListener("paste", (e) => {
+        e.preventDefault();
+        const paste = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+        paste.split("").forEach((num, i) => {
+          if (inputs[i]) inputs[i].value = num;
+        });
+        inputs[Math.min(paste.length, 5)].focus();
       });
     });
-  
+
     function startTest() {
-      let code = '';
-      inputs.forEach(input => code += input.value);
+      const code = Array.from(inputs).map(i => i.value).join("");
       if (/^\d{6}$/.test(code)) {
         alert(`Test starting with code: ${code}`);
-        // Add real test logic or redirect here
+        // Redirect to test page
       } else {
         alert("Please enter a valid 6-digit code.");
       }
