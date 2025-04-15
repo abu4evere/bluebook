@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Start Code</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #d8e5dc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: white;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      font-size: 14px;
+    }
+
+    .icon-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: black;
+    }
+
+    .material-icons {
+      font-size: 18px;
+      vertical-align: middle;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    main h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    main p {
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      line-height: 1.5;
+    }
+
+    .code-input {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .code-input input {
+      width: 52px;
+      height: 60px;
+      font-size: 28px;
+      text-align: center;
+      border: 2px solid #000;
+      border-radius: 8px;
+      background: white;
+    }
+
+    .btn {
+      background-color: #ffd900;
+      padding: 14px 36px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 32px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 10px 20px;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #0645ad;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="#" class="icon-link"><span class="material-icons">help_outline</span> Help</a>
+    <a href="#" class="icon-link"><span class="material-icons">home</span> Return to Home</a>
+  </header>
+
+  <main>
+    <h1>Start Code</h1>
+    <p>
+      Enter your start code now to begin testing. Good luck!<br><br>
+      The start code contains <strong>numbers only.</strong>
+    </p>
+
+    <div class="code-input">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+    </div>
+
+    <button class="btn" onclick="startTest()">Start Test</button>
+  </main>
+
+  <footer>
+    You can <a href="#">review the instructions</a> that the proctor reads aloud.
+  </footer>
+
+  <script>
+    const inputs = document.querySelectorAll('.code-input input');
+  
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', () => {
+        input.value = input.value.replace(/\D/, ''); // Allow digits only
+        if (input.value && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+  
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+    });
+  
+    function startTest() {
+      let code = '';
+      inputs.forEach(input => code += input.value);
+      if (/^\d{6}$/.test(code)) {
+        alert(`Test starting with code: ${code}`);
+        // Add real test logic or redirect here
+      } else {
+        alert("Please enter a valid 6-digit code.");
+      }
+    }
+  </script>
+
+</body>
+</html>
