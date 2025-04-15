@@ -12,11 +12,14 @@
       --text-color: #1a1a1a;
       --border-color: #ccc;
     }
-  
+
     * {
       box-sizing: border-box;
     }
-  
+    body:hover #fullscreenBtn {
+  opacity: 1;
+}
+
     html, body {
       margin: 0;
       padding: 0;
@@ -27,7 +30,7 @@
       flex-direction: column;
       color: var(--text-color);
     }
-  
+
     header {
       background-color: white;
       border-bottom: 1px solid var(--border-color);
@@ -36,8 +39,9 @@
       align-items: center;
       padding: 12px 20px;
       font-size: 14px;
+      position: relative;
     }
-  
+
     .icon-link {
       display: flex;
       align-items: center;
@@ -45,12 +49,43 @@
       text-decoration: none;
       color: black;
     }
-  
+
     .material-icons {
       font-size: 18px;
       vertical-align: middle;
     }
-  
+
+    #fullscreenBtn {
+  display: none;
+  background: white;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  padding: 6px;
+  cursor: pointer;
+}
+#fullscreenTrigger:hover #fullscreenBtn {
+  display: inline-block;
+}
+    header:hover #fullscreenBtn {
+      opacity: 1;
+    }
+    #fullscreenTrigger {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 30px; /* invisible hover area */
+  height: 60px;
+  transform: translateY(-50%);
+  z-index: 1000;
+}
+
+
+    #fullscreenBtn .material-icons {
+      color: black;
+      font-size: 20px;
+    }
+
     main {
       flex: 1;
       display: flex;
@@ -60,26 +95,26 @@
       padding: 60px 20px 30px;
       text-align: center;
     }
-  
+
     main h1 {
       font-size: 26px;
       font-weight: 600;
       margin-bottom: 8px;
     }
-  
+
     main p {
       font-size: 16px;
       max-width: 600px;
       line-height: 1.4;
       margin-bottom: 22px;
     }
-  
+
     .code-input {
       display: flex;
       gap: 12px;
       margin-bottom: 20px;
     }
-  
+
     .code-input input {
       width: 56px;
       height: 64px;
@@ -91,11 +126,11 @@
       outline: none;
       transition: border-color 0.2s;
     }
-  
+
     .code-input input:focus {
       border-color: #666;
     }
-  
+
     .btn {
       background-color: var(--yellow);
       padding: 12px 32px;
@@ -106,34 +141,41 @@
       cursor: pointer;
       transition: background-color 0.2s;
     }
-  
+
     .btn:hover {
       background-color: #f5c700;
     }
-  
+
     footer {
       text-align: center;
       font-size: 14px;
       padding: 30px 10px 20px;
     }
-  
+
     footer a {
       color: #0645ad;
       text-decoration: underline;
     }
   </style>
-  
 </head>
 <body>
 
   <header>
     <a href="#" class="icon-link"><span class="material-icons">help_outline</span> Help</a>
     <a href="#" class="icon-link"><span class="material-icons">home</span> Return to Home</a>
+    <div id="fullscreenTrigger">
+      <button id="fullscreenBtn" title="Enter Fullscreen">
+        <span class="material-icons">fullscreen</span>
+      </button>
+    </div>
   </header>
 
   <main>
     <h1>Start Code</h1>
-    <p>Enter your start code now to begin testing. Good luck!<br><br>The start code contains <strong>numbers only.</strong></p>
+    <p>
+      Enter your start code now to begin testing. Good luck!<br><br>
+      The start code contains <strong>numbers only.</strong>
+    </p>
 
     <div class="code-input">
       <input type="text" inputmode="numeric" maxlength="1" />
@@ -194,11 +236,19 @@
       const code = Array.from(inputs).map(i => i.value).join("");
       if (/^\d{6}$/.test(code)) {
         alert(`Test starting with code: ${code}`);
-        // Redirect to test page
+        // Add logic here
       } else {
         alert("Please enter a valid 6-digit code.");
       }
     }
+
+    document.getElementById("fullscreenBtn").addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch((err) => {
+          alert(`Error trying to enable fullscreen: ${err.message}`);
+        });
+      }
+    });
   </script>
 
 </body>
