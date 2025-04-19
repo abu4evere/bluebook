@@ -1,255 +1,389 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Start Code</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenPledge - Eco Facts & Challenges</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+    
     :root {
-      --yellow: #ffd900;
-      --gray-bg: #d8e5dc;
-      --text-color: #1a1a1a;
-      --border-color: #ccc;
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --secondary: #f59e0b;
     }
-
-    * {
-      box-sizing: border-box;
+    
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+      min-height: 100vh;
     }
-    body:hover #fullscreenBtn {
-  opacity: 1;
-}
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Noto Sans', sans-serif;
-      background-color: var(--gray-bg);
-      display: flex;
-      flex-direction: column;
-      color: var(--text-color);
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
     }
-
-    header {
-      background-color: white;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 20px;
-      font-size: 14px;
-      position: relative;
+    
+    .floating {
+      animation: floating 6s ease-in-out infinite;
     }
-
-    .icon-link {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-      color: black;
+    
+    .floating-delay {
+      animation: floating 6s ease-in-out 1s infinite;
     }
-
-    .material-icons {
-      font-size: 18px;
-      vertical-align: middle;
+    
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
     }
-
-    #fullscreenBtn {
-  display: none;
-  background: white;
-  border: 1px solid #ccc;
-  border-left: none;
-  border-radius: 0 6px 6px 0;
-  padding: 6px;
-  cursor: pointer;
-}
-#fullscreenTrigger:hover #fullscreenBtn {
-  display: inline-block;
-}
-    header:hover #fullscreenBtn {
-      opacity: 1;
+    
+    .btn-glow:hover {
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
     }
-    #fullscreenTrigger {
-  position: fixed;
-  top: 50%;
-  left: 0;
-  width: 30px; /* invisible hover area */
-  height: 60px;
-  transform: translateY(-50%);
-  z-index: 1000;
-}
-
-
-    #fullscreenBtn .material-icons {
-      color: black;
-      font-size: 20px;
+    
+    .parallax-bg {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
-
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: start;
-      padding: 60px 20px 30px;
-      text-align: center;
-    }
-
-    main h1 {
-      font-size: 26px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    main p {
-      font-size: 16px;
-      max-width: 600px;
-      line-height: 1.4;
-      margin-bottom: 22px;
-    }
-
-    .code-input {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .code-input input {
-      width: 56px;
-      height: 64px;
-      font-size: 28px;
-      text-align: center;
-      border: 2px solid black;
-      border-radius: 10px;
-      background-color: white;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .code-input input:focus {
-      border-color: #666;
-    }
-
-    .btn {
-      background-color: var(--yellow);
-      padding: 12px 32px;
-      font-size: 15px;
-      font-weight: bold;
-      border: 1px solid black;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .btn:hover {
-      background-color: #f5c700;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 14px;
-      padding: 30px 10px 20px;
-    }
-
-    footer a {
-      color: #0645ad;
-      text-decoration: underline;
+    
+    .text-gradient {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
   </style>
 </head>
-<body>
+<body class="overflow-x-hidden">
+  <!-- Animated Background Elements -->
+  <div class="fixed -z-10 w-full h-full overflow-hidden">
+    <div class="absolute top-20 left-10 w-16 h-16 rounded-full bg-green-200 opacity-20 floating"></div>
+    <div class="absolute top-1/3 right-20 w-24 h-24 rounded-full bg-amber-200 opacity-20 floating-delay"></div>
+    <div class="absolute bottom-20 left-1/4 w-32 h-32 rounded-full bg-emerald-200 opacity-15 floating"></div>
+    <div class="absolute top-1/2 right-1/3 w-20 h-20 rounded-full bg-green-300 opacity-10 floating-delay"></div>
+  </div>
 
-  <header>
-    <a href="#" class="icon-link"><span class="material-icons">help_outline</span> Help</a>
-    <a href="#" class="icon-link"><span class="material-icons">home</span> Return to Home</a>
-    <div id="fullscreenTrigger">
-      <button id="fullscreenBtn" title="Enter Fullscreen">
-        <span class="material-icons">fullscreen</span>
-      </button>
-    </div>
-  </header>
+  <div class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="relative py-12 px-6 text-center">
+      <div class="max-w-4xl mx-auto">
+        <div class="inline-block mb-4 px-4 py-2 bg-white/80 rounded-full shadow-sm">
+          <span class="text-sm font-semibold text-green-600">🌎 Join the Movement</span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-bold mb-4 text-gradient">GreenPledge</h1>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+          Transform your daily habits with micro-actions that create macro impact for our planet
+        </p>
+        <div class="flex justify-center gap-4">
+          <button class="btn-glow px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full font-medium shadow-lg transition-all hover:scale-105">
+            Take the Pledge <i class="fas fa-hands-clapping ml-2"></i>
+          </button>
+          <button class="px-6 py-3 bg-white text-green-600 border border-green-200 rounded-full font-medium shadow-sm transition-all hover:bg-green-50 hover:scale-105">
+            Learn More <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="absolute bottom-0 left-0 right-0 flex justify-center">
+        <div class="w-64 h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent rounded-full"></div>
+      </div>
+    </header>
 
-  <main>
-    <h1>Start Code</h1>
-    <p>
-      Enter your start code now to begin testing. Good luck!<br><br>
-      The start code contains <strong>numbers only.</strong>
-    </p>
+    <!-- Main Content -->
+    <main class="flex-1 py-12 px-6">
+      <div class="max-w-7xl mx-auto">
+        <!-- Cards Grid -->
+        <div class="grid md:grid-cols-2 gap-8 mb-16">
+          <!-- Eco Fact Card -->
+          <div class="glass-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl animate__animated animate__fadeInUp">
+            <div class="p-8">
+              <div class="flex items-center mb-4">
+                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mr-4">
+                  <i class="fas fa-leaf text-2xl text-green-600"></i>
+                </div>
+                <div>
+                  <div class="text-xs font-semibold text-green-500 uppercase tracking-wider">Daily Wisdom</div>
+                  <h2 class="text-2xl font-bold text-gray-800">Eco Fact</h2>
+                </div>
+              </div>
+              
+              <div class="my-6">
+                <p class="text-gray-600 text-lg min-h-[72px] flex items-center justify-center" id="factDisplay">
+                  Click below to discover today's eco fact!
+                </p>
+              </div>
+              
+              <button 
+                onclick="getNewFact()"
+                class="w-full btn-glow px-6 py-3 bg-gradient-to-r from-green-400 to-green-500 text-white rounded-full font-medium transition-all hover:scale-[1.02]"
+              >
+                <i class="fas fa-seedling mr-2"></i> Reveal Fact
+              </button>
+            </div>
+          </div>
 
-    <div class="code-input">
-      <input type="text" inputmode="numeric" maxlength="1" />
-      <input type="text" inputmode="numeric" maxlength="1" />
-      <input type="text" inputmode="numeric" maxlength="1" />
-      <input type="text" inputmode="numeric" maxlength="1" />
-      <input type="text" inputmode="numeric" maxlength="1" />
-      <input type="text" inputmode="numeric" maxlength="1" />
-    </div>
+          <!-- Challenge Card -->
+          <div class="glass-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="p-8">
+              <div class="flex items-center mb-4">
+                <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-4">
+                  <i class="fas fa-bullseye text-2xl text-amber-600"></i>
+                </div>
+                <div>
+                  <div class="text-xs font-semibold text-amber-500 uppercase tracking-wider">Your Mission</div>
+                  <h2 class="text-2xl font-bold text-gray-800">Daily Challenge</h2>
+                </div>
+              </div>
+              
+              <div class="my-6">
+                <p class="text-gray-600 text-lg min-h-[72px] flex items-center justify-center" id="challengeDisplay">
+                  Ready for today's green challenge?
+                </p>
+              </div>
+              
+              <button 
+                onclick="getNewChallenge()"
+                class="w-full btn-glow px-6 py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-white rounded-full font-medium transition-all hover:scale-[1.02]"
+              >
+                <i class="fas fa-medal mr-2"></i> Accept Challenge
+              </button>
+            </div>
+          </div>
+        </div>
 
-    <button class="btn" onclick="startTest()">Start Test</button>
-  </main>
+        <!-- Impact Section -->
+        <div class="glass-card rounded-2xl overflow-hidden mb-16 p-8 animate__animated animate__fadeIn">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Your Impact Matters</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto">
+              Every small action contributes to a larger change. Here's what our community has accomplished so far:
+            </p>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white/80 p-6 rounded-xl text-center">
+              <div class="text-4xl font-bold text-green-600 mb-2">1,248+</div>
+              <div class="text-gray-600">Plastic Bottles Saved</div>
+              <div class="mt-4 h-2 bg-gradient-to-r from-green-300 to-green-500 rounded-full"></div>
+            </div>
+            <div class="bg-white/80 p-6 rounded-xl text-center">
+              <div class="text-4xl font-bold text-green-600 mb-2">3,742+</div>
+              <div class="text-gray-600">Kilowatt Hours Conserved</div>
+              <div class="mt-4 h-2 bg-gradient-to-r from-green-300 to-green-500 rounded-full"></div>
+            </div>
+            <div class="bg-white/80 p-6 rounded-xl text-center">
+              <div class="text-4xl font-bold text-green-600 mb-2">892+</div>
+              <div class="text-gray-600">Trees Protected</div>
+              <div class="mt-4 h-2 bg-gradient-to-r from-green-300 to-green-500 rounded-full"></div>
+            </div>
+          </div>
+        </div>
 
-  <footer>
-    You can <a href="#">review the instructions</a> that the proctor reads aloud.
-  </footer>
+        <!-- Testimonials -->
+        <div class="mb-16">
+          <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Join Our Green Community</h2>
+          
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="glass-card p-6 rounded-2xl">
+              <div class="flex items-center mb-4">
+                <img src="https://randomuser.me/api/portraits/women/43.jpg" class="w-12 h-12 rounded-full object-cover mr-4">
+                <div>
+                  <div class="font-bold">Sarah K.</div>
+                  <div class="text-sm text-gray-500">32 days pledged</div>
+                </div>
+              </div>
+              <p class="text-gray-600 italic">"GreenPledge helped me reduce my waste by 40% in just one month. The daily challenges are fun and achievable!"</p>
+              <div class="mt-4 flex text-amber-400">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+            
+            <div class="glass-card p-6 rounded-2xl">
+              <div class="flex items-center mb-4">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-12 h-12 rounded-full object-cover mr-4">
+                <div>
+                  <div class="font-bold">Michael T.</div>
+                  <div class="text-sm text-gray-500">67 days pledged</div>
+                </div>
+              </div>
+              <p class="text-gray-600 italic">"I've learned so much from the eco facts. My whole family is now participating in the challenges together!"</p>
+              <div class="mt-4 flex text-amber-400">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+            
+            <div class="glass-card p-6 rounded-2xl">
+              <div class="flex items-center mb-4">
+                <img src="https://randomuser.me/api/portraits/women/65.jpg" class="w-12 h-12 rounded-full object-cover mr-4">
+                <div>
+                  <div class="font-bold">Priya M.</div>
+                  <div class="text-sm text-gray-500">112 days pledged</div>
+                </div>
+              </div>
+              <p class="text-gray-600 italic">"This app transformed my perspective. Small actions really do add up to make a big difference for our planet."</p>
+              <div class="mt-4 flex text-amber-400">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white/80 py-12 px-6 border-t border-green-100">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <h3 class="text-lg font-bold text-gray-800 mb-4">GreenPledge</h3>
+            <p class="text-gray-600 mb-4">Making sustainability simple, one day at a time.</p>
+            <div class="flex space-x-4">
+              <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Resources</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-600 hover:text-green-600">Eco Tips</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-green-600">Challenge Archive</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-green-600">Carbon Calculator</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-green-600">Educational Materials</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-bold text-gray-800 mb-4">About</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-600 hover:text-green-600">Our Mission</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-green-600">The Team</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-green-600">Partners</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-green-600">Press</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Get Updates</h3>
+            <p class="text-gray-600 mb-4">Join our newsletter for weekly eco-tips</p>
+            <div class="flex">
+              <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg border border-r-0 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent w-full">
+              <button class="px-4 py-2 bg-green-600 text-white rounded-r-lg hover:bg-green-700 transition-colors">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+          <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 GreenPledge. All rights reserved.</p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Privacy Policy</a>
+            <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Terms of Service</a>
+            <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
 
   <script>
-    const inputs = document.querySelectorAll(".code-input input");
+    const ecoFacts = [
+      "Recycling one ton of paper saves 17 trees and 7,000 gallons of water.",
+      "Turning off the tap while brushing your teeth can save up to 8 gallons of water per day.",
+      "Plastic takes over 400 years to decompose, but aluminum can be recycled indefinitely.",
+      "Eating one plant-based meal per day can reduce your carbon footprint by over 1 ton per year.",
+      "One reusable bottle can save an average person 167 plastic bottles annually.",
+      "LED bulbs use 75% less energy and last 25 times longer than incandescent lighting.",
+      "A single tree can absorb up to 48 pounds of carbon dioxide per year.",
+      "Composting food waste reduces methane emissions from landfills by up to 60%."
+    ];
 
-    inputs.forEach((input, index) => {
-      input.addEventListener("input", (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        input.value = value;
+    const challenges = [
+      "Use a reusable water bottle and coffee cup all day today.",
+      "Go meat-free for one day this week.",
+      "Collect and properly recycle 10 pieces of plastic waste.",
+      "Turn off all unnecessary lights and electronics for 2 hours.",
+      "Research and share one environmental organization with a friend.",
+      "Take a 5-minute shower instead of your usual time.",
+      "Identify and eliminate one single-use plastic item from your routine.",
+      "Plant a native plant or tree in your community."
+    ];
 
-        if (value && index < inputs.length - 1) {
-          inputs[index + 1].focus();
-        }
-      });
+    let previousFactIndex = null;
+    let previousChallengeIndex = null;
 
-      input.addEventListener("keydown", (e) => {
-        const key = e.key;
-
-        if (key === "Backspace" && input.value === "" && index > 0) {
-          inputs[index - 1].focus();
-        }
-
-        if (key === "ArrowLeft" && index > 0) {
-          inputs[index - 1].focus();
-        }
-
-        if (key === "ArrowRight" && index < inputs.length - 1) {
-          inputs[index + 1].focus();
-        }
-      });
-
-      input.addEventListener("paste", (e) => {
-        e.preventDefault();
-        const paste = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
-        paste.split("").forEach((num, i) => {
-          if (inputs[i]) inputs[i].value = num;
-        });
-        inputs[Math.min(paste.length, 5)].focus();
-      });
-    });
-
-    function startTest() {
-      const code = Array.from(inputs).map(i => i.value).join("");
-      if (/^\d{6}$/.test(code)) {
-        alert(`Test starting with code: ${code}`);
-        // Add logic here
-      } else {
-        alert("Please enter a valid 6-digit code.");
-      }
+    function getRandomItem(array, previousIndex) {
+      if (array.length === 0) return ["No items available", null];
+      
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * array.length);
+      } while (array.length > 1 && randomIndex === previousIndex);
+      
+      return [array[randomIndex], randomIndex];
     }
 
-    document.getElementById("fullscreenBtn").addEventListener("click", () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch((err) => {
-          alert(`Error trying to enable fullscreen: ${err.message}`);
-        });
-      }
-    });
-  </script>
+    function getNewFact() {
+      const factElement = document.getElementById('factDisplay');
+      factElement.classList.add('animate__animated', 'animate__pulse');
+      
+      setTimeout(() => {
+        const [newFact, index] = getRandomItem(ecoFacts, previousFactIndex);
+        factElement.textContent = newFact;
+        previousFactIndex = index;
+        factElement.classList.remove('animate__animated', 'animate__pulse');
+      }, 300);
+    }
 
+    function getNewChallenge() {
+      const challengeElement = document.getElementById('challengeDisplay');
+      challengeElement.classList.add('animate__animated', 'animate__pulse');
+      
+      setTimeout(() => {
+        const [newChallenge, index] = getRandomItem(challenges, previousChallengeIndex);
+        challengeElement.textContent = newChallenge;
+        previousChallengeIndex = index;
+        challengeElement.classList.remove('animate__animated', 'animate__pulse');
+      }, 300);
+    }
+
+    // Initialize with random fact and challenge
+    window.onload = function() {
+      const [initialFact] = getRandomItem(ecoFacts, null);
+      document.getElementById('factDisplay').textContent = initialFact;
+      
+      const [initialChallenge] = getRandomItem(challenges, null);
+      document.getElementById('challengeDisplay').textContent = initialChallenge;
+    };
+  </script>
 </body>
 </html>
