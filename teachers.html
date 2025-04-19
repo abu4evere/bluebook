@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenPledge - Your Eco Journey</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+    
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --secondary: #f59e0b;
+    }
+    
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+      min-height: 100vh;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    }
+    
+    .floating {
+      animation: floating 6s ease-in-out infinite;
+    }
+    
+    .floating-delay {
+      animation: floating 6s ease-in-out 1s infinite;
+    }
+    
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .btn-glow:hover {
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+    }
+    
+    .text-gradient {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    /* Custom switch toggle */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+    
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background-color: var(--primary);
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden">
+  <!-- App Container -->
+  <div id="app" class="min-h-screen">
+    <!-- Login Page (Default View) -->
+    <div id="login-page" class="flex items-center justify-center min-h-screen p-4">
+      <div class="glass-card rounded-2xl overflow-hidden w-full max-w-md animate__animated animate__fadeIn">
+        <div class="p-8">
+          <div class="text-center mb-8">
+            <i class="fas fa-leaf text-5xl text-green-500 mb-4"></i>
+            <h1 class="text-3xl font-bold text-gray-800">Welcome Back</h1>
+            <p class="text-gray-600 mt-2">Log in to continue your eco journey</p>
+          </div>
+          
+          <form id="login-form" class="space-y-4">
+            <div>
+              <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input 
+                type="email" 
+                id="login-email" 
+                required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                placeholder="your@email.com"
+              >
+            </div>
+            
+            <div>
+              <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <input 
+                type="password" 
+                id="login-password" 
+                required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                placeholder="••••••••"
+              >
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <input id="remember-me" type="checkbox" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+              </div>
+              
+              <a href="#" id="forgot-password" class="text-sm text-green-600 hover:text-green-800">Forgot password?</a>
+            </div>
+            
+            <button 
+              type="submit"
+              class="w-full btn-glow px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium transition-all hover:scale-[1.02] mt-6"
+            >
+              Log In
+            </button>
+            
+            <div class="text-center text-sm text-gray-600 mt-4">
+              Don't have an account? 
+              <a href="#" id="show-signup" class="text-green-600 font-medium hover:text-green-800">Sign up</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Signup Page (Hidden Initially) -->
+    <div id="signup-page" class="hidden flex items-center justify-center min-h-screen p-4">
+      <div class="glass-card rounded-2xl overflow-hidden w-full max-w-md animate__animated animate__fadeIn">
+        <div class="p-8">
+          <div class="text-center mb-8">
+            <i class="fas fa-seedling text-5xl text-green-500 mb-4"></i>
+            <h1 class="text-3xl font-bold text-gray-800">Join GreenPledge</h1>
+            <p class="text-gray-600 mt-2">Start your sustainable journey today</p>
+          </div>
+          
+          <form id="signup-form" class="space-y-4">
+            <div>
+              <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <input 
+                type="text" 
+                id="signup-name" 
+                required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                placeholder="John Doe"
+              >
+            </div>
+            
+            <div>
+              <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input 
+                type="email" 
+                id="signup-email" 
+                required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                placeholder="your@email.com"
+              >
+            </div>
+            
+            <div>
+              <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <input 
+                type="password" 
+                id="signup-password" 
+                required
+                minlength="8"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                placeholder="••••••••"
+              >
+              <p class="text-xs text-gray-500 mt-1">Minimum 8 characters</p>
+            </div>
+            
+            <div>
+              <label for="signup-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+              <input 
+                type="password" 
+                id="signup-confirm-password" 
+                required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                placeholder="••••••••"
+              >
+            </div>
+            
+            <div class="flex items-center">
+              <input id="accept-terms" type="checkbox" required class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+              <label for="accept-terms" class="ml-2 block text-sm text-gray-700">
+                I agree to the <a href="#" class="text-green-600 hover:text-green-800">Terms of Service</a> and <a href="#" class="text-green-600 hover:text-green-800">Privacy Policy</a>
+              </label>
+            </div>
+            
+            <button 
+              type="submit"
+              class="w-full btn-glow px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium transition-all hover:scale-[1.02] mt-6"
+            >
+              Create Account
+            </button>
+            
+            <div class="text-center text-sm text-gray-600 mt-4">
+              Already have an account? 
+              <a href="#" id="show-login" class="text-green-600 font-medium hover:text-green-800">Log in</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Profile Page (Hidden Initially) -->
+    <div id="profile-page" class="hidden min-h-screen">
+      <!-- Header -->
+      <header class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6">
+        <div class="container mx-auto flex justify-between items-center">
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-leaf text-2xl"></i>
+            <h1 class="text-2xl font-bold">GreenPledge</h1>
+          </div>
+          <button id="logout-btn" class="px-4 py-2 bg-white/20 rounded-lg hover:bg-white/30 transition">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+          </button>
+        </div>
+      </header>
+      
+      <main class="container mx-auto p-6">
+        <!-- User Profile Section -->
+        <div class="glass-card rounded-2xl overflow-hidden mb-8">
+          <div class="p-6 flex flex-col md:flex-row items-center">
+            <div class="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mb-4 md:mb-0 md:mr-6">
+              <i class="fas fa-user text-3xl text-green-600"></i>
+            </div>
+            
+            <div class="flex-1 text-center md:text-left">
+              <h2 class="text-2xl font-bold text-gray-800" id="profile-name">Loading...</h2>
+              <p class="text-gray-600" id="profile-email">user@example.com</p>
+              <div class="flex items-center justify-center md:justify-start mt-2">
+                <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                <span class="text-sm text-gray-600">Active member since <span id="member-since">2023</span></span>
+              </div>
+            </div>
+            
+            <button class="px-6 py-2 border border-green-500 text-green-600 rounded-lg hover:bg-green-50 transition mt-4 md:mt-0">
+              Edit Profile
+            </button>
+          </div>
+        </div>
+        
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <div>
+                <div class="text-gray-500 text-sm">Days Active</div>
+                <div class="text-2xl font-bold" id="days-active">0</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-amber-100 text-amber-600 mr-4">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <div>
+                <div class="text-gray-500 text-sm">Challenges Completed</div>
+                <div class="text-2xl font-bold" id="challenges-completed">0</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
+                <i class="fas fa-leaf"></i>
+              </div>
+              <div>
+                <div class="text-gray-500 text-sm">CO₂ Reduced</div>
+                <div class="text-2xl font-bold" id="co2-reduced">0 kg</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Saved Challenges -->
+        <div class="glass-card rounded-2xl overflow-hidden mb-8">
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-xl font-bold text-gray-800">
+                <i class="fas fa-bookmark mr-2 text-green-600"></i> Saved Challenges
+              </h2>
+              <button id="new-challenge-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                <i class="fas fa-plus mr-2"></i> New Challenge
+              </button>
+            </div>
+            
+            <div id="saved-challenges-list" class="space-y-4">
+              <!-- Challenges will be added here dynamically -->
+              <div class="text-center py-8 text-gray-500" id="no-challenges-message">
+                You haven't saved any challenges yet. Click "New Challenge" to get started!
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Daily Challenge -->
+        <div class="glass-card rounded-2xl overflow-hidden">
+          <div class="p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+              <i class="fas fa-bullseye mr-2 text-amber-600"></i> Today's Challenge
+            </h2>
+            
+            <div class="bg-white rounded-lg p-6 mb-4">
+              <p class="text-lg text-gray-700 mb-4" id="daily-challenge-text">Loading today's challenge...</p>
+              <div class="flex space-x-4">
+                <button id="accept-challenge" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                  <i class="fas fa-check mr-2"></i> I Did This!
+                </button>
+                <button id="save-challenge" class="px-6 py-2 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
+                  <i class="fas fa-bookmark mr-2"></i> Save for Later
+                </button>
+                <button id="new-daily-challenge" class="px-6 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition">
+                  <i class="fas fa-sync-alt mr-2"></i> New Challenge
+                </button>
+              </div>
+            </div>
+            
+            <div class="bg-green-50 rounded-lg p-4">
+              <h3 class="font-semibold text-green-800 mb-2">
+                <i class="fas fa-lightbulb mr-2"></i> Why This Matters
+              </h3>
+              <p class="text-green-700" id="challenge-impact-text">
+                Every small action contributes to a healthier planet. This challenge helps reduce waste and conserve resources.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <footer class="bg-white/80 py-6 border-t border-gray-200 mt-12">
+        <div class="container mx-auto px-6 text-center text-gray-600 text-sm">
+          &copy; 2023 GreenPledge. Making sustainability simple, one day at a time.
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // App State
+    const state = {
+      currentUser: null,
+      challenges: [
+        "Use a reusable water bottle and coffee cup all day today.",
+        "Go meat-free for one day this week.",
+        "Collect and properly recycle 10 pieces of plastic waste.",
+        "Turn off all unnecessary lights and electronics for 2 hours.",
+        "Research and share one environmental organization with a friend.",
+        "Take a 5-minute shower instead of your usual time.",
+        "Identify and eliminate one single-use plastic item from your routine.",
+        "Plant a native plant or tree in your community."
+      ],
+      savedChallenges: [],
+      completedChallenges: 0,
+      memberSince: new Date().getFullYear()
+    };
+
+    // DOM Elements
+    const loginPage = document.getElementById('login-page');
+    const signupPage = document.getElementById('signup-page');
+    const profilePage = document.getElementById('profile-page');
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const showSignup = document.getElementById('show-signup');
+    const showLogin = document.getElementById('show-login');
+    const logoutBtn = document.getElementById('logout-btn');
+    const newChallengeBtn = document.getElementById('new-challenge-btn');
+    const savedChallengesList = document.getElementById('saved-challenges-list');
+    const noChallengesMessage = document.getElementById('no-challenges-message');
+    const dailyChallengeText = document.getElementById('daily-challenge-text');
+    const acceptChallengeBtn = document.getElementById('accept-challenge');
+    const saveChallengeBtn = document.getElementById('save-challenge');
+    const newDailyChallengeBtn = document.getElementById('new-daily-challenge');
+    const profileName = document.getElementById('profile-name');
+    const profileEmail = document.getElementById('profile-email');
+    const memberSince = document.getElementById('member-since');
+    const daysActive = document.getElementById('days-active');
+    const challengesCompleted = document.getElementById('challenges-completed');
+    const co2Reduced = document.getElementById('co2-reduced');
+
+    // Initialize the app
+    function initApp() {
+      // Check if user is logged in (in a real app, you'd check localStorage or cookies)
+      const loggedInUser = localStorage.getItem('greenPledgeUser');
+      
+      if (loggedInUser) {
+        state.currentUser = JSON.parse(loggedInUser);
+        showProfilePage();
+      } else {
+        showLoginPage();
+      }
+      
+      // Load saved challenges from localStorage
+      const savedChallenges = localStorage.getItem('greenPledgeSavedChallenges');
+      if (savedChallenges) {
+        state.savedChallenges = JSON.parse(savedChallenges);
+        renderSavedChallenges();
+      }
+      
+      // Set up event listeners
+      setupEventListeners();
+      
+      // Generate initial daily challenge
+      generateDailyChallenge();
+    }
+
+    // Set up all event listeners
+    function setupEventListeners() {
+      // Login/Signup navigation
+      showSignup.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginPage.classList.add('hidden');
+        signupPage.classList.remove('hidden');
+        signupPage.classList.add('animate__fadeIn');
+      });
+      
+      showLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        signupPage.classList.add('hidden');
+        loginPage.classList.remove('hidden');
+        loginPage.classList.add('animate__fadeIn');
+      });
+      
+      // Form submissions
+      loginForm.addEventListener('submit', handleLogin);
+      signupForm.addEventListener('submit', handleSignup);
+      
+      // Profile page actions
+      logoutBtn.addEventListener('click', handleLogout);
+      newChallengeBtn.addEventListener('click', generateDailyChallenge);
+      acceptChallengeBtn.addEventListener('click', completeChallenge);
+      saveChallengeBtn.addEventListener('click', saveChallenge);
+      newDailyChallengeBtn.addEventListener('click', generateDailyChallenge);
+    }
+
+    // Handle login
+    function handleLogin(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      
+      // In a real app, you would validate credentials with a server
+      // For this demo, we'll just create a user object
+      state.currentUser = {
+        name: "Demo User",
+        email: email,
+        joinDate: new Date()
+      };
+      
+      // Save to localStorage
+      localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
+      
+      // Show profile page
+      showProfilePage();
+    }
+
+    // Handle signup
+    function handleSignup(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('signup-name').value;
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+      
+      // Validate passwords match
+      if (password !== confirmPassword) {
+        alert("Passwords don't match!");
+        return;
+      }
+      
+      // In a real app, you would create the user account on a server
+      // For this demo, we'll just create a user object
+      state.currentUser = {
+        name: name,
+        email: email,
+        joinDate: new Date()
+      };
+      
+      // Save to localStorage
+      localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
+      
+      // Show profile page
+      showProfilePage();
+    }
+
+    // Handle logout
+    function handleLogout() {
+      state.currentUser = null;
+      localStorage.removeItem('greenPledgeUser');
+      showLoginPage();
+    }
+
+    // Show login page
+    function showLoginPage() {
+      profilePage.classList.add('hidden');
+      signupPage.classList.add('hidden');
+      loginPage.classList.remove('hidden');
+      loginPage.classList.add('animate__fadeIn');
+      
+      // Reset forms
+      loginForm.reset();
+      signupForm.reset();
+    }
+
+    // Show profile page
+    function showProfilePage() {
+      loginPage.classList.add('hidden');
+      signupPage.classList.add('hidden');
+      profilePage.classList.remove('hidden');
+      
+      // Update profile info
+      if (state.currentUser) {
+        profileName.textContent = state.currentUser.name;
+        profileEmail.textContent = state.currentUser.email;
+        memberSince.textContent = state.currentUser.joinDate.getFullYear();
+        
+        // Calculate days active (demo data)
+        const daysSinceJoin = Math.floor((new Date() - new Date(state.currentUser.joinDate)) / (1000 * 60 * 60 * 24));
+        daysActive.textContent = daysSinceJoin;
+        
+        // Calculate CO2 reduced (demo data)
+        const co2 = state.completedChallenges * 2.5; // Assume 2.5kg per challenge
+        co2Reduced.textContent = `${co2} kg`;
+      }
+    }
+
+    // Generate a new daily challenge
+    function generateDailyChallenge() {
+      const randomIndex = Math.floor(Math.random() * state.challenges.length);
+      dailyChallengeText.textContent = state.challenges[randomIndex];
+    }
+
+    // Complete the current challenge
+    function completeChallenge() {
+      state.completedChallenges++;
+      challengesCompleted.textContent = state.completedChallenges;
+      
+      // Update CO2 reduced
+      const co2 = state.completedChallenges * 2.5;
+      co2Reduced.textContent = `${co2} kg`;
+      
+      // Show confirmation
+      alert("Great job completing today's challenge! 🌱");
+      generateDailyChallenge();
+    }
+
+    // Save the current challenge
+    function saveChallenge() {
+      const challenge = dailyChallengeText.textContent;
+      
+      if (!state.savedChallenges.includes(challenge)) {
+        state.savedChallenges.push(challenge);
+        localStorage.setItem('greenPledgeSavedChallenges', JSON.stringify(state.savedChallenges));
+        renderSavedChallenges();
+        alert("Challenge saved to your list! 📌");
+      } else {
+        alert("You've already saved this challenge!");
+      }
+    }
+
+    // Render saved challenges
+    function renderSavedChallenges() {
+      if (state.savedChallenges.length === 0) {
+        noChallengesMessage.classList.remove('hidden');
+        savedChallengesList.innerHTML = '';
+        return;
+      }
+      
+      noChallengesMessage.classList.add('hidden');
+      savedChallengesList.innerHTML = '';
+      
+      state.savedChallenges.forEach((challenge, index) => {
+        const challengeEl = document.createElement('div');
+        challengeEl.className = 'bg-white rounded-lg p-4 flex justify-between items-center';
+        challengeEl.innerHTML = `
+          <div class="flex items-center">
+            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-4">
+              ${index + 1}
+            </div>
+            <p class="text-gray-700">${challenge}</p>
+          </div>
+          <button class="delete-challenge px-3 py-1 text-red-500 hover:text-red-700" data-index="${index}">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+        
+        savedChallengesList.appendChild(challengeEl);
+      });
+      
+      // Add event listeners to delete buttons
+      document.querySelectorAll('.delete-challenge').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = parseInt(e.currentTarget.getAttribute('data-index'));
+          state.savedChallenges.splice(index, 1);
+          localStorage.setItem('greenPledgeSavedChallenges', JSON.stringify(state.savedChallenges));
+          renderSavedChallenges();
+        });
+      });
+    }
+
+    // Initialize the app when the page loads
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
