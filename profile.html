@@ -532,12 +532,12 @@
       showProfilePage();
     }
 
-    // Handle logout
     function handleLogout() {
-      state.currentUser = null;
-      localStorage.removeItem('greenPledgeUser');
-      showLoginPage();
-    }
+  state.currentUser = null;
+  localStorage.removeItem('greenPledgeUser');
+  window.location.href = "index.html";
+}
+
 
     // Show login page
     function showLoginPage() {
