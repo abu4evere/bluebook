@@ -361,28 +361,33 @@ nav {
   <!-- Darker Navigation Bar -->
   <nav class="absolute top-0 left-0 w-full z-50 bg-gradient-to-b from-black/30 to-transparent backdrop-blur-sm">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="flex items-center justify-between h-20">
-        <!-- Logo -->
-        <div class="flex items-center">
-          <i class="fas fa-leaf text-2xl text-emerald-300 mr-2"></i>
-          <span class="text-xl font-bold text-white">GreenPledge</span>
-        </div>
-        
-        <!-- Navigation Links -->
-        <div class="hidden md:flex items-center space-x-8">
-          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="hero">Home</a>
-          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
-          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
-          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
-          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors">About</a>
-<button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition">
-          Sign In
-        </button>
-        <button id="signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
-          Sign Up
-        </button>
-        </div>
-        
+     <!-- Navigation Bar -->
+<div class="flex items-center justify-between h-20">
+  <!-- Logo -->
+  <div class="flex items-center">
+    <i class="fas fa-leaf text-2xl text-emerald-300 mr-2"></i>
+    <span class="text-xl font-bold text-white">GreenPledge</span>
+  </div>
+  
+  <!-- Navigation Links (without auth buttons) -->
+  <div class="hidden md:flex items-center space-x-8">
+    <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="hero">Home</a>
+    <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
+    <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
+    <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
+    <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors">About</a>
+  </div>
+  
+  <!-- Auth Buttons (outside nav links, always visible) -->
+  <div class="flex items-center space-x-3">
+    <button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition">
+      Sign In
+    </button>
+    <button id="signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+      Sign Up
+    </button>
+  </div>
+</div>
         <!-- Auth Buttons -->
         <div class="flex items-center space-x-4">
           <button id="auth-button" class="px-6 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
