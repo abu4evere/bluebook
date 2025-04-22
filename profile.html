@@ -55,6 +55,7 @@
     .nav-link {
       position: relative;
       transition: color 0.3s ease;
+      color: #1f2937 !important; /* Black text at all times */
     }
 
     .nav-link::after {
@@ -70,6 +71,10 @@
 
     .nav-link:hover::after {
       width: 100%;
+    }
+
+    .nav-link:hover {
+      color: #10b981 !important; /* Hover color remains green */
     }
 
     .glow-btn {
@@ -171,26 +176,31 @@
       transform: scale(1);
     }
 
-    /* Updated Nav Styles for Scroll */
-    nav.scrolled .nav-link {
-      color: #1f2937 !important; /* Black text on scroll */
+    /* Nav Styles */
+    .nav-logo-text {
+      color: #1f2937 !important; /* Black logo text at all times */
     }
 
-    nav.scrolled .nav-logo-text {
-      color: #1f2937 !important; /* Black logo text on scroll */
+    .nav-icon {
+      color: #10b981 !important; /* Keep icon color primary green */
     }
 
-    nav.scrolled .nav-icon {
-      color: #10b981 !important; /* Keep icon color primary for contrast */
+    .nav-button {
+      color: #1f2937 !important; /* Black button text at all times */
     }
 
-    nav.scrolled .nav-button {
-      color: #1f2937 !important; /* Black button text on scroll */
+    .nav-button.bg-emerald-600\/90 {
+      background-color: #10b981 !important; /* Green background for contrast */
+      color: white !important; /* White text on green button */
     }
 
-    nav.scrolled .nav-button.bg-emerald-600\/90 {
-      background-color: #10b981 !important; /* Adjust button background for contrast */
-      color: white !important;
+    .nav-button.bg-emerald-600\/90:hover {
+      background-color: #059669 !important; /* Darker green on hover */
+    }
+
+    /* Glassmorphism on scroll, but no text color change */
+    nav.scrolled {
+      /* Only apply glassmorphism, no text color changes */
     }
   </style>
 </head>
