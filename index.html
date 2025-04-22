@@ -152,7 +152,7 @@ nav {
     
     /* Auth Modal Styles */
     .auth-modal {
-      position: fixed;
+    position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -176,7 +176,9 @@ nav {
      transform: scale(0.9);
   transition: transform 0.3s ease;
     }
-    
+    #login-modal, #signup-modal {
+  transition: all 0.3s ease;
+}
     .auth-modal.active .auth-content {
       transform: scale(1);
     }
