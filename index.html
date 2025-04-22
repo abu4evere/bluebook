@@ -211,12 +211,14 @@ nav {
     <div class="auth-content w-full max-w-md p-4">
       <div id="login-modal" class="glass-card rounded-2xl overflow-hidden animate__animated animate__fadeIn">
         <div class="p-8">
-          <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Welcome Back</h1>
-            <button id="close-auth" class="text-gray-500 hover:text-gray-700">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
+         
+          <!-- In your auth modal -->
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold text-gray-800">Welcome Back</h1>
+  <button id="close-auth-modal" class="text-gray-500 hover:text-gray-700 transition-colors">
+    <i class="fas fa-times text-xl"></i>
+  </button>
+</div>
           
           <form id="modal-login-form" class="space-y-4">
             <div>
@@ -649,7 +651,7 @@ nav {
     const authButton = document.getElementById('auth-button');
     const profileButton = document.getElementById('profile-button');
     const closeAuth = document.getElementById('close-auth');
-    const closeAuthSignup = document.getElementById('close-auth-signup');
+    const closeAuthSignup = document.getElementById('close-auth-modal');
     const showModalSignup = document.getElementById('show-modal-signup');
     const showModalLogin = document.getElementById('show-modal-login');
     const modalLoginForm = document.getElementById('modal-login-form');
@@ -658,13 +660,12 @@ nav {
     const bottomAuthButton = document.getElementById('bottom-auth-button');
     const tryChallengeButton = document.getElementById('try-challenge-button');
     const saveChallengeButton = document.getElementById('save-challenge-button');
-const addCommentContainer = document.getElementById('add-comment-container');
-const signinPrompt = document.getElementById('signin-prompt');
-const commentAuthButton = document.getElementById('comment-auth-button');
-const commentForm = document.getElementById('comment-form');
-// Update your existing DOM elements
-const loginButton = document.getElementById('login-button');
-const signupButton = document.getElementById('signup-button');
+    const addCommentContainer = document.getElementById('add-comment-container');
+    const signinPrompt = document.getElementById('signin-prompt');
+    const commentAuthButton = document.getElementById('comment-auth-button');
+    const commentForm = document.getElementById('comment-form');
+    const loginButton = document.getElementById('login-button');
+    const signupButton = document.getElementById('signup-button');
 
 // Add to your setupEventListeners function
 loginButton.addEventListener('click', () => {
@@ -693,6 +694,11 @@ signupButton.addEventListener('click', () => {
       setupEventListeners();
     }
 
+function closeAuthModalFunc() {
+  authModal.classList.remove('active');
+  loginModal.classList.add('hidden');
+  signupModal.classList.add('hidden');
+}
     // Set up all event listeners
     function setupEventListeners() {
       // Auth modal toggle
