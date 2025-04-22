@@ -7,6 +7,7 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
     
@@ -22,6 +23,22 @@
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
+/* Particle Animation */
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); }
+    50% { transform: translateY(-100px) translateX(20px) rotate(180deg); }
+    100% { transform: translateY(-200px) translateX(0) rotate(360deg); }
+  }
+
+  .particle {
+    will-change: transform, opacity;
+    filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.5));
+  }
+
+  /* Text Glow */
+  .text-glow {
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
+  }
     body {
       font-family: 'Outfit', sans-serif;
       background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
@@ -348,103 +365,83 @@
 
     <!-- Main Content -->
     <div class="pt-20 pb-12 px-6">
-      <!-- Hero Section -->
-      <!-- Hero Section -->
-<section class="relative overflow-hidden">
-  <!-- Animated background elements -->
+      
+<!-- Hero Section -->
+<section class="relative overflow-hidden min-h-screen flex items-center">
+  <!-- Crisp Nature Background -->
   <div class="absolute inset-0 z-0">
-    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-green-50 to-emerald-100 opacity-95"></div>
-    <div class="absolute top-0 left-0 w-full h-full opacity-20 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format')] bg-cover bg-center"></div>
-    
-    <!-- Floating leaves decoration -->
-    <div class="absolute top-10 left-10 w-16 h-16 opacity-30 animate-float1">
-      <svg viewBox="0 0 512 512" class="w-full h-full text-green-600">
-        <path fill="currentColor" d="M413.5 237.5c-28.2 4.8-58.2-3.6-80-25.4-15.7-15.7-19.2-38.7-10.9-58.8 17.1 1.4 35.2 9.2 46.9 20.9 25 25 25 65.5 0 90.5-19.3 19.3-49.3 19.3-67.8 4.2-18.5 15.1-48.5 15.1-67.8-4.2-25-25-25-65.5 0-90.5 11.8-11.8 29.8-19.5 46.9-20.9 8.3-20-4.8-43.1-20.9-58.2-21.8-21.8-30.2-51.8-25.4-80C196.5 7.4 164.7 0 132 0 57.3 0 0 57.3 0 132c0 32.7 7.4 64.5 21.5 93.5 4.8 28.2-3.6 58.2-25.4 80-15.7 15.7-19.2 38.7-10.9 58.8 17.1-1.4 35.2-9.2 46.9-20.9 25-25 25-65.5 0-90.5-19.3-19.3-49.3-19.3-67.8-4.2C-1.2 238.4-1.2 268.4 18.1 287.7c25 25 65.5 25 90.5 0 11.8-11.8 19.5-29.8 20.9-46.9 20 8.3 43.1-4.8 58.2-20.9 21.8-21.8 30.2-51.8 25.4-80C172.6 196.5 180 164.7 180 132c0-26.5-5.1-52.1-14.4-76.1 24 9.3 49.6 14.4 76.1 14.4 32.7 0 64.5-7.4 93.5-21.5 28.2-4.8 58.2 3.6 80 25.4 15.7 15.7 19.2 38.7 10.9 58.8-17.1-1.4-35.2-9.2-46.9-20.9-25-25-25-65.5 0-90.5 19.3-19.3 49.3-19.3 67.8-4.2 18.5-15.1 48.5-15.1 67.8 4.2 25 25 25 65.5 0 90.5-11.8 11.8-29.8 19.5-46.9 20.9-8.3 20 4.8 43.1 20.9 58.2 21.8 21.8 30.2 51.8 25.4 80C315.5 376.6 323 408.4 323 441c0 39.2-10.4 76-28.6 107.7-4.5 7.7-14.3 10.7-22 6.2s-10.7-14.3-6.2-22C297.6 505.5 307 474 307 441c0-25.6-5.4-50.5-15.1-73.5-4.8-28.2 3.6-58.2 25.4-80 15.7-15.7 19.2-38.7 10.9-58.8-17.1 1.4-35.2 9.2-46.9 20.9-25 25-25 65.5 0 90.5 19.3 19.3 49.3 19.3 67.8 4.2 18.5 15.1 48.5 15.1 67.8-4.2 25-25 25-65.5 0-90.5-11.8-11.8-29.8-19.5-46.9-20.9-8.3-20 4.8-43.1 20.9-58.2 21.8-21.8 30.2-51.8 25.4-80C376.6 196.5 384 164.7 384 132c0-32.7-7.4-64.5-21.5-93.5z"/>
-      </svg>
-    </div>
-    <div class="absolute bottom-20 right-20 w-20 h-20 opacity-20 animate-float2">
-      <svg viewBox="0 0 512 512" class="w-full h-full text-green-500">
-        <path fill="currentColor" d="M413.5 237.5c-28.2 4.8-58.2-3.6-80-25.4-15.7-15.7-19.2-38.7-10.9-58.8 17.1 1.4 35.2 9.2 46.9 20.9 25 25 25 65.5 0 90.5-19.3 19.3-49.3 19.3-67.8 4.2-18.5 15.1-48.5 15.1-67.8-4.2-25-25-25-65.5 0-90.5 11.8-11.8 29.8-19.5 46.9-20.9 8.3-20-4.8-43.1-20.9-58.2-21.8-21.8-30.2-51.8-25.4-80C196.5 7.4 164.7 0 132 0 57.3 0 0 57.3 0 132c0 32.7 7.4 64.5 21.5 93.5 4.8 28.2-3.6 58.2-25.4 80-15.7 15.7-19.2 38.7-10.9 58.8 17.1-1.4 35.2-9.2 46.9-20.9 25-25 25-65.5 0-90.5-19.3-19.3-49.3-19.3-67.8-4.2C-1.2 238.4-1.2 268.4 18.1 287.7c25 25 65.5 25 90.5 0 11.8-11.8 19.5-29.8 20.9-46.9 20 8.3 43.1-4.8 58.2-20.9 21.8-21.8 30.2-51.8 25.4-80C172.6 196.5 180 164.7 180 132c0-26.5-5.1-52.1-14.4-76.1 24 9.3 49.6 14.4 76.1 14.4 32.7 0 64.5-7.4 93.5-21.5 28.2-4.8 58.2 3.6 80 25.4 15.7 15.7 19.2 38.7 10.9 58.8-17.1-1.4-35.2-9.2-46.9-20.9-25-25-25-65.5 0-90.5 19.3-19.3 49.3-19.3 67.8-4.2 18.5-15.1 48.5-15.1 67.8 4.2 25 25 25 65.5 0 90.5-11.8 11.8-29.8 19.5-46.9 20.9-8.3 20 4.8 43.1 20.9 58.2 21.8 21.8 30.2 51.8 25.4 80C315.5 376.6 323 408.4 323 441c0 39.2-10.4 76-28.6 107.7-4.5 7.7-14.3 10.7-22 6.2s-10.7-14.3-6.2-22C297.6 505.5 307 474 307 441c0-25.6-5.4-50.5-15.1-73.5-4.8-28.2 3.6-58.2 25.4-80 15.7-15.7 19.2-38.7 10.9-58.8-17.1 1.4-35.2 9.2-46.9 20.9-25 25-25 65.5 0 90.5 19.3 19.3 49.3 19.3 67.8 4.2 18.5 15.1 48.5 15.1 67.8-4.2 25-25 25-65.5 0-90.5-11.8-11.8-29.8-19.5-46.9-20.9-8.3-20 4.8-43.1 20.9-58.2 21.8-21.8 30.2-51.8 25.4-80C376.6 196.5 384 164.7 384 132c0-32.7-7.4-64.5-21.5-93.5z"/>
-      </svg>
-    </div>
+    <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+         alt="Green forest background"
+         class="w-full h-full object-cover object-center">
+    <div class="absolute inset-0 bg-gradient-to-b from-green-900/20 to-emerald-900/40"></div>
   </div>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-6 py-32 sm:py-40 lg:py-48 text-center">
-    <div class="inline-block mb-8 px-6 py-3 bg-white/90 rounded-full shadow-sm backdrop-blur-sm">
-      <span class="text-lg font-semibold text-green-600 flex items-center justify-center">
-        <span class="animate-pulse mr-2">🌍</span> Join the Movement
+  <!-- Floating Particles (Animated) -->
+  <div class="particles-container absolute inset-0 overflow-hidden z-10">
+    <!-- 30 floating particles -->
+    <template x-for="i in 30" :key="i">
+      <div class="particle absolute rounded-full"
+           :style="`
+             width: ${Math.random() * 12 + 4}px;
+             height: ${Math.random() * 12 + 4}px;
+             background: ${['#10b981', '#84cc16', '#22c55e', '#86efac'][Math.floor(Math.random() * 4)]};
+             top: ${Math.random() * 100}%;
+             left: ${Math.random() * 100}%;
+             opacity: ${Math.random() * 0.6 + 0.2};
+             animation: float ${Math.random() * 15 + 10}s linear infinite;
+             animation-delay: -${Math.random() * 15}s;
+           `"></div>
+    </template>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-20 max-w-7xl mx-auto px-6 py-24 text-center w-full">
+    <!-- Animated Badge -->
+    <div class="inline-flex mb-8 px-6 py-3 bg-white/90 rounded-full shadow-lg backdrop-blur-sm border border-white/20 hover:scale-105 transition-transform duration-300">
+      <span class="text-lg font-bold text-green-600 flex items-center">
+        <span class="animate-pulse mr-2">🌱</span> Eco Warriors Unite!
       </span>
     </div>
     
-    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
-      <span class="text-gradient bg-clip-text bg-gradient-to-r from-green-600 to-emerald-500">
-        Small Actions,<br> 
-        <span class="relative inline-block">
-          Big Impact
-          <span class="absolute -bottom-2 left-0 w-full h-2 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full"></span>
-        </span>
+    <!-- Main Headline -->
+    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+      <span class="text-white drop-shadow-lg">
+        Small <span class="text-emerald-300">Actions</span>,
+      </span><br>
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 via-green-400 to-emerald-600">
+        Big <span class="underline decoration-emerald-500/30 decoration-4 underline-offset-8">Impact</span>
       </span>
     </h1>
     
-    <p class="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-10 leading-relaxed">
-      Transform your daily habits with micro-actions that create macro impact for our planet. Start with one small change today.
+    <!-- Subheading -->
+    <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10 leading-relaxed drop-shadow-md">
+      Join <span class="font-semibold text-emerald-200">10,000+</span> people transforming daily habits into planetary healing
     </p>
     
+    <!-- CTA Buttons -->
     <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <button id="cta-auth-button" class="btn-glow px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-full font-bold shadow-xl transition-all hover:scale-105 transform hover:shadow-2xl flex items-center">
-        Start Your Journey
-        <span class="ml-3 animate-bounce-right">🚀</span>
+      <button class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all hover:scale-105 transform flex items-center group">
+        <span class="mr-3">Start Your Journey</span>
+        <span class="group-hover:translate-x-1 transition-transform">→</span>
       </button>
       
-      <button class="px-8 py-4 bg-white/90 text-green-600 border border-green-200 rounded-full font-medium shadow-lg transition-all hover:bg-green-50 hover:scale-105 flex items-center">
-        <span class="mr-2">▶️</span> Watch Intro
+      <button class="px-8 py-4 bg-white/20 backdrop-blur-lg text-white border border-white/30 rounded-full font-medium shadow-lg hover:bg-white/30 transition-all hover:scale-105 flex items-center group">
+        <span class="mr-2">📽️</span> Watch Story
       </button>
     </div>
     
-    <!-- Animated stats counter -->
-    <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-      <div class="bg-white/90 p-6 rounded-xl text-center shadow-lg backdrop-blur-sm hover:shadow-xl transition-shadow">
-        <div class="text-4xl text-green-600 mb-3 animate-bounce">
-          <i class="fas fa-users"></i>
-        </div>
-        <div class="text-2xl font-bold text-gray-800" id="community-count">10,000+</div>
-        <div class="text-gray-600">Community Members</div>
-      </div>
-      
-      <div class="bg-white/90 p-6 rounded-xl text-center shadow-lg backdrop-blur-sm hover:shadow-xl transition-shadow">
-        <div class="text-4xl text-green-600 mb-3 animate-spin-slow">
-          <i class="fas fa-trophy"></i>
-        </div>
-        <div class="text-2xl font-bold text-gray-800" id="challenges-count">250K+</div>
-        <div class="text-gray-600">Challenges Completed</div>
-      </div>
-      
-      <div class="bg-white/90 p-6 rounded-xl text-center shadow-lg backdrop-blur-sm hover:shadow-xl transition-shadow">
-        <div class="text-4xl text-green-600 mb-3 animate-pulse">
-          <i class="fas fa-leaf"></i>
-        </div>
-        <div class="text-2xl font-bold text-gray-800" id="co2-count">1.2M+</div>
-        <div class="text-gray-600">Tons of CO₂ Reduced</div>
-      </div>
-      
-      <div class="bg-white/90 p-6 rounded-xl text-center shadow-lg backdrop-blur-sm hover:shadow-xl transition-shadow">
-        <div class="text-4xl text-green-600 mb-3 animate-float">
-          <i class="fas fa-tree"></i>
-        </div>
-        <div class="text-2xl font-bold text-gray-800" id="trees-count">500K+</div>
-        <div class="text-gray-600">Trees Protected</div>
-      </div>
-    </div>
+    <!-- Floating Elements -->
+    <div class="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-emerald-400/10 blur-3xl"></div>
+    <div class="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-green-500/10 blur-3xl"></div>
   </div>
-  
-  <!-- Animated scroll indicator -->
-  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
-    <a href="#challenges-section" class="text-green-600 hover:text-green-800">
-      <i class="fas fa-chevron-down text-2xl"></i>
+
+  <!-- Animated Scroll Indicator -->
+  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30">
+    <a href="#challenges-section" class="animate-bounce inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 transition-colors">
+      <i class="fas fa-chevron-down text-white text-xl"></i>
     </a>
   </div>
 </section>
-
       <!-- Daily Challenge Section -->
       <section id="challenges-section" class="max-w-4xl mx-auto mb-20">
         <div class="glass-card rounded-2xl overflow-hidden">
