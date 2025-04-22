@@ -9,91 +9,127 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700&display=swap');
     
     :root {
       --primary: #10b981;
       --primary-dark: #059669;
       --secondary: #f59e0b;
+      --accent: #34d399;
+      --background: #f0fdf4;
+      --text: #1f2937;
+      --text-light: #6b7280;
     }
 
     body {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
       min-height: 100vh;
       margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
     }
 
-    .glass-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
     }
 
-    .testimonial-card, .comment-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .glassmorphism {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
     }
 
-    .testimonial-card:hover, .comment-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    .card-3d {
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
     }
 
-    .comment-actions {
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-
-    .comment-card:hover .comment-actions {
-      opacity: 1;
-    }
-
-    .text-gradient {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .btn-glow:hover {
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
-    }
-
-    .floating {
-      animation: floating 6s ease-in-out infinite;
-    }
-
-    @keyframes floating {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
-      100% { transform: translateY(0px); }
-    }
-
-    .mobile-menu {
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .mobile-menu.hidden {
-      transform: translateX(100%);
+    .card-3d:hover {
+      transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     }
 
     .nav-link {
-      transition: all 0.3s ease;
       position: relative;
+      transition: color 0.3s ease;
     }
 
-    .nav-link:hover::after {
+    .nav-link::after {
       content: '';
       position: absolute;
       bottom: -4px;
       left: 0;
-      width: 100%;
+      width: 0;
       height: 2px;
-      background-color: var(--primary);
-      transform: scaleX(1);
-      transform-origin: left;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .glow-btn {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .glow-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+      z-index: -1;
+    }
+
+    .glow-btn:hover::before {
+      left: 100%;
+    }
+
+    .social-icon {
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .social-icon:hover {
+      transform: scale(1.2);
+      color: var(--primary);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .staggered {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .staggered.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gradient-icon {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     nav {
@@ -103,15 +139,6 @@
       width: 100%;
       z-index: 100;
       transition: background-color 0.3s ease;
-    }
-
-    nav.scrolled {
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(8px);
-    }
-
-    main {
-      padding-top: 80px;
     }
 
     .photo-modal {
@@ -149,7 +176,7 @@
   <!-- Photo Upload Modal -->
   <div id="photo-modal" class="photo-modal">
     <div class="photo-content w-full max-w-md p-4">
-      <div class="glass-card rounded-2xl overflow-hidden">
+      <div class="glassmorphism rounded-2xl overflow-hidden">
         <div class="p-8">
           <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Upload Proof</h1>
@@ -172,7 +199,7 @@
             </div>
             <button 
               id="confirm-photo" 
-              class="w-full btn-glow px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium transition-all hover:scale-[1.02] mt-6"
+              class="w-full glow-btn px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium transition-all hover:scale-[1.02] mt-6"
               disabled
             >
               Confirm Upload
@@ -212,7 +239,7 @@
       </div>
 
       <!-- Mobile Menu -->
-      <div id="mobile-menu" class="md:hidden mobile-menu hidden fixed top-0 right-0 h-full w-64 bg-emerald-900/95 p-6">
+      <div id="mobile-menu" class="md:hidden mobile-menu fixed top-0 right-0 h-full w-64 glassmorphism p-6 transform translate-x-full transition-transform duration-300">
         <button id="mobile-menu-close" class="text-white mb-6">
           <i class="fas fa-times text-2xl"></i>
         </button>
@@ -231,12 +258,12 @@
   </nav>
 
   <!-- Main Content -->
-  <main class="container max-w-7xl mx-auto px-6 pb-20">
+  <main class="container max-w-7xl mx-auto px-6 pb-20 pt-32">
     <!-- User Profile Section -->
-    <div class="glass-card rounded-2xl overflow-hidden mb-8 animate__animated animate__fadeIn">
+    <div class="glassmorphism card-3d rounded-2xl overflow-hidden mb-8 fade-in">
       <div class="p-6 flex flex-col md:flex-row items-center">
         <div class="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mb-4 md:mb-0 md:mr-6">
-          <i class="fas fa-user text-3xl text-green-600"></i>
+          <i class="fas fa-user text-3xl text-green-600 gradient-icon"></i>
         </div>
         
         <div class="flex-1 text-center md:text-left">
@@ -249,10 +276,10 @@
         </div>
         
         <div class="flex flex-col space-y-2 mt-4 md:mt-0">
-          <button class="px-6 py-2 border border-green-500 text-green-600 rounded-lg hover:bg-green-50 transition">
+          <button class="glow-btn px-6 py-2 border border-green-500 text-green-600 rounded-lg hover:bg-green-50 transition">
             Edit Profile
           </button>
-          <button id="redeem-xp" class="px-6 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition">
+          <button id="redeem-xp" class="glow-btn px-6 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition">
             Redeem XP
           </button>
         </div>
@@ -261,10 +288,10 @@
     
     <!-- Stats Overview -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <div class="glass-card rounded-xl p-6">
+      <div class="glassmorphism card-3d rounded-xl p-6 staggered">
         <div class="flex items-center">
           <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
-            <i class="fas fa-calendar-check"></i>
+            <i class="fas fa-calendar-check gradient-icon"></i>
           </div>
           <div>
             <div class="text-gray-500 text-sm">Days Active</div>
@@ -273,10 +300,10 @@
         </div>
       </div>
       
-      <div class="glass-card rounded-xl p-6">
+      <div class="glassmorphism card-3d rounded-xl p-6 staggered" style="transition-delay: 0.2s;">
         <div class="flex items-center">
           <div class="p-3 rounded-full bg-amber-100 text-amber-600 mr-4">
-            <i class="fas fa-trophy"></i>
+            <i class="fas fa-trophy gradient-icon"></i>
           </div>
           <div>
             <div class="text-gray-500 text-sm">Challenges Completed</div>
@@ -285,10 +312,10 @@
         </div>
       </div>
       
-      <div class="glass-card rounded-xl p-6">
+      <div class="glassmorphism card-3d rounded-xl p-6 staggered" style="transition-delay: 0.4s;">
         <div class="flex items-center">
           <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
-            <i class="fas fa-leaf"></i>
+            <i class="fas fa-leaf gradient-icon"></i>
           </div>
           <div>
             <div class="text-gray-500 text-sm">CO₂ Reduced</div>
@@ -297,10 +324,10 @@
         </div>
       </div>
       
-      <div class="glass-card rounded-xl p-6">
+      <div class="glassmorphism card-3d rounded-xl p-6 staggered" style="transition-delay: 0.6s;">
         <div class="flex items-center">
           <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
-            <i class="fas fa-star"></i>
+            <i class="fas fa-star gradient-icon"></i>
           </div>
           <div>
             <div class="text-gray-500 text-sm">XP Earned</div>
@@ -311,13 +338,13 @@
     </div>
     
     <!-- Saved Challenges -->
-    <div class="glass-card rounded-2xl overflow-hidden mb-8">
+    <div class="glassmorphism card-3d rounded-2xl overflow-hidden mb-8 fade-in">
       <div class="p-6">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-xl font-bold text-gray-800">
-            <i class="fas fa-bookmark mr-2 text-green-600"></i> Saved Challenges
+            <i class="fas fa-bookmark mr-2 text-green-600 gradient-icon"></i> Saved Challenges
           </h2>
-          <button id="new-challenge-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+          <button id="new-challenge-btn" class="glow-btn px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
             <i class="fas fa-plus mr-2"></i> New Challenge
           </button>
         </div>
@@ -331,22 +358,22 @@
     </div>
     
     <!-- Daily Challenge -->
-    <div class="glass-card rounded-2xl overflow-hidden mb-8">
+    <div class="glassmorphism card-3d rounded-2xl overflow-hidden mb-8 fade-in">
       <div class="p-6">
         <h2 class="text-xl font-bold text-gray-800 mb-4">
-          <i class="fas fa-bullseye mr-2 text-amber-600"></i> Today's Challenge
+          <i class="fas fa-bullseye mr-2 text-amber-600 gradient-icon"></i> Today's Challenge
         </h2>
         
         <div class="bg-white rounded-lg p-6 mb-4">
           <p class="text-lg text-gray-700 mb-4" id="daily-challenge-text">Loading today's challenge...</p>
           <div class="flex flex-wrap gap-4">
-            <button id="accept-challenge" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+            <button id="accept-challenge" class="glow-btn px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
               <i class="fas fa-check mr-2"></i> I Did This!
             </button>
-            <button id="save-challenge" class="px-6 py-2 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
+            <button id="save-challenge" class="glow-btn px-6 py-2 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
               <i class="fas fa-bookmark mr-2"></i> Save for Later
             </button>
-            <button id="new-daily-challenge" class="px-6 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition">
+            <button id="new-daily-challenge" class="glow-btn px-6 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition">
               <i class="fas fa-sync-alt mr-2"></i> New Challenge
             </button>
           </div>
@@ -354,7 +381,7 @@
         
         <div class="bg-green-50 rounded-lg p-4">
           <h3 class="font-semibold text-green-800 mb-2">
-            <i class="fas fa-lightbulb mr-2"></i> Why This Matters
+            <i class="fas fa-lightbulb mr-2 gradient-icon"></i> Why This Matters
           </h3>
           <p class="text-green-700" id="challenge-impact-text">
             Loading impact information...
@@ -364,13 +391,13 @@
     </div>
     
     <!-- My Community Comments -->
-    <div class="glass-card rounded-2xl overflow-hidden mb-8">
+    <div class="glassmorphism card-3d rounded-2xl overflow-hidden mb-8 fade-in">
       <div class="p-6">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-xl font-bold text-gray-800">
-            <i class="fas fa-comments mr-2 text-blue-600"></i> My Community Comments
+            <i class="fas fa-comments mr-2 text-blue-600 gradient-icon"></i> My Community Comments
           </h2>
-          <button id="new-comment-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+          <button id="new-comment-btn" class="glow-btn px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
             <i class="fas fa-plus mr-2"></i> Add Comment
           </button>
         </div>
@@ -390,14 +417,14 @@
             <div class="flex space-x-4">
               <button 
                 type="submit"
-                class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                class="glow-btn px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
               >
                 <i class="fas fa-paper-plane mr-2"></i> Post Comment
               </button>
               <button 
                 type="button"
                 id="cancel-comment"
-                class="px-6 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition"
+                class="glow-btn px-6 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition"
               >
                 Cancel
               </button>
@@ -419,22 +446,16 @@
   <footer class="bg-white/80 py-12 border-t border-gray-200">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid md:grid-cols-4 gap-8 mb-8">
-        <div>
+        <div class="fade-in">
           <h3 class="text-lg font-bold text-gray-800 mb-4">GreenPledge</h3>
           <p class="text-gray-600 mb-4">Making sustainability simple, one day at a time.</p>
           <div class="flex space-x-4">
-            <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
-              <i class="fab fa-facebook-f"></i>
-            </a>
+            <a href="#" class="social-icon text-gray-600"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon text-gray-600"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon text-gray-600"><i class="fab fa-facebook-f"></i></a>
           </div>
         </div>
-        <div>
+        <div class="fade-in">
           <h3 class="text-lg font-bold text-gray-800 mb-4">Resources</h3>
           <ul class="space-y-2">
             <li><a href="#" class="text-gray-600 hover:text-green-600">Eco Tips</a></li>
@@ -443,7 +464,7 @@
             <li><a href="#" class="text-gray-600 hover:text-green-600">Educational Materials</a></li>
           </ul>
         </div>
-        <div>
+        <div class="fade-in">
           <h3 class="text-lg font-bold text-gray-800 mb-4">About</h3>
           <ul class="space-y-2">
             <li><a href="#" class="text-gray-600 hover:text-green-600">Our Mission</a></li>
@@ -452,7 +473,7 @@
             <li><a href="#" class="text-gray-600 hover:text-green-600">Press</a></li>
           </ul>
         </div>
-        <div>
+        <div class="fade-in">
           <h3 class="text-lg font-bold text-gray-800 mb-4">Get Updates</h3>
           <p class="text-gray-600 mb-4">Join our newsletter for weekly eco-tips</p>
           <div class="flex">
@@ -464,7 +485,7 @@
         </div>
       </div>
       <div class="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
-        <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 GreenPledge. All rights reserved.</p>
+        <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 GreenPledge. All rights reserved.</p>
         <div class="flex space-x-6">
           <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Privacy Policy</a>
           <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Terms of Service</a>
@@ -550,7 +571,6 @@
       }
 
       state.currentUser = loggedInUser;
-      profilePage.classList.remove('hidden');
 
       // Load saved data
       state.savedChallenges = getSavedChallenges();
@@ -568,17 +588,32 @@
       setupEventListeners();
       generateDailyChallenge();
       updateNavBackground();
+      setupScrollAnimations();
     }
 
     // Update navigation background on scroll
     function updateNavBackground() {
       window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-          nav.classList.add('scrolled');
+          nav.classList.add('glassmorphism');
         } else {
-          nav.classList.remove('scrolled');
+          nav.classList.remove('glassmorphism');
         }
       });
+    }
+
+    // Scroll animations
+    function setupScrollAnimations() {
+      const elements = document.querySelectorAll('.fade-in, .staggered');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.2 });
+
+      elements.forEach(element => observer.observe(element));
     }
 
     // Update profile information
@@ -604,11 +639,11 @@
       mobileLogoutButton.addEventListener('click', handleLogout);
       
       mobileMenuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
+        mobileMenu.classList.toggle('translate-x-full');
       });
 
       mobileMenuClose.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.add('translate-x-full');
       });
 
       newChallengeBtn.addEventListener('click', generateDailyChallenge);
@@ -642,15 +677,16 @@
           } else {
             window.location.href = `index.html#${targetId}`;
           }
-          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.add('translate-x-full');
         });
       });
     }
 
     // Handle logout
     function handleLogout() {
-      state.currentUser = null;
       clearUser();
+      state.currentUser = null;
+      alert("You have been logged out.");
       window.location.href = 'index.html';
     }
 
@@ -829,7 +865,7 @@
       
       state.comments.forEach((comment, index) => {
         const commentEl = document.createElement('div');
-        commentEl.className = 'comment-card bg-white rounded-lg p-6 relative';
+        commentEl.className = 'card-3d bg-white rounded-lg p-6 relative';
         commentEl.innerHTML = `
           <div class="flex items-start mb-4">
             <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold mr-4">
@@ -841,7 +877,7 @@
             </div>
           </div>
           <p class="text-gray-700 pl-14">${comment.text}</p>
-          <div class="comment-actions absolute top-4 right-4">
+          <div class="absolute top-4 right-4">
             <button class="delete-comment px-2 py-1 text-red-500 hover:text-red-700" data-index="${index}">
               <i class="fas fa-trash"></i>
             </button>
