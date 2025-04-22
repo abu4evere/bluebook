@@ -136,16 +136,11 @@
       backdrop-filter: blur(8px);
     }
 
-    /* Hero Section Adjustments */
+    /* Hero Section */
     .hero-section {
       position: relative;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background-attachment: fixed;
-      background-position: center;
-      background-size: cover;
+      padding-top: 80px; /* Space for fixed header */
     }
 
     .hero-background {
@@ -174,11 +169,8 @@
     }
 
     /* Content Sections */
-    .content-section {
-      position: relative;
-      z-index: 10;
-      margin-top: -100px; /* Pulls content up to slide under header */
-      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    section {
+      padding-top: 80px; /* Prevent content from hiding under fixed header */
     }
   </style>
 </head>
@@ -409,7 +401,7 @@
   </section>
 
   <!-- Daily Challenge Section -->
-  <section id="challenges-section" class="content-section max-w-4xl mx-auto mb-20 pt-20">
+  <section id="challenges-section" class="max-w-4xl mx-auto mb-20">
     <div class="glass-card rounded-2xl overflow-hidden">
       <div class="p-8 md:p-10">
         <div class="flex flex-col md:flex-row items-center">
@@ -449,7 +441,7 @@
   </section>
 
   <!-- Eco Facts Section -->
-  <section id="facts-section" class="content-section max-w-7xl mx-auto mb-20 pt-20">
+  <section id="facts-section" class="max-w-7xl mx-auto mb-20">
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Discover Eco Facts</h2>
     <div class="grid md:grid-cols-3 gap-8">
       <div class="glass-card rounded-2xl overflow-hidden transition-all hover:shadow-xl">
@@ -498,7 +490,7 @@
   </section>
 
   <!-- Community Testimonials Section -->
-  <section id="community-section" class="content-section max-w-7xl mx-auto mb-20 pt-20">
+  <section id="community-section" class="max-w-7xl mx-auto mb-20">
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Community Says</h2>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div class="glass-card rounded-2xl overflow-hidden p-8 relative testimonial-card">
@@ -544,7 +536,7 @@
   </section>
 
   <!-- Footer -->
-  <footer class="content-section bg-white/80 py-12 border-t border-gray-200">
+  <footer class="bg-white/80 py-12 border-t border-gray-200">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid md:grid-cols-4 gap-8 mb-8">
         <div>
@@ -729,7 +721,7 @@
           const targetElement = document.getElementById(targetId);
           if (targetElement) {
             const headerHeight = nav.offsetHeight;
-            const targetPosition = targetElement.offsetTop - headerHeight - 20;
+            const targetPosition = targetElement.offsetTop - headerHeight;
             window.scrollTo({
               top: targetPosition,
               behavior: 'smooth'
