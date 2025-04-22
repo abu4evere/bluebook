@@ -400,7 +400,87 @@
           </div>
         </div>
       </section>
-
+<!-- Community Testimonials Section -->
+<section class="max-w-7xl mx-auto mb-20">
+  <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Community Says</h2>
+  
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Testimonial 1 -->
+    <div class="glass-card rounded-2xl overflow-hidden p-8 relative">
+      <div class="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+        <i class="fas fa-user text-xl"></i>
+      </div>
+      <p class="text-gray-600 italic mb-6">"This website helped me reduce my water usage by 30%! The daily challenges make sustainability so easy."</p>
+      <div class="flex items-center">
+        <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold mr-3">A</div>
+        <div>
+          <h4 class="font-bold text-gray-800">Abdurashid</h4>
+          <p class="text-sm text-gray-500">Member since 2023</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Testimonial 2 -->
+    <div class="glass-card rounded-2xl overflow-hidden p-8 relative">
+      <div class="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+        <i class="fas fa-user text-xl"></i>
+      </div>
+      <p class="text-gray-600 italic mb-6">"I never knew small changes could make such a difference. GreenPledge opened my eyes to eco-friendly living!"</p>
+      <div class="flex items-center">
+        <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold mr-3">S</div>
+        <div>
+          <h4 class="font-bold text-gray-800">Sarah</h4>
+          <p class="text-sm text-gray-500">Member since 2022</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Testimonial 3 -->
+    <div class="glass-card rounded-2xl overflow-hidden p-8 relative">
+      <div class="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+        <i class="fas fa-user text-xl"></i>
+      </div>
+      <p class="text-gray-600 italic mb-6">"The community challenges are so motivating. I've saved 100kg of CO₂ thanks to GreenPledge!"</p>
+      <div class="flex items-center">
+        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-3">M</div>
+        <div>
+          <h4 class="font-bold text-gray-800">Michael</h4>
+          <p class="text-sm text-gray-500">Member since 2023</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Add Comment Form (visible when logged in) -->
+  <div id="add-comment-container" class="mt-12 glass-card rounded-2xl p-8 max-w-2xl mx-auto hidden">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">Add Your Comment</h3>
+    <form id="comment-form">
+      <div class="mb-4">
+        <textarea 
+          id="comment-text" 
+          rows="4" 
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          placeholder="Share your GreenPledge experience..."
+          required
+        ></textarea>
+      </div>
+      <button 
+        type="submit"
+        class="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition"
+      >
+        <i class="fas fa-paper-plane mr-2"></i> Post Comment
+      </button>
+    </form>
+  </div>
+  
+  <!-- Sign in prompt (visible when logged out) -->
+  <div id="signin-prompt" class="mt-12 text-center">
+    <p class="text-gray-600 mb-4">Want to share your experience?</p>
+    <button id="comment-auth-button" class="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition">
+      <i class="fas fa-sign-in-alt mr-2"></i> Sign In to Comment
+    </button>
+  </div>
+</section>
       <!-- CTA Section -->
       <section class="max-w-4xl mx-auto text-center mb-20">
         <div class="glass-card rounded-2xl overflow-hidden py-12 px-6">
@@ -502,6 +582,10 @@
     const bottomAuthButton = document.getElementById('bottom-auth-button');
     const tryChallengeButton = document.getElementById('try-challenge-button');
     const saveChallengeButton = document.getElementById('save-challenge-button');
+const addCommentContainer = document.getElementById('add-comment-container');
+const signinPrompt = document.getElementById('signin-prompt');
+const commentAuthButton = document.getElementById('comment-auth-button');
+const commentForm = document.getElementById('comment-form');
 
     // Initialize the app
     function initApp() {
@@ -525,6 +609,22 @@
         authModal.classList.add('active');
         loginModal.classList.remove('hidden');
         signupModal.classList.add('hidden');
+commentAuthButton.addEventListener('click', () => {
+  authModal.classList.add('active');
+  loginModal.classList.remove('hidden');
+  signupModal.classList.add('hidden');
+});
+
+commentForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const commentText = document.getElementById('comment-text').value;
+  
+  // In a real app, you would send this to a server
+  alert(`Thanks for your comment, ${state.currentUser.name}! Your feedback helps our community grow.`);
+  
+  // Clear the form
+  commentForm.reset();
+});
       });
       
       profileButton.addEventListener('click', () => {
@@ -661,19 +761,23 @@
     }
 
     // Update UI based on auth state
-    function updateAuthUI() {
-      if (state.isAuthenticated) {
-        authButton.classList.add('hidden');
-        profileButton.classList.remove('hidden');
-        tryChallengeButton.textContent = "I Did This!";
-        saveChallengeButton.textContent = "Save Challenge";
-      } else {
-        authButton.classList.remove('hidden');
-        profileButton.classList.add('hidden');
-        tryChallengeButton.textContent = "Try Challenge";
-        saveChallengeButton.textContent = "Save for Later";
-      }
-    }
+  function updateAuthUI() {
+  if (state.isAuthenticated) {
+    authButton.classList.add('hidden');
+    profileButton.classList.remove('hidden');
+    tryChallengeButton.textContent = "I Did This!";
+    saveChallengeButton.textContent = "Save Challenge";
+    addCommentContainer.classList.remove('hidden');
+    signinPrompt.classList.add('hidden');
+  } else {
+    authButton.classList.remove('hidden');
+    profileButton.classList.add('hidden');
+    tryChallengeButton.textContent = "Try Challenge";
+    saveChallengeButton.textContent = "Save for Later";
+    addCommentContainer.classList.add('hidden');
+    signinPrompt.classList.remove('hidden');
+  }
+}
 
     // Initialize the app when the page loads
     window.addEventListener('DOMContentLoaded', initApp);
