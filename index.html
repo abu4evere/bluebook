@@ -372,6 +372,12 @@ nav {
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors">About</a>
+<button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition">
+          Sign In
+        </button>
+        <button id="signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+          Sign Up
+        </button>
         </div>
         
         <!-- Auth Buttons -->
@@ -541,7 +547,7 @@ nav {
       <div class="flex items-center">
         <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold mr-3">S</div>
         <div>
-          <h4 class="font-bold text-gray-800">Sarah</h4>
+          <h4 class="font-bold text-gray-800">Nozima</h4>
           <p class="text-sm text-gray-500">Member since 2022</p>
         </div>
       </div>
@@ -556,8 +562,8 @@ nav {
       <div class="flex items-center">
         <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-3">M</div>
         <div>
-          <h4 class="font-bold text-gray-800">Michael</h4>
-          <p class="text-sm text-gray-500">Member since 2023</p>
+          <h4 class="font-bold text-gray-800">Sardor</h4>
+          <p class="text-sm text-gray-500">Member since 2024</p>
         </div>
       </div>
     </div>
@@ -656,7 +662,22 @@ const addCommentContainer = document.getElementById('add-comment-container');
 const signinPrompt = document.getElementById('signin-prompt');
 const commentAuthButton = document.getElementById('comment-auth-button');
 const commentForm = document.getElementById('comment-form');
+// Update your existing DOM elements
+const loginButton = document.getElementById('login-button');
+const signupButton = document.getElementById('signup-button');
 
+// Add to your setupEventListeners function
+loginButton.addEventListener('click', () => {
+  authModal.classList.add('active');
+  loginModal.classList.remove('hidden');
+  signupModal.classList.add('hidden');
+});
+
+signupButton.addEventListener('click', () => {
+  authModal.classList.add('active');
+  signupModal.classList.remove('hidden');
+  loginModal.classList.add('hidden');
+});
     // Initialize the app
     function initApp() {
       // Check if user is logged in (in a real app, you'd check localStorage or cookies)
