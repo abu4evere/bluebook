@@ -474,32 +474,28 @@
     </div>
   </footer>
 
-  <script>
+  <script type="module">
+    import {
+      saveUser,
+      getUser,
+      updateUser,
+      clearUser,
+      saveSavedChallenges,
+      getSavedChallenges,
+      saveComments,
+      getComments,
+      saveCompletedChallenges,
+      getCompletedChallenges,
+      saveXP,
+      getXP,
+      savePhotos,
+      getPhotos,
+      getRandomChallenge
+    } from './dataManager.js';
+
     // App State
     const state = {
       currentUser: null,
-      challenges: [
-        { challenge: "Avoid using plastic bottles for a day.", fact: "It takes 450 years for a plastic bottle to decompose." },
-        { challenge: "Use a reusable water bottle today.", fact: "One million plastic bottles are bought every minute." },
-        { challenge: "Separate and recycle all your waste today.", fact: "Only 9% of plastic ever produced has been recycled." },
-        { challenge: "Refuse all plastic bags for 24 hours.", fact: "Plastic bags are used for an average of 12 minutes." },
-        { challenge: "Pick up 5 pieces of plastic litter.", fact: "Every year, 8 million tons of plastic enter the oceans." },
-        { challenge: "Avoid products containing microplastics.", fact: "Microplastics have been found in human blood." },
-        { challenge: "Say no to plastic straws today.", fact: "A single plastic straw takes 200 years to decompose." },
-        { challenge: "Educate a friend about ocean pollution.", fact: "The Great Pacific Garbage Patch is twice the size of Texas." },
-        { challenge: "Plant a flower or herb to support pollinators.", fact: "Bees pollinate 70% of the crops we eat." },
-        { challenge: "Plant or care for a tree today.", fact: "One tree absorbs 22 kg of CO2 per year." },
-        { challenge: "Eat all your meals today without any food waste.", fact: "Food waste contributes to 10% of global emissions." },
-        { challenge: "Wear something second-hand today.", fact: "Globally, 2,700 liters of water to make one cotton T-shirt." },
-        { challenge: "Watch a climate documentary and share a fact.", fact: "Climate change causes more extreme weather events." },
-        { challenge: "Turn off all lights not in use today.", fact: "Turning off lights can reduce CO2 by 10%." },
-        { challenge: "Walk, cycle, or use public transport today.", fact: "Airplanes emit 900 million tons of CO2 each year." },
-        { challenge: "Try a fully plant-based meal today.", fact: "Meat production contributes 14.5% of global emissions." },
-        { challenge: "Share 3 ways to reduce paper use.", fact: "Deforestation is responsible for 14% of global emissions." },
-        { challenge: "Fix a leak or turn off the tap when brushing.", fact: "A leaking faucet can waste 11,000 liters/year." },
-        { challenge: "Wear second-hand or swap clothes today.", fact: "Most fast fashion ends up in landfills within a year." },
-        { challenge: "Compost your food scraps today.", fact: "Composting food can reduce landfill waste by 30%." }
-      ],
       savedChallenges: [],
       comments: [],
       completedChallenges: 0,
@@ -547,39 +543,26 @@
 
     // Initialize the app
     function initApp() {
-      const loggedInUser = localStorage.getItem('greenPledgeUser');
+      const loggedInUser = getUser();
       if (!loggedInUser) {
         window.location.href = 'index.html';
         return;
       }
 
-      state.currentUser = JSON.parse(loggedInUser);
+      state.currentUser = loggedInUser;
       profilePage.classList.remove('hidden');
 
       // Load saved data
-      const savedChallenges = localStorage.getItem('greenPledgeSavedChallenges');
-      if (savedChallenges) {
-        state.savedChallenges = JSON.parse(savedChallenges);
-        renderSavedChallenges();
-      }
+      state.savedChallenges = getSavedChallenges();
+      renderSavedChallenges();
 
-      const savedComments = localStorage.getItem('greenPledgeComments');
-      if (savedComments) {
-        state.comments = JSON.parse(savedComments).filter(
-          comment => comment.user === state.currentUser.name
-        );
-        renderComments();
-      }
+      state.comments = getComments().filter(
+        comment => comment.user === state.currentUser.name
+      );
+      renderComments();
 
-      const savedCompleted = localStorage.getItem('greenPledgeCompletedChallenges');
-      if (savedCompleted) {
-        state.completedChallenges = parseInt(savedCompleted, 10);
-      }
-
-      const savedXP = localStorage.getItem('greenPledgeXP');
-      if (savedXP) {
-        state.xp = parseInt(savedXP, 10);
-      }
+      state.completedChallenges = getCompletedChallenges();
+      state.xp = getXP();
 
       updateProfileInfo();
       setupEventListeners();
@@ -667,7 +650,7 @@
     // Handle logout
     function handleLogout() {
       state.currentUser = null;
-      localStorage.removeItem('greenPledgeUser');
+      clearUser();
       window.location.href = 'index.html';
     }
 
@@ -706,10 +689,10 @@
 
     // Generate a new daily challenge
     function generateDailyChallenge() {
-      const randomIndex = Math.floor(Math.random() * state.challenges.length);
-      state.currentChallengeIndex = randomIndex;
-      dailyChallengeText.textContent = state.challenges[randomIndex].challenge;
-      challengeImpactText.textContent = state.challenges[randomIndex].fact;
+      const { index, challenge, fact } = getRandomChallenge();
+      state.currentChallengeIndex = index;
+      dailyChallengeText.textContent = challenge;
+      challengeImpactText.textContent = fact;
     }
 
     // Complete the current challenge
@@ -722,21 +705,21 @@
       const file = photoUpload.files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        // Store photo in localStorage (for demo purposes)
-        const photos = JSON.parse(localStorage.getItem('greenPledgePhotos') || '[]');
+        // Store photo in localStorage
+        const photos = getPhotos();
         photos.push({
           challenge: dailyChallengeText.textContent,
           photo: reader.result,
           timestamp: new Date().toLocaleString(),
           user: state.currentUser.name
         });
-        localStorage.setItem('greenPledgePhotos', JSON.stringify(photos));
+        savePhotos(photos);
 
         // Update challenge and XP
         state.completedChallenges++;
         state.xp += 10;
-        localStorage.setItem('greenPledgeCompletedChallenges', state.completedChallenges);
-        localStorage.setItem('greenPledgeXP', state.xp);
+        saveCompletedChallenges(state.completedChallenges);
+        saveXP(state.xp);
         
         updateProfileInfo();
         closePhotoModalFn();
@@ -752,7 +735,7 @@
       
       if (!state.savedChallenges.includes(challenge)) {
         state.savedChallenges.push(challenge);
-        localStorage.setItem('greenPledgeSavedChallenges', JSON.stringify(state.savedChallenges));
+        saveSavedChallenges(state.savedChallenges);
         renderSavedChallenges();
         alert("Challenge saved to your list! 📌");
       } else {
@@ -793,7 +776,7 @@
         btn.addEventListener('click', (e) => {
           const index = parseInt(e.currentTarget.getAttribute('data-index'));
           state.savedChallenges.splice(index, 1);
-          localStorage.setItem('greenPledgeSavedChallenges', JSON.stringify(state.savedChallenges));
+          saveSavedChallenges(state.savedChallenges);
           renderSavedChallenges();
         });
       });
@@ -826,7 +809,7 @@
       };
       
       state.comments.push(newComment);
-      localStorage.setItem('greenPledgeComments', JSON.stringify(state.comments));
+      saveComments(state.comments);
       
       renderComments();
       hideCommentForm();
@@ -872,7 +855,7 @@
         btn.addEventListener('click', (e) => {
           const index = parseInt(e.currentTarget.getAttribute('data-index'));
           state.comments.splice(index, 1);
-          localStorage.setItem('greenPledgeComments', JSON.stringify(state.comments));
+          saveComments(state.comments);
           renderComments();
         });
       });
