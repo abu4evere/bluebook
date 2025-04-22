@@ -210,17 +210,16 @@ nav {
 <body class="overflow-x-hidden">
   <!-- Auth Modal (Hidden by default) -->
   <div id="auth-modal" class="auth-modal">
-    <div class="auth-content w-full max-w-md p-4">
-      <div id="login-modal" class="glass-card rounded-2xl overflow-hidden animate__animated animate__fadeIn">
-        <div class="p-8">
-         
-          <!-- In your auth modal -->
-<div class="flex justify-between items-center mb-6">
-  <h1 class="text-2xl font-bold text-gray-800">Welcome Back</h1>
-  <button id="close-auth-modal" class="text-gray-500 hover:text-gray-700 transition-colors">
-    <i class="fas fa-times text-xl"></i>
-  </button>
-</div>
+     <div class="auth-content w-full max-w-md p-4">
+    <!-- Login Modal -->
+    <div id="login-modal" class="glass-card rounded-2xl overflow-hidden">
+      <div class="p-8">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-2xl font-bold text-gray-800">Welcome Back</h1>
+          <button id="close-auth-modal" class="text-gray-500 hover:text-gray-700 transition-colors">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
           
           <form id="modal-login-form" class="space-y-4">
             <div>
@@ -269,14 +268,14 @@ nav {
         </div>
       </div>
       
-      <div id="signup-modal" class="glass-card rounded-2xl overflow-hidden animate__animated animate__fadeIn hidden">
-        <div class="p-8">
-          <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Join GreenPledge</h1>
-            <button id="close-auth" class="text-gray-500 hover:text-gray-700" aria-label="Close modal">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
+       <div id="signup-modal" class="glass-card rounded-2xl overflow-hidden hidden">
+      <div class="p-8">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-2xl font-bold text-gray-800">Join GreenPledge</h1>
+          <button id="close-auth-signup" class="text-gray-500 hover:text-gray-700 transition-colors">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
           
           <form id="modal-signup-form" class="space-y-4">
             <div>
