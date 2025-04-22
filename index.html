@@ -638,312 +638,270 @@ nav {
   </div>
 
   <script>
-    // App State
-    const state = {
-      currentUser: null,
-      isAuthenticated: false
-    };
+  // App State
+  const state = {
+    currentUser: null,
+    isAuthenticated: false
+  };
 
-    // DOM Elements
-    const authModal = document.getElementById('auth-modal');
-    const loginModal = document.getElementById('login-modal');
-    const signupModal = document.getElementById('signup-modal');
-    const authButton = document.getElementById('auth-button');
-    const profileButton = document.getElementById('profile-button');
-    const closeAuth = document.getElementById('close-auth');
-    const closeAuthSignup = document.getElementById('close-auth-modal');
-    const showModalSignup = document.getElementById('show-modal-signup');
-    const showModalLogin = document.getElementById('show-modal-login');
-    const modalLoginForm = document.getElementById('modal-login-form');
-    const modalSignupForm = document.getElementById('modal-signup-form');
-    const ctaAuthButton = document.getElementById('cta-auth-button');
-    const bottomAuthButton = document.getElementById('bottom-auth-button');
-    const tryChallengeButton = document.getElementById('try-challenge-button');
-    const saveChallengeButton = document.getElementById('save-challenge-button');
-    const addCommentContainer = document.getElementById('add-comment-container');
-    const signinPrompt = document.getElementById('signin-prompt');
-    const commentAuthButton = document.getElementById('comment-auth-button');
-    const commentForm = document.getElementById('comment-form');
-    const loginButton = document.getElementById('login-button');
-    const signupButton = document.getElementById('signup-button');
+  // DOM Elements
+  const authModal = document.getElementById('auth-modal');
+  const loginModal = document.getElementById('login-modal');
+  const signupModal = document.getElementById('signup-modal');
+  const authButton = document.getElementById('auth-button');
+  const profileButton = document.getElementById('profile-button');
+  const closeAuthModal = document.getElementById('close-auth-modal');
+  const closeAuthSignup = document.getElementById('close-auth-signup');
+  const showModalSignup = document.getElementById('show-modal-signup');
+  const showModalLogin = document.getElementById('show-modal-login');
+  const modalLoginForm = document.getElementById('modal-login-form');
+  const modalSignupForm = document.getElementById('modal-signup-form');
+  const ctaAuthButton = document.getElementById('cta-auth-button');
+  const bottomAuthButton = document.getElementById('bottom-auth-button');
+  const tryChallengeButton = document.getElementById('try-challenge-button');
+  const saveChallengeButton = document.getElementById('save-challenge-button');
+  const addCommentContainer = document.getElementById('add-comment-container');
+  const signinPrompt = document.getElementById('signin-prompt');
+  const commentAuthButton = document.getElementById('comment-auth-button');
+  const commentForm = document.getElementById('comment-form');
+  const loginButton = document.getElementById('login-button');
+  const signupButton = document.getElementById('signup-button');
 
-// Add to your setupEventListeners function
-loginButton.addEventListener('click', () => {
-  authModal.classList.add('active');
-  loginModal.classList.remove('hidden');
-  signupModal.classList.add('hidden');
-});
-
-signupButton.addEventListener('click', () => {
-  authModal.classList.add('active');
-  signupModal.classList.remove('hidden');
-  loginModal.classList.add('hidden');
-});
-    // Initialize the app
-    function initApp() {
-      // Check if user is logged in (in a real app, you'd check localStorage or cookies)
-      const loggedInUser = localStorage.getItem('greenPledgeUser');
-      
-      if (loggedInUser) {
-        state.currentUser = JSON.parse(loggedInUser);
-        state.isAuthenticated = true;
-        updateAuthUI();
-      }
-      
-      // Set up event listeners
-      setupEventListeners();
-    }
-function setupEventListeners() {
-  // ... existing code ...
-  
-  // Close modal events
-  closeAuthModal.addEventListener('click', closeAuthModalFunc);
-  
-  // Close when clicking outside modal content
-  authModal.addEventListener('click', (e) => {
-    if (e.target === authModal) {
-      closeAuthModalFunc();
-    }
-  });
-  
-  // Close with Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && authModal.classList.contains('active')) {
-      closeAuthModalFunc();
-    }
-  });
-}
-function closeAuthModalFunc() {
-  authModal.classList.remove('active');
-  loginModal.classList.add('hidden');
-  signupModal.classList.add('hidden');
-}
-    // Set up all event listeners
-    function setupEventListeners() {
-      // Auth modal toggle
-      authButton.addEventListener('click', () => {
-        authModal.classList.add('active');
-        loginModal.classList.remove('hidden');
-        signupModal.classList.add('hidden');
-commentAuthButton.addEventListener('click', () => {
-  authModal.classList.add('active');
-  loginModal.classList.remove('hidden');
-  signupModal.classList.add('hidden');
-});
-
-commentForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const commentText = document.getElementById('comment-text').value;
-  
-  // In a real app, you would send this to a server
-  alert(`Thanks for your comment, ${state.currentUser.name}! Your feedback helps our community grow.`);
-  
-  // Clear the form
-  commentForm.reset();
-});
-      });
-      
-      profileButton.addEventListener('click', () => {
-  window.location.href = "profile.html";
-});
-
-      
-      ctaAuthButton.addEventListener('click', () => {
-        authModal.classList.add('active');
-        loginModal.classList.remove('hidden');
-        signupModal.classList.add('hidden');
-      });
-      
-      bottomAuthButton.addEventListener('click', () => {
-        authModal.classList.add('active');
-        loginModal.classList.remove('hidden');
-        signupModal.classList.add('hidden');
-      });
-      
-      // Close modal buttons
-      closeAuth.addEventListener('click', closeModal);
-      closeAuthSignup.addEventListener('click', closeModal);
-      
-      // Switch between login/signup
-      showModalSignup.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginModal.classList.add('hidden');
-        signupModal.classList.remove('hidden');
-      });
-      
-      showModalLogin.addEventListener('click', (e) => {
-        e.preventDefault();
-        signupModal.classList.add('hidden');
-        loginModal.classList.remove('hidden');
-      });
-      
-      // Form submissions
-      modalLoginForm.addEventListener('submit', handleModalLogin);
-      modalSignupForm.addEventListener('submit', handleModalSignup);
-      
-      // Challenge buttons
-      tryChallengeButton.addEventListener('click', () => {
-        if (!state.isAuthenticated) {
-          authModal.classList.add('active');
-          loginModal.classList.remove('hidden');
-          signupModal.classList.add('hidden');
-          alert("Please log in to track your challenges!");
-          return;
-        }
-        alert("Great job completing today's challenge! 🌱");
-      });
-      
-      saveChallengeButton.addEventListener('click', () => {
-        if (!state.isAuthenticated) {
-          authModal.classList.add('active');
-          loginModal.classList.remove('hidden');
-          signupModal.classList.add('hidden');
-          alert("Please log in to save challenges!");
-          return;
-        }
-        alert("Challenge saved to your profile! 📌");
-      });
-    }
-
-    // Close auth modal
-    function closeModal() {
-      authModal.classList.remove('active');
-    }
-
-    // Handle modal login
-    function handleModalLogin(e) {
-      e.preventDefault();
-      
-      const email = document.getElementById('modal-login-email').value;
-      const password = document.getElementById('modal-login-password').value;
-      
-      // In a real app, you would validate credentials with a server
-      // For this demo, we'll just create a user object
-      state.currentUser = {
-        name: "Demo User",
-        email: email,
-        joinDate: new Date()
-      };
-      
-      // Save to localStorage
-      localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
-      
-      // Update UI
+  // Initialize the app
+  function initApp() {
+    // Check if user is logged in
+    const loggedInUser = localStorage.getItem('greenPledgeUser');
+    
+    if (loggedInUser) {
+      state.currentUser = JSON.parse(loggedInUser);
       state.isAuthenticated = true;
       updateAuthUI();
-      closeModal();
-      
-      // Show welcome message
-      setTimeout(() => {
-        alert(`Welcome back, ${state.currentUser.name}!`);
-      }, 300);
     }
+    
+    // Set up event listeners
+    setupEventListeners();
+  }
 
-    // Handle modal signup
-    function handleModalSignup(e) {
+  // Set up all event listeners
+  function setupEventListeners() {
+    // Auth modal toggle
+    authButton.addEventListener('click', () => {
+      authModal.classList.add('active');
+      loginModal.classList.remove('hidden');
+      signupModal.classList.add('hidden');
+    });
+
+    // Profile button
+    profileButton.addEventListener('click', () => {
+      window.location.href = "profile.html";
+    });
+
+    // Navbar auth buttons
+    loginButton.addEventListener('click', () => {
+      authModal.classList.add('active');
+      loginModal.classList.remove('hidden');
+      signupModal.classList.add('hidden');
+    });
+
+    signupButton.addEventListener('click', () => {
+      authModal.classList.add('active');
+      signupModal.classList.remove('hidden');
+      loginModal.classList.add('hidden');
+    });
+
+    // CTA buttons
+    ctaAuthButton.addEventListener('click', () => {
+      authModal.classList.add('active');
+      loginModal.classList.remove('hidden');
+      signupModal.classList.add('hidden');
+    });
+
+    bottomAuthButton.addEventListener('click', () => {
+      authModal.classList.add('active');
+      loginModal.classList.remove('hidden');
+      signupModal.classList.add('hidden');
+    });
+
+    // Close modal buttons
+    closeAuthModal.addEventListener('click', closeModal);
+    closeAuthSignup.addEventListener('click', closeModal);
+    
+    // Close when clicking outside modal content
+    authModal.addEventListener('click', (e) => {
+      if (e.target === authModal) {
+        closeModal();
+      }
+    });
+    
+    // Close with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && authModal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // Switch between login/signup
+    showModalSignup.addEventListener('click', (e) => {
       e.preventDefault();
-      
-      const name = document.getElementById('modal-signup-name').value;
-      const email = document.getElementById('modal-signup-email').value;
-      const password = document.getElementById('modal-signup-password').value;
-      const confirmPassword = document.getElementById('modal-signup-confirm-password').value;
-      
-      // Validate passwords match
-      if (password !== confirmPassword) {
-        alert("Passwords don't match!");
+      loginModal.classList.add('hidden');
+      signupModal.classList.remove('hidden');
+    });
+
+    showModalLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      signupModal.classList.add('hidden');
+      loginModal.classList.remove('hidden');
+    });
+
+    // Form submissions
+    modalLoginForm.addEventListener('submit', handleModalLogin);
+    modalSignupForm.addEventListener('submit', handleModalSignup);
+
+    // Challenge buttons
+    tryChallengeButton.addEventListener('click', () => {
+      if (!state.isAuthenticated) {
+        authModal.classList.add('active');
+        loginModal.classList.remove('hidden');
+        signupModal.classList.add('hidden');
+        alert("Please log in to track your challenges!");
         return;
       }
-      
-      // In a real app, you would create the user account on a server
-      // For this demo, we'll just create a user object
-      state.currentUser = {
-        name: name,
-        email: email,
-        joinDate: new Date()
-      };
-      
-      // Save to localStorage
-      localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
-      
-      // Update UI
-      state.isAuthenticated = true;
-      updateAuthUI();
-      closeModal();
-      
-      // Show welcome message
-      setTimeout(() => {
-        alert(`Welcome to GreenPledge, ${name}! Start your eco journey today.`);
-      }, 300);
-    }
+      alert("Great job completing today's challenge! 🌱");
+    });
 
-    // Update UI based on auth state
-  function updateAuthUI() {
-  if (state.isAuthenticated) {
-    authButton.classList.add('hidden');
-    profileButton.classList.remove('hidden');
-    tryChallengeButton.textContent = "I Did This!";
-    saveChallengeButton.textContent = "Save Challenge";
-    addCommentContainer.classList.remove('hidden');
-    signinPrompt.classList.add('hidden');
-  } else {
-    authButton.classList.remove('hidden');
-    profileButton.classList.add('hidden');
-    tryChallengeButton.textContent = "Try Challenge";
-    saveChallengeButton.textContent = "Save for Later";
-    addCommentContainer.classList.add('hidden');
-    signinPrompt.classList.remove('hidden');
-  }
-}
-// Add to your existing JavaScript in index.html
+    saveChallengeButton.addEventListener('click', () => {
+      if (!state.isAuthenticated) {
+        authModal.classList.add('active');
+        loginModal.classList.remove('hidden');
+        signupModal.classList.add('hidden');
+        alert("Please log in to save challenges!");
+        return;
+      }
+      alert("Challenge saved to your profile! 📌");
+    });
 
-// Smooth scrolling for navigation
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    const targetId = this.getAttribute('data-target');
-    const targetElement = document.getElementById(targetId);
-    
-    if (targetElement) {
-      // Calculate position (accounting for fixed header)
-      const headerHeight = document.querySelector('nav').offsetHeight;
-      const targetPosition = targetElement.offsetTop - headerHeight - 20;
-      
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
-      
-      // Update active state
-      document.querySelectorAll('.nav-link').forEach(navLink => {
-        navLink.classList.remove('text-green-600', 'font-medium');
-      });
-      this.classList.add('text-green-600', 'font-medium');
-    }
-  });
-});
+    // Comment section
+    commentAuthButton.addEventListener('click', () => {
+      authModal.classList.add('active');
+      loginModal.classList.remove('hidden');
+      signupModal.classList.add('hidden');
+    });
 
-// Highlight current section while scrolling
-window.addEventListener('scroll', function() {
-  const sections = document.querySelectorAll('section[id]');
-  const scrollPosition = window.scrollY + 100;
-  
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.offsetHeight;
-    
-    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-      const id = section.getAttribute('id');
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('text-green-600', 'font-medium');
-        if (link.getAttribute('data-target') === id) {
-          link.classList.add('text-green-600', 'font-medium');
+    commentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const commentText = document.getElementById('comment-text').value;
+      if (state.currentUser) {
+        alert(`Thanks for your comment, ${state.currentUser.name}! Your feedback helps our community grow.`);
+        commentForm.reset();
+      }
+    });
+
+    // Navigation smooth scrolling
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('data-target');
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          const headerHeight = document.querySelector('nav').offsetHeight;
+          const targetPosition = targetElement.offsetTop - headerHeight - 20;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
+          document.querySelectorAll('.nav-link').forEach(navLink => {
+            navLink.classList.remove('text-green-600', 'font-medium');
+          });
+          this.classList.add('text-green-600', 'font-medium');
         }
       });
+    });
+  }
+
+  // Close modal function
+  function closeModal() {
+    authModal.classList.remove('active');
+    loginModal.classList.add('hidden');
+    signupModal.classList.add('hidden');
+  }
+
+  // Handle modal login
+  function handleModalLogin(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('modal-login-email').value;
+    const password = document.getElementById('modal-login-password').value;
+    
+    state.currentUser = {
+      name: "Demo User",
+      email: email,
+      joinDate: new Date()
+    };
+    
+    localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
+    state.isAuthenticated = true;
+    updateAuthUI();
+    closeModal();
+    
+    setTimeout(() => {
+      alert(`Welcome back, ${state.currentUser.name}!`);
+    }, 300);
+  }
+
+  // Handle modal signup
+  function handleModalSignup(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('modal-signup-name').value;
+    const email = document.getElementById('modal-signup-email').value;
+    const password = document.getElementById('modal-signup-password').value;
+    const confirmPassword = document.getElementById('modal-signup-confirm-password').value;
+    
+    if (password !== confirmPassword) {
+      alert("Passwords don't match!");
+      return;
     }
-  });
-});
-    // Initialize the app when the page loads
-    window.addEventListener('DOMContentLoaded', initApp);
-  </script>
+    
+    state.currentUser = {
+      name: name,
+      email: email,
+      joinDate: new Date()
+    };
+    
+    localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
+    state.isAuthenticated = true;
+    updateAuthUI();
+    closeModal();
+    
+    setTimeout(() => {
+      alert(`Welcome to GreenPledge, ${name}! Start your eco journey today.`);
+    }, 300);
+  }
+
+  // Update UI based on auth state
+  function updateAuthUI() {
+    if (state.isAuthenticated) {
+      authButton.classList.add('hidden');
+      profileButton.classList.remove('hidden');
+      tryChallengeButton.textContent = "I Did This!";
+      saveChallengeButton.textContent = "Save Challenge";
+      addCommentContainer.classList.remove('hidden');
+      signinPrompt.classList.add('hidden');
+    } else {
+      authButton.classList.remove('hidden');
+      profileButton.classList.add('hidden');
+      tryChallengeButton.textContent = "Try Challenge";
+      saveChallengeButton.textContent = "Save for Later";
+      addCommentContainer.classList.add('hidden');
+      signinPrompt.classList.remove('hidden');
+    }
+  }
+
+  // Initialize the app when the page loads
+  window.addEventListener('DOMContentLoaded', initApp);
+</script>
 </body>
 </html>
