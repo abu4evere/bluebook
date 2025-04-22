@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
     
@@ -16,49 +16,13 @@
       --primary-dark: #059669;
       --secondary: #f59e0b;
     }
-    .testimonial-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.testimonial-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-/* Particle Animation */
-  @keyframes float {
-    0% { transform: translateY(0) translateX(0) rotate(0deg); }
-    50% { transform: translateY(-100px) translateX(20px) rotate(180deg); }
-    100% { transform: translateY(-200px) translateX(0) rotate(360deg); }
-  }
 
-  .particle {
-    will-change: transform, opacity;
-    filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.5));
-  }
-/* Navbar Scroll Effect */
-nav {
-  transition: all 0.3s ease;
-}
-
-/* Hero Section Height */
-.min-h-screen {
-  min-height: 100vh;
-}
-
-/* Image Positioning */
-.object-cover {
-  object-fit: cover;
-  object-position: center;
-}
-  /* Text Glow */
-  .text-glow {
-    text-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
-  }
     body {
       font-family: 'Outfit', sans-serif;
       background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
       min-height: 100vh;
     }
-    
+
     .glass-card {
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(12px);
@@ -66,162 +30,111 @@ nav {
       border: 1px solid rgba(255, 255, 255, 0.18);
       box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
     }
-    
-    .floating {
-      animation: floating 6s ease-in-out infinite;
+
+    .testimonial-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
-    .floating-delay {
-      animation: floating 6s ease-in-out 1s infinite;
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     }
-    /* Add to your existing style section */
-@keyframes float1 {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
-}
 
-@keyframes float2 {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(15px) rotate(-5deg); }
-}
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes bounce-right {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(5px); }
-}
-
-.animate-float1 {
-  animation: float1 8s ease-in-out infinite;
-}
-
-.animate-float2 {
-  animation: float2 10s ease-in-out infinite;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
-}
-
-.animate-bounce-right {
-  animation: bounce-right 1s infinite;
-}
-
-/* Gradient underline animation */
-.text-gradient-underline {
-  position: relative;
-}
-
-.text-gradient-underline::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.5s ease;
-}
-
-.text-gradient-underline:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-    @keyframes floating {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
-      100% { transform: translateY(0px); }
-    }
-    
-    .btn-glow:hover {
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
-    }
-    
     .text-gradient {
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
-    
-    /* Auth Modal Styles */
+
+    .btn-glow:hover {
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+    }
+
+    .text-glow {
+      text-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
+    }
+
     .auth-modal {
-    position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
     }
-    
+
     .auth-modal.active {
-     opacity: 1;
-  pointer-events: all;
+      opacity: 1;
+      pointer-events: all;
     }
-    
+
     .auth-content {
-     transform: scale(0.9);
-  transition: transform 0.3s ease;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
     }
-    #login-modal, #signup-modal {
-  transition: all 0.3s ease;
-}
+
     .auth-modal.active .auth-content {
       transform: scale(1);
     }
-/* Add to your existing CSS */
-.nav-link {
-  transition: all 0.3s ease;
-  position: relative;
-}
 
-.nav-link:hover:not(.text-green-600)::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: var(--primary);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
+    .nav-link {
+      transition: all 0.3s ease;
+      position: relative;
+    }
 
-.nav-link:hover:not(.text-green-600)::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
+    .nav-link:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary);
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating {
+      animation: floating 6s ease-in-out infinite;
+    }
+
+    .mobile-menu {
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .mobile-menu.hidden {
+      transform: translateX(100%);
+    }
   </style>
 </head>
 <body class="overflow-x-hidden">
-  <!-- Auth Modal (Hidden by default) -->
+  <!-- Auth Modal -->
   <div id="auth-modal" class="auth-modal">
-     <div class="auth-content w-full max-w-md p-4">
-    <!-- Login Modal -->
-    <div id="login-modal" class="glass-card rounded-2xl overflow-hidden">
-      <div class="p-8">
-        <div class="flex justify-between items-center mb-6">
-          <h1 class="text-2xl font-bold text-gray-800">Welcome Back</h1>
-          <button id="close-auth-modal" class="text-gray-500 hover:text-gray-700 transition-colors">
-            <i class="fas fa-times text-xl"></i>
-          </button>
-        </div>
-          
-          <form id="modal-login-form" class="space-y-4">
+    <div class="auth-content w-full max-w-md p-4">
+      <!-- Login Modal -->
+      <div id="login-modal" class="glass-card rounded-2xl overflow-hidden">
+        <div class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Welcome Back</h1>
+            <button id="close-auth-modal" class="text-gray-500 hover:text-gray-700 transition-colors">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          <div id="modal-login-form" class="space-y-4">
             <div>
               <label for="modal-login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
               <input 
@@ -232,7 +145,6 @@ nav {
                 placeholder="your@email.com"
               >
             </div>
-            
             <div>
               <label for="modal-login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
               <input 
@@ -243,41 +155,36 @@ nav {
                 placeholder="••••••••"
               >
             </div>
-            
             <div class="flex items-center justify-between">
               <div class="flex items-center">
                 <input id="modal-remember-me" type="checkbox" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
                 <label for="modal-remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
               </div>
-              
               <a href="#" class="text-sm text-green-600 hover:text-green-800">Forgot password?</a>
             </div>
-            
             <button 
-              type="submit"
+              id="login-submit"
               class="w-full btn-glow px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium transition-all hover:scale-[1.02] mt-6"
             >
               Log In
             </button>
-            
             <div class="text-center text-sm text-gray-600 mt-4">
               Don't have an account? 
               <a href="#" id="show-modal-signup" class="text-green-600 font-medium hover:text-green-800">Sign up</a>
             </div>
-          </form>
+          </div>
         </div>
       </div>
-      
-       <div id="signup-modal" class="glass-card rounded-2xl overflow-hidden hidden">
-      <div class="p-8">
-        <div class="flex justify-between items-center mb-6">
-          <h1 class="text-2xl font-bold text-gray-800">Join GreenPledge</h1>
-          <button id="close-auth-signup" class="text-gray-500 hover:text-gray-700 transition-colors">
-            <i class="fas fa-times text-xl"></i>
-          </button>
-        </div>
-          
-          <form id="modal-signup-form" class="space-y-4">
+      <!-- Signup Modal -->
+      <div id="signup-modal" class="glass-card rounded-2xl overflow-hidden hidden">
+        <div class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Join GreenPledge</h1>
+            <button id="close-auth-signup" class="text-gray-500 hover:text-gray-700 transition-colors">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          <div id="modal-signup-form" class="space-y-4">
             <div>
               <label for="modal-signup-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
               <input 
@@ -288,7 +195,6 @@ nav {
                 placeholder="John Doe"
               >
             </div>
-            
             <div>
               <label for="modal-signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
               <input 
@@ -299,7 +205,6 @@ nav {
                 placeholder="your@email.com"
               >
             </div>
-            
             <div>
               <label for="modal-signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
               <input 
@@ -312,7 +217,6 @@ nav {
               >
               <p class="text-xs text-gray-500 mt-1">Minimum 8 characters</p>
             </div>
-            
             <div>
               <label for="modal-signup-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
               <input 
@@ -323,560 +227,542 @@ nav {
                 placeholder="••••••••"
               >
             </div>
-            
             <div class="flex items-center">
               <input id="modal-accept-terms" type="checkbox" required class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
               <label for="modal-accept-terms" class="ml-2 block text-sm text-gray-700">
-                I agree to the <a href="#" class="text-green-600 hover:text-green-800">Terms</a> and <a href="#" class="text-green-600 hover:text-green-800">Privacy Policy</a>
+                I agree to the <a href="#" classOrbital Mechanics and Rocket Science" contentType="text/plain">
+                Terms</a> and <a href="#" class="text-green-600 hover:text-green-800">Privacy Policy</a>
               </label>
             </div>
-            
             <button 
-              type="submit"
+              id="signup-submit"
               class="w-full btn-glow px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium transition-all hover:scale-[1.02] mt-6"
             >
               Create Account
             </button>
-            
             <div class="text-center text-sm text-gray-600 mt-4">
               Already have an account? 
               <a href="#" id="show-modal-login" class="text-green-600 font-medium hover:text-green-800">Log in</a>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-<!-- Hero Section -->
-<!-- Hero Section -->
-<section class="relative overflow-hidden min-h-screen">
-  <!-- Full-screen Nature Background -->
-  <div class="absolute inset-0 z-0">
-    <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
-         alt="Green forest background"
-         class="w-full h-full object-cover object-center">
-    <div class="absolute inset-0 bg-gradient-to-b from-green-900/30 to-emerald-900/50"></div>
-  </div>
 
-  <!-- Darker Navigation Bar -->
-  <nav class="absolute top-0 left-0 w-full z-50 bg-gradient-to-b from-black/30 to-transparent backdrop-blur-sm">
-    <div class="max-w-7xl mx-auto px-6">
-     <!-- Navigation Bar -->
-<div class="flex items-center justify-between h-20">
-  <!-- Logo -->
-  <div class="flex items-center">
-    <i class="fas fa-leaf text-2xl text-emerald-300 mr-2"></i>
-    <span class="text-xl font-bold text-white">GreenPledge</span>
-  </div>
-  
-  <!-- Navigation Links (without auth buttons) -->
-  <div class="hidden md:flex items-center space-x-8">
-    <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="hero">Home</a>
-    <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
-    <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
-    <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
-    <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors">About</a>
-  </div>
-  
-  <!-- Auth Buttons (outside nav links, always visible) -->
-  <div class="flex items-center space-x-3">
-    <button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition">
-      Sign In
-    </button>
-    <button id="signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
-      Sign Up
-    </button>
-  </div>
-</div>
-        <!-- Auth Buttons -->
-        <div class="flex items-center space-x-4">
-          <button id="auth-button" class="px-6 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
-            <i class="fas fa-user mr-2"></i> Sign In
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden min-h-screen">
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+           alt="Green forest background"
+           class="w-full h-full object-cover object-center">
+      <div class="absolute inset-0 bg-gradient-to-b from-green-900/30 to-emerald-900/50"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="absolute top-0 left-0 w-full z-50 bg-gradient-to-b from-black/30 to-transparent backdrop-blur-sm">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between h-20">
+          <div class="flex items-center">
+            <i class="fas fa-leaf text-2xl text-emerald-300 mr-2"></i>
+            <span class="text-xl font-bold text-white">GreenPledge</span>
+          </div>
+          
+          <button id="mobile-menu-toggle" class="md:hidden text-white">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="hero">Home</a>
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors">About</a>
+          </div>
+
+          <div class="hidden md:flex items-center space-x-3">
+            <button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition">
+              Sign In
+            </button>
+            <button id="signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+              Sign Up
+            </button>
+            <button id="profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+              Profile
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden mobile-menu hidden fixed top-0 right-0 h-full w-64 bg-emerald-900/95 p-6">
+          <button id="mobile-menu-close" class="text-white mb-6">
+            <i class="fas fa-times text-2xl"></i>
+          </button>
+          <div class="flex flex-col space-y-4">
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="hero">Home</a>
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors">About</a>
+            <button id="mobile-login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition">
+              Sign In
+            </button>
+            <button id="mobile-signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+              Sign Up
+            </button>
+            <button id="mobile-profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+              Profile
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 flex flex-col justify-center min-h-screen pt-24 pb-32 text-center">
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+        <span class="text-white drop-shadow-lg">
+          Small <span class="text-emerald-300">Actions</span>,
+        </span><br>
+        <span class="text-white drop-shadow-lg">
+          Big <span class="text-emerald-300">Impact</span>
+        </span>
+      </h1>
+      <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10 leading-relaxed">
+        Transform your daily habits with micro-actions that create macro impact for our planet
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <button class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all hover:scale-105 transform">
+          Start Your Journey
+        </button>
+        <button class="px-8 py-4 bg-white/10 backdrop-blur-lg text-white border border-white/20 rounded-full font-medium shadow-lg hover:bg-white/20 transition-all hover:scale-105">
+          Learn More
+        </button>
+      </div>
+    </div>
+
+    <!-- Animated Scroll Indicator -->
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
+      <a href="#challenges-section" class="animate-bounce inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors">
+        <i class="fas fa-chevron-down text-white text-xl"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- Daily Challenge Section -->
+  <section id="challenges-section" class="max-w-4xl mx-auto mb-20">
+    <div class="glass-card rounded-2xl overflow-hidden">
+      <div class="p-8 md:p-10">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Today's Featured Challenge</h2>
+            <p class="text-gray-600 mb-6" id="featured-challenge">
+              Take a 5-minute shower to conserve water (saves up to 25 gallons compared to a 10-minute shower).
+            </p>
+            <div class="flex space-x-4">
+              <button id="try-challenge-button" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                <i class="fas fa-check-circle mr-2"></i> I Did This!
+              </button>
+              <button id="save-challenge-button" class="px-6 py-3 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
+                <i class="fas fa-bookmark mr-2"></i> Save Challenge
+              </button>
+            </div>
+          </div>
+          <div class="md:w-1/2">
+            <div class="bg-green-50 rounded-xl p-6">
+              <h3 class="font-semibold text-green-800 mb-3 flex items-center">
+                <i class="fas fa-lightbulb mr-2"></i> Why This Matters
+              </h3>
+              <p class="text-green-700 mb-4">
+                Reducing shower time by just 5 minutes can save up to 1,000 gallons of water per month for a family of four.
+              </p>
+              <div class="flex items-center">
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mr-3">
+                  <div class="bg-green-600 h-2.5 rounded-full" style="width: 72%"></div>
+                </div>
+                <span class="text-sm text-gray-600">72% completion rate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Eco Facts Section -->
+  <section id="facts-section" class="max-w-7xl mx-auto mb-20">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Discover Eco Facts</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="glass-card rounded-2xl overflow-hidden transition-all hover:shadow-xl">
+        <div class="p-8">
+          <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-green-600 mb-6">
+            <i class="fas fa-recycle text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Recycling Revolution</h3>
+          <p class="text-gray-600 mb-6">
+            Recycling one ton of paper saves 17 trees, 7,000 gallons of water, and 4,000 kilowatt hours of electricity.
+          </p>
+          <button class="text-green-600 font-medium flex items-center">
+            Learn More <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden transition-all hover:shadow-xl">
+        <div class="p-8">
+          <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-6">
+            <i class="fas fa-tint text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Water Wisdom</h3>
+          <p class="text-gray-600 mb-6">
+            Turning off the tap while brushing your teeth can save up to 8 gallons of water per day, that's 200 gallons per month!
+          </p>
+          <button class="text-green-600 font-medium flex items-center">
+            Learn More <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden transition-all hover:shadow-xl">
+        <div class="p-8">
+          <div class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mb-6">
+            <i class="fas fa-bolt text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-3">Energy Efficiency</h3>
+          <p class="text-gray-600 mb-6">
+            LED bulbs use 75% less energy and last 25 times longer than incandescent lighting, saving money and resources.
+          </p>
+          <button class="text-green-600 font-medium flex items-center">
+            Learn More <i class="fas fa-arrow-right ml-2"></i>
           </button>
         </div>
       </div>
     </div>
-  </nav>
+  </section>
 
-  <!-- Hero Content -->
-  <div class="relative z-10 max-w-7xl mx-auto px-6 flex flex-col justify-center min-h-screen pt-24 pb-32 text-center">
-   
-    
-    <!-- Main Headline -->
-    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-      <span class="text-white drop-shadow-lg">
-        Small <span class="text-emerald-300">Actions</span>,
-      </span><br>
-      <span class="text-white drop-shadow-lg">
-        Big <span class="text-emerald-300">Impact</span>
-      </span>
-    </h1>
-    
-    <!-- Subheading -->
-    <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10 leading-relaxed">
-      Transform your daily habits with micro-actions that create macro impact for our planet
-    </p>
-    
-    <!-- CTA Buttons -->
-    <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <button class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all hover:scale-105 transform">
-        Start Your Journey
-      </button>
-      <button class="px-8 py-4 bg-white/10 backdrop-blur-lg text-white border border-white/20 rounded-full font-medium shadow-lg hover:bg-white/20 transition-all hover:scale-105">
-        Learn More
-      </button>
-    </div>
-  </div>
-
-  <!-- Animated Scroll Indicator -->
-  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
-    <a href="#challenges-section" class="animate-bounce inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors">
-      <i class="fas fa-chevron-down text-white text-xl"></i>
-    </a>
-  </div>
-</section>
-      <!-- Daily Challenge Section -->
-      <section id="challenges-section" class="max-w-4xl mx-auto mb-20">
-        <div class="glass-card rounded-2xl overflow-hidden">
-          <div class="p-8 md:p-10">
-            <div class="flex flex-col md:flex-row items-center">
-              <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Today's Featured Challenge</h2>
-                <p class="text-gray-600 mb-6" id="featured-challenge">
-                  Take a 5-minute shower to conserve water (saves up to 25 gallons compared to a 10-minute shower).
-                </p>
-                <div class="flex space-x-4">
-                  <button id="try-challenge-button" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                    <i class="fas fa-check-circle mr-2"></i> I Did This!
-                  </button>
-                  <button id="save-challenge-button" class="px-6 py-3 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
-                    <i class="fas fa-bookmark mr-2"></i> Save Challenge
-                  </button>
-                </div>
-              </div>
-              <div class="md:w-1/2">
-                <div class="bg-green-50 rounded-xl p-6">
-                  <h3 class="font-semibold text-green-800 mb-3 flex items-center">
-                    <i class="fas fa-lightbulb mr-2"></i> Why This Matters
-                  </h3>
-                  <p class="text-green-700 mb-4">
-                    Reducing shower time by just 5 minutes can save up to 1,000 gallons of water per month for a family of four.
-                  </p>
-                  <div class="flex items-center">
-                    <div class="w-full bg-gray-200 rounded-full h-2.5 mr-3">
-                      <div class="bg-green-600 h-2.5 rounded-full" style="width: 72%"></div>
-                    </div>
-                    <span class="text-sm text-gray-600">72% completion rate</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <!-- Community Testimonials Section -->
+  <section id="community-section" class="max-w-7xl mx-auto mb-20">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Community Says</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="glass-card rounded-2xl overflow-hidden p-8 relative testimonial-card">
+        <div class="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+          <i class="fas fa-user text-xl"></i>
+        </div>
+        <p class="text-gray-600 italic mb-6">"This website helped me reduce my water usage by 30%! The daily challenges make sustainability so easy."</p>
+        <div class="flex items-center">
+          <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold mr-3">A</div>
+          <div>
+            <h4 class="font-bold text-gray-800">Abdurashid</h4>
+            <p class="text-sm text-gray-500">Member since 2023</p>
           </div>
         </div>
-      </section>
-
-      <!-- Eco Facts Section -->
-      <section id="facts-section" class="max-w-7xl mx-auto mb-20">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Discover Eco Facts</h2>
-        
-        <div class="grid md:grid-cols-3 gap-8">
-          <div class="glass-card rounded-2xl overflow-hidden transition-all hover:shadow-xl">
-            <div class="p-8">
-              <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-green-600 mb-6">
-                <i class="fas fa-recycle text-2xl"></i>
-              </div>
-              <h3 class="text-xl font-bold text-gray-800 mb-3">Recycling Revolution</h3>
-              <p class="text-gray-600 mb-6">
-                Recycling one ton of paper saves 17 trees, 7,000 gallons of water, and 4,000 kilowatt hours of electricity.
-              </p>
-              <button class="text-green-600 font-medium flex items-center">
-                Learn More <i class="fas fa-arrow-right ml-2"></i>
-              </button>
-            </div>
-          </div>
-          
-          <div class="glass-card rounded-2xl overflow-hidden transition-all hover:shadow-xl">
-            <div class="p-8">
-              <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-6">
-                <i class="fas fa-tint text-2xl"></i>
-              </div>
-              <h3 class="text-xl font-bold text-gray-800 mb-3">Water Wisdom</h3>
-              <p class="text-gray-600 mb-6">
-                Turning off the tap while brushing your teeth can save up to 8 gallons of water per day, that's 200 gallons per month!
-              </p>
-              <button class="text-green-600 font-medium flex items-center">
-                Learn More <i class="fas fa-arrow-right ml-2"></i>
-              </button>
-            </div>
-          </div>
-          
-          <div class="glass-card rounded-2xl overflow-hidden transition-all hover:shadow-xl">
-            <div class="p-8">
-              <div class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mb-6">
-                <i class="fas fa-bolt text-2xl"></i>
-              </div>
-              <h3 class="text-xl font-bold text-gray-800 mb-3">Energy Efficiency</h3>
-              <p class="text-gray-600 mb-6">
-                LED bulbs use 75% less energy and last 25 times longer than incandescent lighting, saving money and resources.
-              </p>
-              <button class="text-green-600 font-medium flex items-center">
-                Learn More <i class="fas fa-arrow-right ml-2"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-<!-- Community Testimonials Section -->
-<section id="community-section" class="max-w-7xl mx-auto mb-20">
-  <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Community Says</h2>
-  
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-    <!-- Testimonial 1 -->
-    <div class="glass-card rounded-2xl overflow-hidden p-8 relative">
-      <div class="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-        <i class="fas fa-user text-xl"></i>
       </div>
-      <p class="text-gray-600 italic mb-6">"This website helped me reduce my water usage by 30%! The daily challenges make sustainability so easy."</p>
-      <div class="flex items-center">
-        <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold mr-3">A</div>
+      <div class="glass-card rounded-2xl overflow-hidden p-8 relative testimonial-card">
+        <div class="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+          <i class="fas fa-user text-xl"></i>
+        </div>
+        <p class="text-gray-600 italic mb-6">"I never knew small changes could make such a difference. GreenPledge opened my eyes to eco-friendly living!"</p>
+        <div class="flex items-center">
+          <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold mr-3">S</div>
+          <div>
+            <h4 class="font-bold text-gray-800">Nozima</h4>
+            <p class="text-sm text-gray-500">Member since 2022</p>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden p-8 relative testimonial-card">
+        <div class="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+          <i class="fas fa-user text-xl"></i>
+        </div>
+        <p class="text-gray-600 italic mb-6">"The community challenges are so motivating. I've saved 100kg of CO₂ thanks to GreenPledge!"</p>
+        <div class="flex items-center">
+          <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-3">M</div>
+          <div>
+            <h4 class="font-bold text-gray-800">Sardor</h4>
+            <p class="text-sm text-gray-500">Member since 2024</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white/80 py-12 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
         <div>
-          <h4 class="font-bold text-gray-800">Abdurashid</h4>
-          <p class="text-sm text-gray-500">Member since 2023</p>
+          <h3 class="text-lg font-bold text-gray-800 mb-4">GreenPledge</h3>
+          <p class="text-gray-600 mb-4">Making sustainability simple, one day at a time.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </div>
         </div>
-      </div>
-    </div>
-    
-    <!-- Testimonial 2 -->
-    <div class="glass-card rounded-2xl overflow-hidden p-8 relative">
-      <div class="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-        <i class="fas fa-user text-xl"></i>
-      </div>
-      <p class="text-gray-600 italic mb-6">"I never knew small changes could make such a difference. GreenPledge opened my eyes to eco-friendly living!"</p>
-      <div class="flex items-center">
-        <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold mr-3">S</div>
         <div>
-          <h4 class="font-bold text-gray-800">Nozima</h4>
-          <p class="text-sm text-gray-500">Member since 2022</p>
+          <h3 class="text-lg font-bold text-gray-800 mb-4">Resources</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-600 hover:text-green-600">Eco Tips</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-green-600">Challenge Archive</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-green-600">Carbon Calculator</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-green-600">Educational Materials</a></li>
+          </ul>
         </div>
-      </div>
-    </div>
-    
-    <!-- Testimonial 3 -->
-    <div class="glass-card rounded-2xl overflow-hidden p-8 relative">
-      <div class="absolute -top-6 -left-6 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-        <i class="fas fa-user text-xl"></i>
-      </div>
-      <p class="text-gray-600 italic mb-6">"The community challenges are so motivating. I've saved 100kg of CO₂ thanks to GreenPledge!"</p>
-      <div class="flex items-center">
-        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-3">M</div>
         <div>
-          <h4 class="font-bold text-gray-800">Sardor</h4>
-          <p class="text-sm text-gray-500">Member since 2024</p>
+          <h3 class="text-lg font-bold text-gray-800 mb-4">About</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-600 hover:text-green-600">Our Mission</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-green-600">The Team</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-green-600">Partners</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-green-600">Press</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-gray-800 mb-4">Get Updates</h3>
+          <p class="text-gray-600 mb-4">Join our newsletter for weekly eco-tips</p>
+          <div class="flex">
+            <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg border border-r-0 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent w-full">
+            <button class="px-4 py-2 bg-green-600 text-white rounded-r-lg hover:bg-green-700 transition-colors">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 GreenPledge. All rights reserved.</p>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Privacy Policy</a>
+          <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Terms of Service</a>
+          <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Contact Us</a>
         </div>
       </div>
     </div>
-  </div>
-</section>
-      
+  </footer>
 
-    <!-- Footer -->
-    <footer class="bg-white/80 py-12 border-t border-gray-200">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="grid md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <h3 class="text-lg font-bold text-gray-800 mb-4">GreenPledge</h3>
-            <p class="text-gray-600 mb-4">Making sustainability simple, one day at a time.</p>
-            <div class="flex space-x-4">
-              <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
-                <i class="fab fa-instagram"></i>
-              </a>
-              <a href="#" class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-200">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-            </div>
-          </div>
-          
-          <div>
-            <h3 class="text-lg font-bold text-gray-800 mb-4">Resources</h3>
-            <ul class="space-y-2">
-              <li><a href="#" class="text-gray-600 hover:text-green-600">Eco Tips</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-green-600">Challenge Archive</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-green-600">Carbon Calculator</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-green-600">Educational Materials</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 class="text-lg font-bold text-gray-800 mb-4">About</h3>
-            <ul class="space-y-2">
-              <li><a href="#" class="text-gray-600 hover:text-green-600">Our Mission</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-green-600">The Team</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-green-600">Partners</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-green-600">Press</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 class="text-lg font-bold text-gray-800 mb-4">Get Updates</h3>
-            <p class="text-gray-600 mb-4">Join our newsletter for weekly eco-tips</p>
-            <div class="flex">
-              <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg border border-r-0 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent w-full">
-              <button class="px-4 py-2 bg-green-600 text-white rounded-r-lg hover:bg-green-700 transition-colors">
-                <i class="fas fa-paper-plane"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
-          <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 GreenPledge. All rights reserved.</p>
-          <div class="flex space-x-6">
-            <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Privacy Policy</a>
-            <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Terms of Service</a>
-            <a href="#" class="text-gray-500 hover:text-green-600 text-sm">Contact Us</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </div>
-<script>
-  // App State
-  const state = {
-    currentUser: null,
-    isAuthenticated: false
-  };
+  <script>
+    // App State
+    const state = {
+      currentUser: null,
+      isAuthenticated: false
+    };
 
-  // DOM Elements
-  const authModal = document.getElementById('auth-modal');
-  const loginModal = document.getElementById('login-modal');
-  const signupModal = document.getElementById('signup-modal');
-  const authButton = document.getElementById('auth-button');
-  const profileButton = document.getElementById('profile-button');
-  const closeAuthModal = document.getElementById('close-auth-modal');
-  const closeAuthSignup = document.getElementById('close-auth-signup');
-  const showModalSignup = document.getElementById('show-modal-signup');
-  const showModalLogin = document.getElementById('show-modal-login');
-  const modalLoginForm = document.getElementById('modal-login-form');
-  const modalSignupForm = document.getElementById('modal-signup-form');
-  const ctaAuthButton = document.getElementById('cta-auth-button');
-  const bottomAuthButton = document.getElementById('bottom-auth-button');
-  const tryChallengeButton = document.getElementById('try-challenge-button');
-  const saveChallengeButton = document.getElementById('save-challenge-button');
-  const addCommentContainer = document.getElementById('add-comment-container');
-  const signinPrompt = document.getElementById('signin-prompt');
-  const commentAuthButton = document.getElementById('comment-auth-button');
-  const commentForm = document.getElementById('comment-form');
-  const loginButton = document.getElementById('login-button');
-  const signupButton = document.getElementById('signup-button');
+    // DOM Elements
+    const authModal = document.getElementById('auth-modal');
+    const loginModal = document.getElementById('login-modal');
+    const signupModal = document.getElementById('signup-modal');
+    const closeAuthModal = document.getElementById('close-auth-modal');
+    const closeAuthSignup = document.getElementById('close-auth-signup');
+    const showModalSignup = document.getElementById('show-modal-signup');
+    const showModalLogin = document.getElementById('show-modal-login');
+    const loginButton = document.getElementById('login-button');
+    const signupButton = document.getElementById('signup-button');
+    const profileButton = document.getElementById('profile-button');
+    const mobileLoginButton = document.getElementById('mobile-login-button');
+    const mobileSignupButton = document.getElementById('mobile-signup-button');
+    const mobileProfileButton = document.getElementById('mobile-profile-button');
+    const tryChallengeButton = document.getElementById('try-challenge-button');
+    const saveChallengeButton = document.getElementById('save-challenge-button');
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const loginSubmit = document.getElementById('login-submit');
+    const signupSubmit = document.getElementById('signup-submit');
 
-  // Initialize the app
-  function initApp() {
-    // Check if user is logged in
-    const loggedInUser = localStorage.getItem('greenPledgeUser');
-    
-    if (loggedInUser) {
-      state.currentUser = JSON.parse(loggedInUser);
-      state.isAuthenticated = true;
-      updateAuthUI();
+    // Initialize the app
+    function initApp() {
+      const loggedInUser = localStorage.getItem('greenPledgeUser');
+      if (loggedInUser) {
+        state.currentUser = JSON.parse(loggedInUser);
+        state.isAuthenticated = true;
+        updateAuthUI();
+      }
+      setupEventListeners();
     }
-    
+
     // Set up event listeners
-    setupEventListeners();
-  }
+    function setupEventListeners() {
+      loginButton.addEventListener('click', showLoginModal);
+      signupButton.addEventListener('click', showSignupModal);
+      mobileLoginButton.addEventListener('click', showLoginModal);
+      mobileSignupButton.addEventListener('click', showSignupModal);
+      profileButton.addEventListener('click', () => {
+        window.location.href = "profile.html";
+      });
+      mobileProfileButton.addEventListener('click', () => {
+        window.location.href = "profile.html";
+      });
 
-  // Set up all event listeners
-  function setupEventListeners() {
-    // Auth modal toggle
-    authButton.addEventListener('click', showLoginModal);
-    loginButton.addEventListener('click', showLoginModal);
-    signupButton.addEventListener('click', showSignupModal);
-    ctaAuthButton.addEventListener('click', showLoginModal);
-    bottomAuthButton.addEventListener('click', showLoginModal);
-    commentAuthButton.addEventListener('click', showLoginModal);
-
-    // Profile button
-    profileButton.addEventListener('click', () => {
-      window.location.href = "profile.html";
-    });
-
-    // Close modal buttons
-    closeAuthModal.addEventListener('click', closeModal);
-    closeAuthSignup.addEventListener('click', closeModal);
-    
-    // Close when clicking outside modal content
-    authModal.addEventListener('click', (e) => {
-      if (e.target === authModal) {
-        closeModal();
-      }
-    });
-    
-    // Close with Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && authModal.classList.contains('active')) {
-        closeModal();
-      }
-    });
-
-    // Switch between login/signup
-    showModalSignup.addEventListener('click', (e) => {
-      e.preventDefault();
-      showSignupModal();
-    });
-
-    showModalLogin.addEventListener('click', (e) => {
-      e.preventDefault();
-      showLoginModal();
-    });
-
-    // Form submissions
-    modalLoginForm.addEventListener('submit', handleModalLogin);
-    modalSignupForm.addEventListener('submit', handleModalSignup);
-
-    // Challenge buttons
-    tryChallengeButton.addEventListener('click', () => {
-      if (!state.isAuthenticated) {
-        showLoginModal();
-        alert("Please log in to track your challenges!");
-        return;
-      }
-      alert("Great job completing today's challenge! 🌱");
-    });
-
-    saveChallengeButton.addEventListener('click', () => {
-      if (!state.isAuthenticated) {
-        showLoginModal();
-        alert("Please log in to save challenges!");
-        return;
-      }
-      alert("Challenge saved to your profile! 📌");
-    });
-
-    // Comment form
-    commentForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const commentText = document.getElementById('comment-text').value;
-      if (state.currentUser) {
-        alert(`Thanks for your comment, ${state.currentUser.name}!`);
-        commentForm.reset();
-      }
-    });
-
-    // Navigation
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('data-target');
-        const targetElement = document.getElementById(targetId);
-        
-        if (targetElement) {
-          const headerHeight = document.querySelector('nav').offsetHeight;
-          const targetPosition = targetElement.offsetTop - headerHeight - 20;
-          
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
+      closeAuthModal.addEventListener('click', closeModal);
+      closeAuthSignup.addEventListener('click', closeModal);
+      
+      authModal.addEventListener('click', (e) => {
+        if (e.target === authModal) {
+          closeModal();
         }
       });
-    });
-  }
 
-  // Show login modal
-  function showLoginModal() {
-    authModal.classList.add('active');
-    loginModal.classList.remove('hidden');
-    signupModal.classList.add('hidden');
-  }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && authModal.classList.contains('active')) {
+          closeModal();
+        }
+      });
 
-  // Show signup modal
-  function showSignupModal() {
-    authModal.classList.add('active');
-    signupModal.classList.remove('hidden');
-    loginModal.classList.add('hidden');
-  }
+      showModalSignup.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSignupModal();
+      });
 
-  // Close modal
-  function closeModal() {
-    authModal.classList.remove('active');
-  }
+      showModalLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        showLoginModal();
+      });
 
-  // Handle modal login
-  function handleModalLogin(e) {
-    e.preventDefault();
-    
-    const email = document.getElementById('modal-login-email').value;
-    const password = document.getElementById('modal-login-password').value;
-    
-    state.currentUser = {
-      name: "Demo User",
-      email: email,
-      joinDate: new Date()
-    };
-    
-    localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
-    state.isAuthenticated = true;
-    updateAuthUI();
-    closeModal();
-    
-    setTimeout(() => {
-      alert(`Welcome back, ${state.currentUser.name}!`);
-    }, 300);
-  }
+      loginSubmit.addEventListener('click', handleModalLogin);
+      signupSubmit.addEventListener('click', handleModalSignup);
 
-  // Handle modal signup
-  function handleModalSignup(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('modal-signup-name').value;
-    const email = document.getElementById('modal-signup-email').value;
-    const password = document.getElementById('modal-signup-password').value;
-    const confirmPassword = document.getElementById('modal-signup-confirm-password').value;
-    
-    if (password !== confirmPassword) {
-      alert("Passwords don't match!");
-      return;
+      tryChallengeButton.addEventListener('click', () => {
+        if (!state.isAuthenticated) {
+          showLoginModal();
+          alert("Please log in to track your challenges!");
+          return;
+        }
+        alert("Great job completing today's challenge! 🌱");
+      });
+
+      saveChallengeButton.addEventListener('click', () => {
+        if (!state.isAuthenticated) {
+          showLoginModal();
+          alert("Please log in to save challenges!");
+          return;
+        }
+        alert("Challenge saved to your profile! 📌");
+      });
+
+      mobileMenuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      mobileMenuClose.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('data-target');
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            const headerHeight = document.querySelector('nav').offsetHeight;
+            const targetPosition = targetElement.offsetTop - headerHeight - 20;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+            mobileMenu.classList.add('hidden');
+          }
+        });
+      });
     }
-    
-    state.currentUser = {
-      name: name,
-      email: email,
-      joinDate: new Date()
-    };
-    
-    localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
-    state.isAuthenticated = true;
-    updateAuthUI();
-    closeModal();
-    
-    setTimeout(() => {
-      alert(`Welcome to GreenPledge, ${name}!`);
-    }, 300);
-  }
 
-  // Update UI based on auth state
-  function updateAuthUI() {
-    if (state.isAuthenticated) {
-      authButton.classList.add('hidden');
-      profileButton.classList.remove('hidden');
-      tryChallengeButton.textContent = "I Did This!";
-      saveChallengeButton.textContent = "Save Challenge";
-      if (addCommentContainer) addCommentContainer.classList.remove('hidden');
-      if (signinPrompt) signinPrompt.classList.add('hidden');
-    } else {
-      authButton.classList.remove('hidden');
-      profileButton.classList.add('hidden');
-      tryChallengeButton.textContent = "Try Challenge";
-      saveChallengeButton.textContent = "Save for Later";
-      if (addCommentContainer) addCommentContainer.classList.add('hidden');
-      if (signinPrompt) signinPrompt.classList.remove('hidden');
+    // Show login modal
+    function showLoginModal() {
+      authModal.classList.add('active');
+      loginModal.classList.remove('hidden');
+      signupModal.classList.add('hidden');
     }
-  }
 
-  // Initialize the app
-  window.addEventListener('DOMContentLoaded', initApp);
-</script>
+    // Show signup modal
+    function showSignupModal() {
+      authModal.classList.add('active');
+      signupModal.classList.remove('hidden');
+      loginModal.classList.add('hidden');
+    }
+
+    // Close modal
+    function closeModal() {
+      authModal.classList.remove('active');
+    }
+
+    // Handle modal login
+    function handleModalLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('modal-login-email').value;
+      const password = document.getElementById('modal-login-password').value;
+      
+      state.currentUser = {
+        name: "Demo User",
+        email: email,
+        joinDate: new Date()
+      };
+      
+      localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
+      state.isAuthenticated = true;
+      updateAuthUI();
+      closeModal();
+      
+      setTimeout(() => {
+        alert(`Welcome back, ${state.currentUser.name}!`);
+      }, 300);
+    }
+
+    // Handle modal signup
+    function handleModalSignup(e) {
+      e.preventDefault();
+      const name = document.getElementById('modal-signup-name').value;
+      const email = document.getElementById('modal-signup-email').value;
+      const password = document.getElementById('modal-signup-password').value;
+      const confirmPassword = document.getElementById('modal-signup-confirm-password').value;
+      
+      if (password !== confirmPassword) {
+        alert("Passwords don't match!");
+        return;
+      }
+      
+      state.currentUser = {
+        name: name,
+        email: email,
+        joinDate: new Date()
+      };
+      
+      localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
+      state.isAuthenticated = true;
+      updateAuthUI();
+      closeModal();
+      
+      setTimeout(() => {
+        alert(`Welcome to GreenPledge, ${name}!`);
+      }, 300);
+    }
+
+    // Update UI based on auth state
+    function updateAuthUI() {
+      if (state.isAuthenticated) {
+        loginButton.classList.add('hidden');
+        signupButton.classList.add('hidden');
+        mobileLoginButton.classList.add('hidden');
+        mobileSignupButton.classList.add('hidden');
+        profileButton.classList.remove('hidden');
+        mobileProfileButton.classList.remove('hidden');
+        tryChallengeButton.textContent = "I Did This!";
+        saveChallengeButton.textContent = "Save Challenge";
+      } else {
+        loginButton.classList.remove('hidden');
+        signupButton.classList.remove('hidden');
+        mobileLoginButton.classList.remove('hidden');
+        mobileSignupButton.classList.remove('hidden');
+        profileButton.classList.add('hidden');
+        mobileProfileButton.classList.add('hidden');
+        tryChallengeButton.textContent = "Try Challenge";
+        saveChallengeButton.textContent = "Save for Later";
+      }
+    }
+
+    // Initialize the app
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
 </body>
 </html>
