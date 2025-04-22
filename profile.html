@@ -96,7 +96,6 @@
       transform-origin: left;
     }
 
-    /* Fixed Navigation */
     nav {
       position: fixed;
       top: 0;
@@ -111,13 +110,79 @@
       backdrop-filter: blur(8px);
     }
 
-    /* Content Sections */
     main {
-      padding-top: 80px; /* Prevent content from hiding under fixed header */
+      padding-top: 80px;
+    }
+
+    .photo-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .photo-modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .photo-content {
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .photo-modal.active .photo-content {
+      transform: scale(1);
     }
   </style>
 </head>
 <body class="overflow-x-hidden">
+  <!-- Photo Upload Modal -->
+  <div id="photo-modal" class="photo-modal">
+    <div class="photo-content w-full max-w-md p-4">
+      <div class="glass-card rounded-2xl overflow-hidden">
+        <div class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Upload Proof</h1>
+            <button id="close-photo-modal" class="text-gray-500 hover:text-gray-700 transition-colors">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <label for="photo-upload" class="block text-sm font-medium text-gray-700 mb-1">Upload a photo of your challenge completion</label>
+              <input 
+                type="file" 
+                id="photo-upload" 
+                accept="image/*" 
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              >
+            </div>
+            <div id="photo-preview" class="hidden mt-4">
+              <img id="preview-image" src="" alt="Photo preview" class="w-full h-48 object-cover rounded-lg">
+            </div>
+            <button 
+              id="confirm-photo" 
+              class="w-full btn-glow px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium transition-all hover:scale-[1.02] mt-6"
+              disabled
+            >
+              Confirm Upload
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Navigation -->
   <nav>
     <div class="max-w-7xl mx-auto px-6">
@@ -183,14 +248,19 @@
           </div>
         </div>
         
-        <button class="px-6 py-2 border border-green-500 text-green-600 rounded-lg hover:bg-green-50 transition mt-4 md:mt-0">
-          Edit Profile
-        </button>
+        <div class="flex flex-col space-y-2 mt-4 md:mt-0">
+          <button class="px-6 py-2 border border-green-500 text-green-600 rounded-lg hover:bg-green-50 transition">
+            Edit Profile
+          </button>
+          <button id="redeem-xp" class="px-6 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition">
+            Redeem XP
+          </button>
+        </div>
       </div>
     </div>
     
     <!-- Stats Overview -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
       <div class="glass-card rounded-xl p-6">
         <div class="flex items-center">
           <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
@@ -226,6 +296,18 @@
           </div>
         </div>
       </div>
+      
+      <div class="glass-card rounded-xl p-6">
+        <div class="flex items-center">
+          <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+            <i class="fas fa-star"></i>
+          </div>
+          <div>
+            <div class="text-gray-500 text-sm">XP Earned</div>
+            <div class="text-2xl font-bold" id="xp-earned">0</div>
+          </div>
+        </div>
+      </div>
     </div>
     
     <!-- Saved Challenges -->
@@ -248,7 +330,40 @@
       </div>
     </div>
     
-    <!-- My Comments Section -->
+    <!-- Daily Challenge -->
+    <div class="glass-card rounded-2xl overflow-hidden mb-8">
+      <div class="p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">
+          <i class="fas fa-bullseye mr-2 text-amber-600"></i> Today's Challenge
+        </h2>
+        
+        <div class="bg-white rounded-lg p-6 mb-4">
+          <p class="text-lg text-gray-700 mb-4" id="daily-challenge-text">Loading today's challenge...</p>
+          <div class="flex flex-wrap gap-4">
+            <button id="accept-challenge" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+              <i class="fas fa-check mr-2"></i> I Did This!
+            </button>
+            <button id="save-challenge" class="px-6 py-2 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
+              <i class="fas fa-bookmark mr-2"></i> Save for Later
+            </button>
+            <button id="new-daily-challenge" class="px-6 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition">
+              <i class="fas fa-sync-alt mr-2"></i> New Challenge
+            </button>
+          </div>
+        </div>
+        
+        <div class="bg-green-50 rounded-lg p-4">
+          <h3 class="font-semibold text-green-800 mb-2">
+            <i class="fas fa-lightbulb mr-2"></i> Why This Matters
+          </h3>
+          <p class="text-green-700" id="challenge-impact-text">
+            Every small action contributes to a healthier planet. This challenge helps reduce waste and conserve resources.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- My Community Comments -->
     <div class="glass-card rounded-2xl overflow-hidden mb-8">
       <div class="p-6">
         <div class="flex justify-between items-center mb-6">
@@ -295,39 +410,6 @@
           <div class="text-center py-8 text-gray-500" id="no-comments-message">
             You haven't posted any comments yet. Click "Add Comment" to share your thoughts!
           </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Daily Challenge -->
-    <div class="glass-card rounded-2xl overflow-hidden">
-      <div class="p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">
-          <i class="fas fa-bullseye mr-2 text-amber-600"></i> Today's Challenge
-        </h2>
-        
-        <div class="bg-white rounded-lg p-6 mb-4">
-          <p class="text-lg text-gray-700 mb-4" id="daily-challenge-text">Loading today's challenge...</p>
-          <div class="flex flex-wrap gap-4">
-            <button id="accept-challenge" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-              <i class="fas fa-check mr-2"></i> I Did This!
-            </button>
-            <button id="save-challenge" class="px-6 py-2 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
-              <i class="fas fa-bookmark mr-2"></i> Save for Later
-            </button>
-            <button id="new-daily-challenge" class="px-6 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition">
-              <i class="fas fa-sync-alt mr-2"></i> New Challenge
-            </button>
-          </div>
-        </div>
-        
-        <div class="bg-green-50 rounded-lg p-4">
-          <h3 class="font-semibold text-green-800 mb-2">
-            <i class="fas fa-lightbulb mr-2"></i> Why This Matters
-          </h3>
-          <p class="text-green-700" id="challenge-impact-text">
-            Every small action contributes to a healthier planet. This challenge helps reduce waste and conserve resources.
-          </p>
         </div>
       </div>
     </div>
@@ -409,6 +491,7 @@
       savedChallenges: [],
       comments: [],
       completedChallenges: 0,
+      xp: 0,
       memberSince: new Date().getFullYear()
     };
 
@@ -432,6 +515,8 @@
     const daysActive = document.getElementById('days-active');
     const challengesCompleted = document.getElementById('challenges-completed');
     const co2Reduced = document.getElementById('co2-reduced');
+    const xpEarned = document.getElementById('xp-earned');
+    const redeemXPBtn = document.getElementById('redeem-xp');
     const newCommentBtn = document.getElementById('new-comment-btn');
     const commentFormContainer = document.getElementById('comment-form-container');
     const commentForm = document.getElementById('comment-form');
@@ -439,6 +524,12 @@
     const commentsList = document.getElementById('comments-list');
     const noCommentsMessage = document.getElementById('no-comments-message');
     const nav = document.querySelector('nav');
+    const photoModal = document.getElementById('photo-modal');
+    const closePhotoModal = document.getElementById('close-photo-modal');
+    const photoUpload = document.getElementById('photo-upload');
+    const photoPreview = document.getElementById('photo-preview');
+    const previewImage = document.getElementById('preview-image');
+    const confirmPhoto = document.getElementById('confirm-photo');
 
     // Initialize the app
     function initApp() {
@@ -451,7 +542,7 @@
       state.currentUser = JSON.parse(loggedInUser);
       profilePage.classList.remove('hidden');
 
-      // Load saved challenges and comments
+      // Load saved data
       const savedChallenges = localStorage.getItem('greenPledgeSavedChallenges');
       if (savedChallenges) {
         state.savedChallenges = JSON.parse(savedChallenges);
@@ -466,13 +557,16 @@
         renderComments();
       }
 
-      // Load completed challenges
       const savedCompleted = localStorage.getItem('greenPledgeCompletedChallenges');
       if (savedCompleted) {
         state.completedChallenges = parseInt(savedCompleted, 10);
       }
 
-      // Update profile info
+      const savedXP = localStorage.getItem('greenPledgeXP');
+      if (savedXP) {
+        state.xp = parseInt(savedXP, 10);
+      }
+
       updateProfileInfo();
       setupEventListeners();
       generateDailyChallenge();
@@ -503,6 +597,7 @@
         challengesCompleted.textContent = state.completedChallenges;
         const co2 = state.completedChallenges * 2.5;
         co2Reduced.textContent = `${co2} kg`;
+        xpEarned.textContent = state.xp;
       }
     }
 
@@ -520,13 +615,26 @@
       });
 
       newChallengeBtn.addEventListener('click', generateDailyChallenge);
-      acceptChallengeBtn.addEventListener('click', completeChallenge);
+      acceptChallengeBtn.addEventListener('click', showPhotoModal);
       saveChallengeBtn.addEventListener('click', saveChallenge);
       newDailyChallengeBtn.addEventListener('click', generateDailyChallenge);
       
       newCommentBtn.addEventListener('click', showCommentForm);
       cancelComment.addEventListener('click', hideCommentForm);
       commentForm.addEventListener('submit', handleCommentSubmit);
+
+      redeemXPBtn.addEventListener('click', () => {
+        alert('XP redemption coming soon! Stay tuned for rewards.');
+      });
+
+      closePhotoModal.addEventListener('click', closePhotoModalFn);
+      photoModal.addEventListener('click', (e) => {
+        if (e.target === photoModal) {
+          closePhotoModalFn();
+        }
+      });
+      photoUpload.addEventListener('change', handlePhotoUpload);
+      confirmPhoto.addEventListener('click', completeChallenge);
 
       document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function(e) {
@@ -549,6 +657,39 @@
       window.location.href = 'index.html';
     }
 
+    // Show photo upload modal
+    function showPhotoModal() {
+      photoModal.classList.add('active');
+      photoUpload.value = '';
+      photoPreview.classList.add('hidden');
+      confirmPhoto.disabled = true;
+    }
+
+    // Close photo upload modal
+    function closePhotoModalFn() {
+      photoModal.classList.remove('active');
+      photoUpload.value = '';
+      photoPreview.classList.add('hidden');
+      confirmPhoto.disabled = true;
+    }
+
+    // Handle photo upload
+    function handlePhotoUpload(e) {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previewImage.src = event.target.result;
+          photoPreview.classList.remove('hidden');
+          confirmPhoto.disabled = false;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please upload a valid image file.');
+        photoUpload.value = '';
+      }
+    }
+
     // Generate a new daily challenge
     function generateDailyChallenge() {
       const randomIndex = Math.floor(Math.random() * state.challenges.length);
@@ -557,15 +698,36 @@
 
     // Complete the current challenge
     function completeChallenge() {
-      state.completedChallenges++;
-      localStorage.setItem('greenPledgeCompletedChallenges', state.completedChallenges);
-      challengesCompleted.textContent = state.completedChallenges;
-      
-      const co2 = state.completedChallenges * 2.5;
-      co2Reduced.textContent = `${co2} kg`;
-      
-      alert("Great job completing today's challenge! 🌱");
-      generateDailyChallenge();
+      if (!photoUpload.files[0]) {
+        alert('Please upload a photo as proof.');
+        return;
+      }
+
+      const file = photoUpload.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        // Store photo in localStorage (for demo purposes)
+        const photos = JSON.parse(localStorage.getItem('greenPledgePhotos') || '[]');
+        photos.push({
+          challenge: dailyChallengeText.textContent,
+          photo: reader.result,
+          timestamp: new Date().toLocaleString(),
+          user: state.currentUser.name
+        });
+        localStorage.setItem('greenPledgePhotos', JSON.stringify(photos));
+
+        // Update challenge and XP
+        state.completedChallenges++;
+        state.xp += 10;
+        localStorage.setItem('greenPledgeCompletedChallenges', state.completedChallenges);
+        localStorage.setItem('greenPledgeXP', state.xp);
+        
+        updateProfileInfo();
+        closePhotoModalFn();
+        alert("Challenge completed! You've earned 10 XP! 🌱");
+        generateDailyChallenge();
+      };
+      reader.readAsDataURL(file);
     }
 
     // Save the current challenge
