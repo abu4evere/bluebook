@@ -189,6 +189,28 @@
       background-clip: text;
       color: transparent;
     }
+
+    /* Updated Nav Styles for Scroll */
+    nav.scrolled .nav-link {
+      color: #1f2937 !important; /* Black text on scroll */
+    }
+
+    nav.scrolled .nav-logo-text {
+      color: #1f2937 !important; /* Black logo text on scroll */
+    }
+
+    nav.scrolled .nav-icon {
+      color: #10b981 !important; /* Keep icon color primary for contrast */
+    }
+
+    nav.scrolled .nav-button {
+      color: #1f2937 !important; /* Black button text on scroll */
+    }
+
+    nav.scrolled .nav-button.bg-emerald-600\/90 {
+      background-color: #10b981 !important; /* Adjust button background for contrast */
+      color: white !important;
+    }
   </style>
 </head>
 <body class="overflow-x-hidden">
@@ -329,11 +351,11 @@
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex items-center justify-between h-20">
           <div class="flex items-center">
-            <i class="fas fa-leaf text-2xl text-emerald-300 mr-2"></i>
-            <span class="text-xl font-bold text-white">GreenPledge</span>
+            <i class="fas fa-leaf text-2xl text-emerald-300 mr-2 nav-icon"></i>
+            <span class="text-xl font-bold text-white nav-logo-text">GreenPledge</span>
           </div>
           
-          <button id="mobile-menu-toggle" class="md:hidden text-white">
+          <button id="mobile-menu-toggle" class="md:hidden text-white nav-button">
             <i class="fas fa-bars text-2xl"></i>
           </button>
 
@@ -342,17 +364,17 @@
             <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
             <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
             <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
-            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors">About</a>
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link">About</a>
           </div>
 
           <div class="hidden md:flex items-center space-x-3">
-            <button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition">
+            <button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition nav-button">
               Sign In
             </button>
-            <button id="signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+            <button id="signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
               Sign Up
             </button>
-            <button id="profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+            <button id="profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
               Profile
             </button>
           </div>
@@ -360,7 +382,7 @@
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden fixed top-0 right-0 h-full w-64 glassmorphism p-6 transform translate-x-full transition-transform duration-300">
-          <button id="mobile-menu-close" class="text-white mb-6">
+          <button id="mobile-menu-close" class="text-white mb-6 nav-button">
             <i class="fas fa-times text-2xl"></i>
           </button>
           <div class="flex flex-col space-y-4">
@@ -368,14 +390,14 @@
             <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
             <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
             <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
-            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors">About</a>
-            <button id="mobile-login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition">
+            <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link">About</a>
+            <button id="mobile-login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition nav-button">
               Sign In
             </button>
-            <button id="mobile-signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+            <button id="mobile-signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
               Sign Up
             </button>
-            <button id="mobile-profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+            <button id="mobile-profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
               Profile
             </button>
           </div>
@@ -669,9 +691,9 @@
     function updateNavBackground() {
       window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-          nav.classList.add('glassmorphism');
+          nav.classList.add('glassmorphism', 'scrolled');
         } else {
-          nav.classList.remove('glassmorphism');
+          nav.classList.remove('glassmorphism', 'scrolled');
         }
       });
     }
