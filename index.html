@@ -21,6 +21,7 @@
       font-family: 'Outfit', sans-serif;
       background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
       min-height: 100vh;
+      margin: 0;
     }
 
     .glass-card {
@@ -118,6 +119,66 @@
 
     .mobile-menu.hidden {
       transform: translateX(100%);
+    }
+
+    /* Fixed Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      transition: background-color 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+    }
+
+    /* Hero Section Adjustments */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .hero-background img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 100, 0, 0.3), rgba(0, 128, 128, 0.5));
+    }
+
+    /* Content Sections */
+    .content-section {
+      position: relative;
+      z-index: 10;
+      margin-top: -100px; /* Pulls content up to slide under header */
+      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
     }
   </style>
 </head>
@@ -230,8 +291,7 @@
             <div class="flex items-center">
               <input id="modal-accept-terms" type="checkbox" required class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
               <label for="modal-accept-terms" class="ml-2 block text-sm text-gray-700">
-                I agree to the <a href="#" classOrbital Mechanics and Rocket Science" contentType="text/plain">
-                Terms</a> and <a href="#" class="text-green-600 hover:text-green-800">Privacy Policy</a>
+                I agree to the <a href="#" class="text-green-600 hover:text-green-800">Terms</a> and <a href="#" class="text-green-600 hover:text-green-800">Privacy Policy</a>
               </label>
             </div>
             <button 
@@ -251,16 +311,15 @@
   </div>
 
   <!-- Hero Section -->
-  <section class="relative overflow-hidden min-h-screen">
-    <div class="absolute inset-0 z-0">
+  <section class="hero-section" id="hero">
+    <div class="hero-background">
       <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
-           alt="Green forest background"
-           class="w-full h-full object-cover object-center">
-      <div class="absolute inset-0 bg-gradient-to-b from-green-900/30 to-emerald-900/50"></div>
+           alt="Green forest background">
+      <div class="hero-overlay"></div>
     </div>
 
     <!-- Navigation -->
-    <nav class="absolute top-0 left-0 w-full z-50 bg-gradient-to-b from-black/30 to-transparent backdrop-blur-sm">
+    <nav>
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex items-center justify-between h-20">
           <div class="flex items-center">
@@ -350,7 +409,7 @@
   </section>
 
   <!-- Daily Challenge Section -->
-  <section id="challenges-section" class="max-w-4xl mx-auto mb-20">
+  <section id="challenges-section" class="content-section max-w-4xl mx-auto mb-20 pt-20">
     <div class="glass-card rounded-2xl overflow-hidden">
       <div class="p-8 md:p-10">
         <div class="flex flex-col md:flex-row items-center">
@@ -390,7 +449,7 @@
   </section>
 
   <!-- Eco Facts Section -->
-  <section id="facts-section" class="max-w-7xl mx-auto mb-20">
+  <section id="facts-section" class="content-section max-w-7xl mx-auto mb-20 pt-20">
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Discover Eco Facts</h2>
     <div class="grid md:grid-cols-3 gap-8">
       <div class="glass-card rounded-2xl overflow-hidden transition-all hover:shadow-xl">
@@ -439,7 +498,7 @@
   </section>
 
   <!-- Community Testimonials Section -->
-  <section id="community-section" class="max-w-7xl mx-auto mb-20">
+  <section id="community-section" class="content-section max-w-7xl mx-auto mb-20 pt-20">
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Community Says</h2>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div class="glass-card rounded-2xl overflow-hidden p-8 relative testimonial-card">
@@ -485,7 +544,7 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-white/80 py-12 border-t border-gray-200">
+  <footer class="content-section bg-white/80 py-12 border-t border-gray-200">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid md:grid-cols-4 gap-8 mb-8">
         <div>
@@ -571,6 +630,7 @@
     const mobileMenu = document.getElementById('mobile-menu');
     const loginSubmit = document.getElementById('login-submit');
     const signupSubmit = document.getElementById('signup-submit');
+    const nav = document.querySelector('nav');
 
     // Initialize the app
     function initApp() {
@@ -581,6 +641,18 @@
         updateAuthUI();
       }
       setupEventListeners();
+      updateNavBackground();
+    }
+
+    // Update navigation background on scroll
+    function updateNavBackground() {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
     }
 
     // Set up event listeners
@@ -656,7 +728,7 @@
           const targetId = this.getAttribute('data-target');
           const targetElement = document.getElementById(targetId);
           if (targetElement) {
-            const headerHeight = document.querySelector('nav').offsetHeight;
+            const headerHeight = nav.offsetHeight;
             const targetPosition = targetElement.offsetTop - headerHeight - 20;
             window.scrollTo({
               top: targetPosition,
