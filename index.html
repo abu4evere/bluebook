@@ -91,6 +91,29 @@
     .auth-modal.active .auth-content {
       transform: scale(1);
     }
+/* Add to your existing CSS */
+.nav-link {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover:not(.text-green-600)::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover:not(.text-green-600)::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
   </style>
 </head>
 <body class="overflow-x-hidden">
@@ -235,6 +258,7 @@
 
   <!-- Main App Container -->
   <div id="app" class="min-h-screen">
+
     <!-- Navigation Bar -->
     <nav class="bg-white/80 backdrop-blur-md border-b border-green-100 fixed w-full z-50">
       <div class="max-w-7xl mx-auto px-6">
@@ -244,12 +268,13 @@
             <span class="text-xl font-bold text-gray-800">GreenPledge</span>
           </div>
           
-          <div class="hidden md:flex items-center space-x-8">
-            <a href="#" class="text-gray-600 hover:text-green-600">Home</a>
-            <a href="#" class="text-gray-600 hover:text-green-600">Challenges</a>
-            <a href="#" class="text-gray-600 hover:text-green-600">Community</a>
-            <a href="#" class="text-gray-600 hover:text-green-600">About</a>
-          </div>
+         <div class="hidden md:flex items-center space-x-8">
+  <a href="#" class="text-gray-600 hover:text-green-600 nav-link" data-target="hero">Home</a>
+  <a href="#" class="text-gray-600 hover:text-green-600 nav-link" data-target="challenges-section">Challenges</a>
+  <a href="#" class="text-gray-600 hover:text-green-600 nav-link" data-target="facts-section">Facts</a>
+  <a href="#" class="text-gray-600 hover:text-green-600 nav-link" data-target="community-section">Community</a>
+  <a href="#" class="text-gray-600 hover:text-green-600">About</a>
+</div>
           
           <div class="flex items-center space-x-4">
             <button id="auth-button" class="px-6 py-2 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition">
@@ -316,7 +341,7 @@
       </section>
 
       <!-- Daily Challenge Section -->
-      <section class="max-w-4xl mx-auto mb-20">
+      <section id="challenges-section" class="max-w-4xl mx-auto mb-20">
         <div class="glass-card rounded-2xl overflow-hidden">
           <div class="p-8 md:p-10">
             <div class="flex flex-col md:flex-row items-center">
@@ -356,7 +381,7 @@
       </section>
 
       <!-- Eco Facts Section -->
-      <section class="max-w-7xl mx-auto mb-20">
+      <section id="facts-section" class="max-w-7xl mx-auto mb-20">
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Discover Eco Facts</h2>
         
         <div class="grid md:grid-cols-3 gap-8">
@@ -407,7 +432,7 @@
         </div>
       </section>
 <!-- Community Testimonials Section -->
-<section class="max-w-7xl mx-auto mb-20">
+<section id="community-section" class="max-w-7xl mx-auto mb-20">
   <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Community Says</h2>
   
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -742,7 +767,54 @@ commentForm.addEventListener('submit', (e) => {
     signinPrompt.classList.remove('hidden');
   }
 }
+// Add to your existing JavaScript in index.html
 
+// Smooth scrolling for navigation
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('data-target');
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      // Calculate position (accounting for fixed header)
+      const headerHeight = document.querySelector('nav').offsetHeight;
+      const targetPosition = targetElement.offsetTop - headerHeight - 20;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Update active state
+      document.querySelectorAll('.nav-link').forEach(navLink => {
+        navLink.classList.remove('text-green-600', 'font-medium');
+      });
+      this.classList.add('text-green-600', 'font-medium');
+    }
+  });
+});
+
+// Highlight current section while scrolling
+window.addEventListener('scroll', function() {
+  const sections = document.querySelectorAll('section[id]');
+  const scrollPosition = window.scrollY + 100;
+  
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+    
+    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+      const id = section.getAttribute('id');
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('text-green-600', 'font-medium');
+        if (link.getAttribute('data-target') === id) {
+          link.classList.add('text-green-600', 'font-medium');
+        }
+      });
+    }
+  });
+});
     // Initialize the app when the page loads
     window.addEventListener('DOMContentLoaded', initApp);
   </script>
