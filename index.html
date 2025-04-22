@@ -408,14 +408,14 @@
           <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
             <h2 class="text-3xl font-bold text-gray-800 mb-4">Today's Featured Challenge</h2>
             <p class="text-gray-600 mb-6" id="featured-challenge">
-              Take a 5-minute shower to conserve water (saves up to 25 gallons compared to a 10-minute shower).
+              Loading today's challenge...
             </p>
             <div class="flex space-x-4">
               <button id="try-challenge-button" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                <i class="fas fa-check-circle mr-2"></i> I Did This!
+                <i class="fas fa-check-circle mr-2"></i> Try Challenge
               </button>
               <button id="save-challenge-button" class="px-6 py-3 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
-                <i class="fas fa-bookmark mr-2"></i> Save Challenge
+                <i class="fas fa-bookmark mr-2"></i> Save for Later
               </button>
             </div>
           </div>
@@ -424,8 +424,8 @@
               <h3 class="font-semibold text-green-800 mb-3 flex items-center">
                 <i class="fas fa-lightbulb mr-2"></i> Why This Matters
               </h3>
-              <p class="text-green-700 mb-4">
-                Reducing shower time by just 5 minutes can save up to 1,000 gallons of water per month for a family of four.
+              <p class="text-green-700 mb-4" id="challenge-impact-text">
+                Loading impact information...
               </p>
               <div class="flex items-center">
                 <div class="w-full bg-gray-200 rounded-full h-2.5 mr-3">
@@ -594,11 +594,25 @@
     </div>
   </footer>
 
-  <script>
+  <script type="module">
+    import {
+      saveUser,
+      getUser,
+      saveSavedChallenges,
+      getSavedChallenges,
+      saveCompletedChallenges,
+      getCompletedChallenges,
+      saveXP,
+      getXP,
+      getRandomChallenge
+    } from './dataManager.js';
+
     // App State
     const state = {
       currentUser: null,
-      isAuthenticated: false
+      isAuthenticated: false,
+      currentChallenge: null,
+      currentFact: null
     };
 
     // DOM Elements
@@ -623,15 +637,18 @@
     const loginSubmit = document.getElementById('login-submit');
     const signupSubmit = document.getElementById('signup-submit');
     const nav = document.querySelector('nav');
+    const featuredChallenge = document.getElementById('featured-challenge');
+    const challengeImpactText = document.getElementById('challenge-impact-text');
 
     // Initialize the app
     function initApp() {
-      const loggedInUser = localStorage.getItem('greenPledgeUser');
+      const loggedInUser = getUser();
       if (loggedInUser) {
-        state.currentUser = JSON.parse(loggedInUser);
+        state.currentUser = loggedInUser;
         state.isAuthenticated = true;
         updateAuthUI();
       }
+      generateDailyChallenge();
       setupEventListeners();
       updateNavBackground();
     }
@@ -645,6 +662,15 @@
           nav.classList.remove('scrolled');
         }
       });
+    }
+
+    // Generate a new daily challenge
+    function generateDailyChallenge() {
+      const { challenge, fact } = getRandomChallenge();
+      state.currentChallenge = challenge;
+      state.currentFact = fact;
+      featuredChallenge.textContent = challenge;
+      challengeImpactText.textContent = fact;
     }
 
     // Set up event listeners
@@ -694,7 +720,16 @@
           alert("Please log in to track your challenges!");
           return;
         }
-        alert("Great job completing today's challenge! 🌱");
+        let completedChallenges = getCompletedChallenges();
+        completedChallenges++;
+        saveCompletedChallenges(completedChallenges);
+
+        let xp = getXP();
+        xp += 10;
+        saveXP(xp);
+
+        alert("Great job completing today's challenge! 🌱 You've earned 10 XP!");
+        generateDailyChallenge();
       });
 
       saveChallengeButton.addEventListener('click', () => {
@@ -703,7 +738,14 @@
           alert("Please log in to save challenges!");
           return;
         }
-        alert("Challenge saved to your profile! 📌");
+        const savedChallenges = getSavedChallenges();
+        if (!savedChallenges.includes(state.currentChallenge)) {
+          savedChallenges.push(state.currentChallenge);
+          saveSavedChallenges(savedChallenges);
+          alert("Challenge saved to your profile! 📌");
+        } else {
+          alert("You've already saved this challenge!");
+        }
       });
 
       mobileMenuToggle.addEventListener('click', () => {
@@ -763,7 +805,7 @@
         joinDate: new Date()
       };
       
-      localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
+      saveUser(state.currentUser);
       state.isAuthenticated = true;
       updateAuthUI();
       closeModal();
@@ -792,7 +834,7 @@
         joinDate: new Date()
       };
       
-      localStorage.setItem('greenPledgeUser', JSON.stringify(state.currentUser));
+      saveUser(state.currentUser);
       state.isAuthenticated = true;
       updateAuthUI();
       closeModal();
