@@ -331,75 +331,55 @@
     </div>
   </div>
 
-  <!-- Main App Container -->
-  <div id="app" class="min-h-screen">
-
-    <!-- Navigation Bar -->
-    <nav class="bg-white/80 backdrop-blur-md border-b border-green-100 fixed w-full z-50">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="flex items-center justify-between h-16">
-          <div class="flex items-center">
-            <i class="fas fa-leaf text-2xl text-green-600 mr-2"></i>
-            <span class="text-xl font-bold text-gray-800">GreenPledge</span>
-          </div>
-          
-         <div class="hidden md:flex items-center space-x-8">
-  <a href="#" class="text-gray-600 hover:text-green-600 nav-link" data-target="hero">Home</a>
-  <a href="#" class="text-gray-600 hover:text-green-600 nav-link" data-target="challenges-section">Challenges</a>
-  <a href="#" class="text-gray-600 hover:text-green-600 nav-link" data-target="facts-section">Facts</a>
-  <a href="#" class="text-gray-600 hover:text-green-600 nav-link" data-target="community-section">Community</a>
-  <a href="#" class="text-gray-600 hover:text-green-600">About</a>
-</div>
-          
-          <div class="flex items-center space-x-4">
-            <button id="auth-button" class="px-6 py-2 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition">
-              <i class="fas fa-user mr-2"></i> Sign In
-            </button>
-            <button id="profile-button" class="hidden px-4 py-2 bg-white text-green-600 border border-green-200 rounded-full font-medium hover:bg-green-50 transition">
-              <i class="fas fa-user-circle mr-2"></i> My Profile
-            </button>
-          </div>
-        </div>
-      </div>
-    </nav>
-
     <!-- Main Content -->
     <div class="pt-20 pb-12 px-6">
       
 <!-- Hero Section -->
-<section class="relative overflow-hidden min-h-screen flex items-center">
-  <!-- Crisp Nature Background -->
+<!-- Hero Section -->
+<section class="relative overflow-hidden min-h-screen">
+  <!-- Full-screen Nature Background -->
   <div class="absolute inset-0 z-0">
-    <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+    <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
          alt="Green forest background"
          class="w-full h-full object-cover object-center">
-    <div class="absolute inset-0 bg-gradient-to-b from-green-900/20 to-emerald-900/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-green-900/30 to-emerald-900/50"></div>
   </div>
 
-  <!-- Floating Particles (Animated) -->
-  <div class="particles-container absolute inset-0 overflow-hidden z-10">
-    <!-- 30 floating particles -->
-    <template x-for="i in 30" :key="i">
-      <div class="particle absolute rounded-full"
-           :style="`
-             width: ${Math.random() * 12 + 4}px;
-             height: ${Math.random() * 12 + 4}px;
-             background: ${['#10b981', '#84cc16', '#22c55e', '#86efac'][Math.floor(Math.random() * 4)]};
-             top: ${Math.random() * 100}%;
-             left: ${Math.random() * 100}%;
-             opacity: ${Math.random() * 0.6 + 0.2};
-             animation: float ${Math.random() * 15 + 10}s linear infinite;
-             animation-delay: -${Math.random() * 15}s;
-           `"></div>
-    </template>
-  </div>
+  <!-- Darker Navigation Bar -->
+  <nav class="absolute top-0 left-0 w-full z-50 bg-gradient-to-b from-black/30 to-transparent backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <i class="fas fa-leaf text-2xl text-emerald-300 mr-2"></i>
+          <span class="text-xl font-bold text-white">GreenPledge</span>
+        </div>
+        
+        <!-- Navigation Links -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="hero">Home</a>
+          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
+          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
+          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
+          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors">About</a>
+        </div>
+        
+        <!-- Auth Buttons -->
+        <div class="flex items-center space-x-4">
+          <button id="auth-button" class="px-6 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition">
+            <i class="fas fa-user mr-2"></i> Sign In
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-  <!-- Content -->
-  <div class="relative z-20 max-w-7xl mx-auto px-6 py-24 text-center w-full">
+  <!-- Hero Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-6 flex flex-col justify-center min-h-screen pt-24 pb-32 text-center">
     <!-- Animated Badge -->
-    <div class="inline-flex mb-8 px-6 py-3 bg-white/90 rounded-full shadow-lg backdrop-blur-sm border border-white/20 hover:scale-105 transition-transform duration-300">
-      <span class="text-lg font-bold text-green-600 flex items-center">
-        <span class="animate-pulse mr-2">🌱</span> Eco Warriors Unite!
+    <div class="inline-flex mb-8 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full shadow-lg border border-white/10 hover:scale-105 transition-transform">
+      <span class="text-lg font-bold text-emerald-300 flex items-center">
+        <span class="animate-pulse mr-2">🌍</span> Join the Movement
       </span>
     </div>
     
@@ -408,36 +388,30 @@
       <span class="text-white drop-shadow-lg">
         Small <span class="text-emerald-300">Actions</span>,
       </span><br>
-      <span class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 via-green-400 to-emerald-600">
-        Big <span class="underline decoration-emerald-500/30 decoration-4 underline-offset-8">Impact</span>
+      <span class="text-white drop-shadow-lg">
+        Big <span class="text-emerald-300">Impact</span>
       </span>
     </h1>
     
     <!-- Subheading -->
-    <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10 leading-relaxed drop-shadow-md">
-      Join <span class="font-semibold text-emerald-200">10,000+</span> people transforming daily habits into planetary healing
+    <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-10 leading-relaxed">
+      Transform your daily habits with micro-actions that create macro impact for our planet
     </p>
     
     <!-- CTA Buttons -->
     <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <button class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all hover:scale-105 transform flex items-center group">
-        <span class="mr-3">Start Your Journey</span>
-        <span class="group-hover:translate-x-1 transition-transform">→</span>
+      <button class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all hover:scale-105 transform">
+        Start Your Journey
       </button>
-      
-      <button class="px-8 py-4 bg-white/20 backdrop-blur-lg text-white border border-white/30 rounded-full font-medium shadow-lg hover:bg-white/30 transition-all hover:scale-105 flex items-center group">
-        <span class="mr-2">📽️</span> Watch Story
+      <button class="px-8 py-4 bg-white/10 backdrop-blur-lg text-white border border-white/20 rounded-full font-medium shadow-lg hover:bg-white/20 transition-all hover:scale-105">
+        Learn More
       </button>
     </div>
-    
-    <!-- Floating Elements -->
-    <div class="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-emerald-400/10 blur-3xl"></div>
-    <div class="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-green-500/10 blur-3xl"></div>
   </div>
 
   <!-- Animated Scroll Indicator -->
-  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30">
-    <a href="#challenges-section" class="animate-bounce inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 transition-colors">
+  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
+    <a href="#challenges-section" class="animate-bounce inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors">
       <i class="fas fa-chevron-down text-white text-xl"></i>
     </a>
   </div>
