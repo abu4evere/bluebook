@@ -15,7 +15,13 @@
       --primary-dark: #059669;
       --secondary: #f59e0b;
     }
-    
+    .testimonial-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
     body {
       font-family: 'Outfit', sans-serif;
       background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
