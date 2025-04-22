@@ -636,8 +636,7 @@ nav {
       </div>
     </footer>
   </div>
-
-  <script>
+<script>
   // App State
   const state = {
     currentUser: null,
@@ -685,41 +684,16 @@ nav {
   // Set up all event listeners
   function setupEventListeners() {
     // Auth modal toggle
-    authButton.addEventListener('click', () => {
-      authModal.classList.add('active');
-      loginModal.classList.remove('hidden');
-      signupModal.classList.add('hidden');
-    });
+    authButton.addEventListener('click', showLoginModal);
+    loginButton.addEventListener('click', showLoginModal);
+    signupButton.addEventListener('click', showSignupModal);
+    ctaAuthButton.addEventListener('click', showLoginModal);
+    bottomAuthButton.addEventListener('click', showLoginModal);
+    commentAuthButton.addEventListener('click', showLoginModal);
 
     // Profile button
     profileButton.addEventListener('click', () => {
       window.location.href = "profile.html";
-    });
-
-    // Navbar auth buttons
-    loginButton.addEventListener('click', () => {
-      authModal.classList.add('active');
-      loginModal.classList.remove('hidden');
-      signupModal.classList.add('hidden');
-    });
-
-    signupButton.addEventListener('click', () => {
-      authModal.classList.add('active');
-      signupModal.classList.remove('hidden');
-      loginModal.classList.add('hidden');
-    });
-
-    // CTA buttons
-    ctaAuthButton.addEventListener('click', () => {
-      authModal.classList.add('active');
-      loginModal.classList.remove('hidden');
-      signupModal.classList.add('hidden');
-    });
-
-    bottomAuthButton.addEventListener('click', () => {
-      authModal.classList.add('active');
-      loginModal.classList.remove('hidden');
-      signupModal.classList.add('hidden');
     });
 
     // Close modal buttons
@@ -743,14 +717,12 @@ nav {
     // Switch between login/signup
     showModalSignup.addEventListener('click', (e) => {
       e.preventDefault();
-      loginModal.classList.add('hidden');
-      signupModal.classList.remove('hidden');
+      showSignupModal();
     });
 
     showModalLogin.addEventListener('click', (e) => {
       e.preventDefault();
-      signupModal.classList.add('hidden');
-      loginModal.classList.remove('hidden');
+      showLoginModal();
     });
 
     // Form submissions
@@ -760,9 +732,7 @@ nav {
     // Challenge buttons
     tryChallengeButton.addEventListener('click', () => {
       if (!state.isAuthenticated) {
-        authModal.classList.add('active');
-        loginModal.classList.remove('hidden');
-        signupModal.classList.add('hidden');
+        showLoginModal();
         alert("Please log in to track your challenges!");
         return;
       }
@@ -771,32 +741,24 @@ nav {
 
     saveChallengeButton.addEventListener('click', () => {
       if (!state.isAuthenticated) {
-        authModal.classList.add('active');
-        loginModal.classList.remove('hidden');
-        signupModal.classList.add('hidden');
+        showLoginModal();
         alert("Please log in to save challenges!");
         return;
       }
       alert("Challenge saved to your profile! 📌");
     });
 
-    // Comment section
-    commentAuthButton.addEventListener('click', () => {
-      authModal.classList.add('active');
-      loginModal.classList.remove('hidden');
-      signupModal.classList.add('hidden');
-    });
-
+    // Comment form
     commentForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const commentText = document.getElementById('comment-text').value;
       if (state.currentUser) {
-        alert(`Thanks for your comment, ${state.currentUser.name}! Your feedback helps our community grow.`);
+        alert(`Thanks for your comment, ${state.currentUser.name}!`);
         commentForm.reset();
       }
     });
 
-    // Navigation smooth scrolling
+    // Navigation
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -811,21 +773,28 @@ nav {
             top: targetPosition,
             behavior: 'smooth'
           });
-          
-          document.querySelectorAll('.nav-link').forEach(navLink => {
-            navLink.classList.remove('text-green-600', 'font-medium');
-          });
-          this.classList.add('text-green-600', 'font-medium');
         }
       });
     });
   }
 
-  // Close modal function
+  // Show login modal
+  function showLoginModal() {
+    authModal.classList.add('active');
+    loginModal.classList.remove('hidden');
+    signupModal.classList.add('hidden');
+  }
+
+  // Show signup modal
+  function showSignupModal() {
+    authModal.classList.add('active');
+    signupModal.classList.remove('hidden');
+    loginModal.classList.add('hidden');
+  }
+
+  // Close modal
   function closeModal() {
     authModal.classList.remove('active');
-    loginModal.classList.add('hidden');
-    signupModal.classList.add('hidden');
   }
 
   // Handle modal login
@@ -877,7 +846,7 @@ nav {
     closeModal();
     
     setTimeout(() => {
-      alert(`Welcome to GreenPledge, ${name}! Start your eco journey today.`);
+      alert(`Welcome to GreenPledge, ${name}!`);
     }, 300);
   }
 
@@ -888,19 +857,19 @@ nav {
       profileButton.classList.remove('hidden');
       tryChallengeButton.textContent = "I Did This!";
       saveChallengeButton.textContent = "Save Challenge";
-      addCommentContainer.classList.remove('hidden');
-      signinPrompt.classList.add('hidden');
+      if (addCommentContainer) addCommentContainer.classList.remove('hidden');
+      if (signinPrompt) signinPrompt.classList.add('hidden');
     } else {
       authButton.classList.remove('hidden');
       profileButton.classList.add('hidden');
       tryChallengeButton.textContent = "Try Challenge";
       saveChallengeButton.textContent = "Save for Later";
-      addCommentContainer.classList.add('hidden');
-      signinPrompt.classList.remove('hidden');
+      if (addCommentContainer) addCommentContainer.classList.add('hidden');
+      if (signinPrompt) signinPrompt.classList.remove('hidden');
     }
   }
 
-  // Initialize the app when the page loads
+  // Initialize the app
   window.addEventListener('DOMContentLoaded', initApp);
 </script>
 </body>
