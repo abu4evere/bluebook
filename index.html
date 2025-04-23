@@ -1154,17 +1154,22 @@
         mobileNavUserName.textContent = state.currentUser.name;
         if (state.currentUser.badge === "topWarrior") {
           const badgeImg = document.createElement('img');
-          badgeImg.src = 'badge.jpg';
+          badgeImg.src = 'eco-badge.png';
           badgeImg.alt = 'Top Eco Warrior Badge';
           badgeImg.className = 'badge-icon';
           navUserName.appendChild(badgeImg);
 
           const mobileBadgeImg = document.createElement('img');
-          mobileBadgeImg.src = 'badge.jpg';
+          mobileBadgeImg.src = 'eco-badge.png';
           mobileBadgeImg.alt = 'Top Eco Warrior Badge';
           mobileBadgeImg.className = 'badge-icon';
           mobileNavUserName.appendChild(mobileBadgeImg);
         }
+        // Show user stats
+        const userStats = document.getElementById('user-stats');
+        const mobileUserStats = document.getElementById('mobile-user-stats');
+        userStats.classList.remove('hidden');
+        mobileUserStats.classList.remove('hidden');
       }
     }
 
@@ -1185,7 +1190,7 @@
           <h3 class="text-xl font-bold text-gray-800 mb-2">${place}</h3>
           <p class="text-gray-600">
             ${warrior.name}
-            ${warrior.badge === "topWarrior" ? '<img src="badge.jpg" alt="Top Eco Warrior Badge" class="badge-icon inline" />' : ''}
+            ${warrior.badge === "topWarrior" ? '<img src="eco-badge.png" alt="Top Eco Warrior Badge" class="badge-icon inline" />' : ''}
             - ${warrior.xp} XP
           </p>
         `;
