@@ -628,9 +628,9 @@
               </p>
               <div class="flex items-center">
                 <div class="w-full bg-gray-200 rounded-full h-2.5 mr-3">
-                  <div class="bg-green-600 h-2.5 rounded-full progress-bar" style="width: 0%"></div>
+                  <div id="challenge-progress-bar" class="bg-green-600 h-2.5 rounded-full progress-bar" style="width: 0%"></div>
                 </div>
-                <span class="text-sm text-gray-600">72% completion rate</span>
+                <span id="completion-rate-text" class="text-sm text-gray-600">0% completion rate</span>
               </div>
             </div>
           </div>
@@ -884,8 +884,12 @@
       isAuthenticated: false,
       currentChallenge: null,
       currentFact: null,
-      completedChallengesWithProof: [] // Array to store completed challenges with photo proof
+      completedChallengesWithProof: [],
+      challengeCompletions: {} // Object to track completions per challenge
     };
+
+    // Simulated total users for calculation (replace with actual user base in a real app)
+    const TOTAL_USERS = 100;
 
     // DOM Elements
     const authModal = document.getElementById('auth-modal');
@@ -912,7 +916,8 @@
     const nav = document.querySelector('nav');
     const featuredChallenge = document.getElementById('featured-challenge');
     const challengeImpactText = document.getElementById('challenge-impact-text');
-    const progressBar = document.querySelector('.progress-bar');
+    const progressBar = document.getElementById('challenge-progress-bar');
+    const completionRateText = document.getElementById('completion-rate-text');
     const newsletterSubmit = document.getElementById('newsletter-submit');
     const newsletterEmail = document.getElementById('newsletter-email');
     const scrollLeftBtn = document.getElementById('scroll-left');
@@ -940,11 +945,33 @@
       if (storedCompletedChallenges) {
         state.completedChallengesWithProof = storedCompletedChallenges;
       }
+      loadChallengeCompletions();
       generateDailyChallenge();
       setupEventListeners();
       updateNavBackground();
       setupScrollAnimations();
       updateTestimonialsScroll();
+      updateChallengeCompletionRate();
+    }
+
+    // Load challenge completions from localStorage
+    function loadChallengeCompletions() {
+      const data = localStorage.getItem('challengeCompletions');
+      state.challengeCompletions = data ? JSON.parse(data) : {};
+    }
+
+    // Save challenge completions to localStorage
+    function saveChallengeCompletions() {
+      localStorage.setItem('challengeCompletions', JSON.stringify(state.challengeCompletions));
+    }
+
+    // Update the challenge completion rate UI
+    function updateChallengeCompletionRate() {
+      const challenge = state.currentChallenge;
+      const completedUsers = state.challengeCompletions[challenge] || 0;
+      const completionRate = Math.round((completedUsers / TOTAL_USERS) * 100);
+      completionRateText.textContent = `${completionRate}% completion rate`;
+      progressBar.style.width = `${completionRate}%`;
     }
 
     // Update navigation background on scroll
@@ -988,9 +1015,9 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            if (entry.target.querySelector('.progress-bar')) {
+            if (entry.target.querySelector('#challenge-progress-bar')) {
               setTimeout(() => {
-                progressBar.style.width = '72%';
+                updateChallengeCompletionRate();
               }, 500);
             }
           }
@@ -1007,8 +1034,8 @@
       state.currentFact = fact;
       featuredChallenge.textContent = challenge;
       challengeImpactText.textContent = fact;
-      progressBar.style.width = '0%'; // Reset progress bar
       document.getElementById('challenge-completed').classList.add('hidden');
+      updateChallengeCompletionRate();
     }
 
     // Newsletter subscription handler
@@ -1090,6 +1117,12 @@
       };
       state.completedChallengesWithProof.push(challengeEntry);
       localStorage.setItem('completedChallengesWithProof', JSON.stringify(state.completedChallengesWithProof));
+
+      // Update challenge completions
+      const challenge = state.currentChallenge;
+      state.challengeCompletions[challenge] = (state.challengeCompletions[challenge] || 0) + 1;
+      saveChallengeCompletions();
+      updateChallengeCompletionRate();
     }
 
     // Retrieve completed challenges with proof
