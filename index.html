@@ -120,7 +120,7 @@
       height: 100%;
       z-index: -1;
       background: no-repeat center center;
-      
+      background-size: cover;
       transform: scale(1.1);
       transition: transform 0.1s ease;
     }
@@ -1007,7 +1007,7 @@
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            heroBg.style.backgroundImage = "url('Wallpaper.jfif')";
+            heroBg.style.backgroundImage = "url('Без названия (34).jfif')";
             observer.unobserve(heroBg);
           }
         });
