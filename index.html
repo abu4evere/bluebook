@@ -305,6 +305,13 @@
       margin-top: 1rem;
     }
 
+    .badge-icon {
+      width: 20px;
+      height: 20px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
     @media (max-width: 640px) {
       .hero-section h1 {
         font-size: 2.5rem;
@@ -514,6 +521,7 @@
 
         <div class="hidden md:flex items-center space-x-3">
           <div id="user-stats" class="hidden text-white text-sm mr-3">
+            <span id="nav-user-name" class="mr-2"></span>
             <span id="user-xp">XP: 0</span> | <span id="user-challenges">Challenges: 0</span>
           </div>
           <button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition nav-button">
@@ -540,6 +548,10 @@
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" id="mobile-reward-shop-link">Reward Shop</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link">About</a>
+          <div id="mobile-user-stats" class="hidden text-white text-sm mb-2">
+            <span id="mobile-nav-user-name" class="block mb-1"></span>
+            <span id="mobile-user-xp">XP: 0</span> | <span id="mobile-user-challenges">Challenges: 0</span>
+          </div>
           <button id="mobile-login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition nav-button">
             Sign In
           </button>
@@ -791,19 +803,8 @@
   <!-- Leaderboard Section -->
   <section id="leaderboard-section" class="max-w-7xl mx-auto mb-20 py-20">
     <h2 class="text-4xl font-bold text-center text-gray-800 mb-12 fade-in">Top Eco Warriors</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="glassmorphism card-3d rounded-2xl p-8 text-center">
-        <h3 class="text-xl font-bold text-gray-800 mb-2">🥇 1st Place</h3>
-        <p class="text-gray-600">Demo User - 150 XP</p>
-      </div>
-      <div class="glassmorphism card-3d rounded-2xl p-8 text-center">
-        <h3 class="text-xl font-bold text-gray-800 mb-2">🥈 2nd Place</h3>
-        <p class="text-gray-600">EcoFan - 120 XP</p>
-      </div>
-      <div class="glassmorphism card-3d rounded-2xl p-8 text-center">
-        <h3 class="text-xl font-bold text-gray-800 mb-2">🥉 3rd Place</h3>
-        <p class="text-gray-600">GreenStar - 100 XP</p>
-      </div>
+    <div id="eco-warriors-list" class="grid md:grid-cols-3 gap-8">
+      <!-- Dynamically populated -->
     </div>
   </section>
 
@@ -936,6 +937,9 @@
     const cancelPhotoButton = document.getElementById('cancel-photo');
     const rewardShopLink = document.getElementById('reward-shop-link');
     const mobileRewardShopLink = document.getElementById('mobile-reward-shop-link');
+    const ecoWarriorsList = document.getElementById('eco-warriors-list');
+    const navUserName = document.getElementById('nav-user-name');
+    const mobileNavUserName = document.getElementById('mobile-nav-user-name');
 
     // Initialize the app
     function initApp() {
@@ -943,7 +947,16 @@
       if (loggedInUser) {
         state.currentUser = loggedInUser;
         state.isAuthenticated = true;
+
+        // Update user object with badge if not present
+        if (!state.currentUser.badge) {
+          const xp = getXP();
+          state.currentUser.badge = xp >= 100 ? "topWarrior" : "none";
+          saveUser(state.currentUser);
+        }
+
         updateAuthUI();
+        displayUserNameWithBadge();
       }
       const storedCompletedChallenges = getCompletedChallengesWithProof();
       if (storedCompletedChallenges) {
@@ -956,6 +969,7 @@
       setupScrollAnimations();
       updateTestimonialsScroll();
       updateChallengeCompletionRate();
+      populateEcoWarriors();
     }
 
     // Load challenge completions from localStorage
@@ -1135,6 +1149,52 @@
       return data ? JSON.parse(data) : [];
     }
 
+    // Display user name with badge in navigation
+    function displayUserNameWithBadge() {
+      if (state.currentUser) {
+        navUserName.textContent = state.currentUser.name;
+        mobileNavUserName.textContent = state.currentUser.name;
+        if (state.currentUser.badge === "topWarrior") {
+          const badgeImg = document.createElement('img');
+          badgeImg.src = 'badge.jpg';
+          badgeImg.alt = 'Top Eco Warrior Badge';
+          badgeImg.className = 'badge-icon';
+          navUserName.appendChild(badgeImg);
+
+          const mobileBadgeImg = document.createElement('img');
+          mobileBadgeImg.src = 'badge.jpg';
+          mobileBadgeImg.alt = 'Top Eco Warrior Badge';
+          mobileBadgeImg.className = 'badge-icon';
+          mobileNavUserName.appendChild(mobileBadgeImg);
+        }
+      }
+    }
+
+    // Populate Top Eco Warriors
+    function populateEcoWarriors() {
+      const warriors = [
+        { name: state.currentUser ? state.currentUser.name : "Demo User", badge: state.currentUser ? state.currentUser.badge : "topWarrior", xp: state.currentUser ? getXP() : 150 },
+        { name: "EcoFan", badge: "topWarrior", xp: 120 },
+        { name: "GreenStar", badge: "topWarrior", xp: 100 },
+      ].sort((a, b) => b.xp - a.xp); // Sort by XP descending
+
+      ecoWarriorsList.innerHTML = '';
+      warriors.forEach((warrior, index) => {
+        const place = index === 0 ? '🥇 1st Place' : index === 1 ? '🥈 2nd Place' : '🥉 3rd Place';
+        const warriorEl = document.createElement('div');
+        warriorEl.className = 'glassmorphism card-3d rounded-2xl p-8 text-center';
+        warriorEl.innerHTML = `
+          <h3 class="text-xl font-bold text-gray-800 mb-2">${place}</h3>
+          <p class="text-gray-600">
+            ${warrior.name}
+            ${warrior.badge === "topWarrior" ? '<img src="badge.jpg" alt="Top Eco Warrior Badge" class="badge-icon inline" />' : ''}
+            - ${warrior.xp} XP
+          </p>
+        `;
+        ecoWarriorsList.appendChild(warriorEl);
+      });
+    }
+
     // Set up event listeners
     function setupEventListeners() {
       loginButton.addEventListener('click', showLoginModal);
@@ -1218,6 +1278,10 @@
           xp += 10;
           saveXP(xp);
 
+          // Update user badge status
+          state.currentUser.badge = xp >= 100 ? "topWarrior" : "none";
+          saveUser(state.currentUser);
+
           document.getElementById('challenge-completed').classList.remove('hidden');
           alert("Great job completing today's challenge! 🌱 You've earned 10 XP!");
           gtag('event', 'challenge_completed', {
@@ -1225,6 +1289,8 @@
             'event_label': state.currentChallenge
           });
           updateAuthUI();
+          displayUserNameWithBadge();
+          populateEcoWarriors();
           generateDailyChallenge();
           closePhotoUploadModalHandler();
         };
@@ -1257,19 +1323,18 @@
 
       document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function(e) {
+          const targetId = link.getAttribute('data-target');
+          if (!targetId) return; // Skip Reward Shop link
           e.preventDefault();
-          const targetId = this.getAttribute('data-target');
-          if (targetId) {
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-              const headerHeight = nav.offsetHeight;
-              const targetPosition = targetElement.offsetTop - headerHeight;
-              window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-              });
-              mobileMenu.classList.add('translate-x-full');
-            }
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            const headerHeight = nav.offsetHeight;
+            const targetPosition = targetElement.offsetTop - headerHeight;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+            mobileMenu.classList.add('translate-x-full');
           }
         });
       });
@@ -1365,12 +1430,15 @@
       state.currentUser = {
         name: "Demo User",
         email: email,
-        joinDate: new Date()
+        joinDate: new Date(),
+        badge: getXP() >= 100 ? "topWarrior" : "none"
       };
       
       saveUser(state.currentUser);
       state.isAuthenticated = true;
       updateAuthUI();
+      displayUserNameWithBadge();
+      populateEcoWarriors();
       closeModal();
       
       setTimeout(() => {
@@ -1406,12 +1474,15 @@
       state.currentUser = {
         name: name,
         email: email,
-        joinDate: new Date()
+        joinDate: new Date(),
+        badge: "none" // New users start with no badge
       };
       
       saveUser(state.currentUser);
       state.isAuthenticated = true;
       updateAuthUI();
+      displayUserNameWithBadge();
+      populateEcoWarriors();
       closeModal();
       
       setTimeout(() => {
@@ -1433,9 +1504,13 @@
 
         // Show user stats
         const userStats = document.getElementById('user-stats');
+        const mobileUserStats = document.getElementById('mobile-user-stats');
         userStats.classList.remove('hidden');
+        mobileUserStats.classList.remove('hidden');
         document.getElementById('user-xp').textContent = `XP: ${getXP()}`;
         document.getElementById('user-challenges').textContent = `Challenges: ${getCompletedChallenges()}`;
+        document.getElementById('mobile-user-xp').textContent = `XP: ${getXP()}`;
+        document.getElementById('mobile-user-challenges').textContent = `Challenges: ${getCompletedChallenges()}`;
       } else {
         loginButton.classList.remove('hidden');
         signupButton.classList.remove('hidden');
@@ -1446,6 +1521,7 @@
         tryChallengeButton.textContent = "Try Challenge";
         saveChallengeButton.textContent = "Save for Later";
         document.getElementById('user-stats').classList.add('hidden');
+        document.getElementById('mobile-user-stats').classList.add('hidden');
       }
     }
 
