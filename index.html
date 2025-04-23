@@ -521,8 +521,7 @@
 
         <div class="hidden md:flex items-center space-x-3">
           <div id="user-stats" class="hidden text-white text-sm mr-3">
-            <span id="nav-user-name" class="mr-2"></span>
-            <span id="user-xp">XP: 0</span> | <span id="user-challenges">Challenges: 0</span>
+            <span id="nav-user-name"></span>
           </div>
           <button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition nav-button">
             Sign In
@@ -550,7 +549,6 @@
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link">About</a>
           <div id="mobile-user-stats" class="hidden text-white text-sm mb-2">
             <span id="mobile-nav-user-name" class="block mb-1"></span>
-            <span id="mobile-user-xp">XP: 0</span> | <span id="mobile-user-challenges">Challenges: 0</span>
           </div>
           <button id="mobile-login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition nav-button">
             Sign In
@@ -1502,15 +1500,11 @@
         tryChallengeButton.textContent = "I Did This!";
         saveChallengeButton.textContent = "Save Challenge";
 
-        // Show user stats
+        // Show user stats (only the name now)
         const userStats = document.getElementById('user-stats');
         const mobileUserStats = document.getElementById('mobile-user-stats');
         userStats.classList.remove('hidden');
         mobileUserStats.classList.remove('hidden');
-        document.getElementById('user-xp').textContent = `XP: ${getXP()}`;
-        document.getElementById('user-challenges').textContent = `Challenges: ${getCompletedChallenges()}`;
-        document.getElementById('mobile-user-xp').textContent = `XP: ${getXP()}`;
-        document.getElementById('mobile-user-challenges').textContent = `Challenges: ${getCompletedChallenges()}`;
       } else {
         loginButton.classList.remove('hidden');
         signupButton.classList.remove('hidden');
