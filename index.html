@@ -14,7 +14,8 @@
   <meta property="og:image" content="path/to/og-image.jpg">
   <meta property="og:url" content="https://yourwebsite.com">
   <meta property="og:type" content="website">
-  <!-- Google Analytics -->
+  <!-- Google Analytics (Commented out until you add your GA ID) -->
+  <!--
   <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -22,7 +23,7 @@
     gtag('js', new Date());
     gtag('config', 'YOUR_GA_ID');
   </script>
-  <script defer src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -44,7 +45,7 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', Arial, sans-serif;
       background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
       min-height: 100vh;
       margin: 0;
@@ -53,7 +54,7 @@
     }
 
     h1, h2, h3, h4, h5, h6 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Playfair Display', Georgia, serif;
     }
 
     .glassmorphism {
@@ -83,7 +84,7 @@
     .nav-link {
       position: relative;
       transition: color 0.3s ease;
-      color: #1f2937 !important;
+      color: #1f2937;
     }
 
     .nav-link::after {
@@ -98,7 +99,7 @@
     }
 
     .nav-link:hover {
-      color: #10b981 !important;
+      color: #10b981;
     }
 
     .nav-link:hover::after {
@@ -110,6 +111,7 @@
       min-height: 100vh;
       padding-top: 80px;
       overflow: hidden;
+      background-color: #2ecc71; /* Fallback background color */
     }
 
     .hero-background {
@@ -233,24 +235,38 @@
     }
 
     .nav-logo-text {
-      color: #1f2937 !important;
+      color: #1f2937;
     }
 
     .nav-icon {
-      color: #10b981 !important;
+      color: #10b981;
     }
 
     .nav-button {
-      color: #1f2937 !important;
+      color: #1f2937;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      transition: all 0.3s ease;
     }
 
-    .nav-button.bg-emerald-600\/90 {
-      background-color: #10b981 !important;
-      color: white !important;
+    .nav-button.emerald {
+      background-color: #10b981;
+      color: white;
     }
 
-    .nav-button.bg-emerald-600\/90:hover {
-      background-color: #059669 !important;
+    .nav-button.emerald:hover {
+      background-color: #059669;
+    }
+
+    .nav-button.border-emerald {
+      color: #10b981;
+      border: 1px solid #10b981;
+    }
+
+    .nav-button.border-emerald:hover {
+      background-color: rgba(16, 185, 129, 0.3);
+      color: white;
     }
 
     nav.scrolled {
@@ -498,7 +514,7 @@
   </div>
 
   <!-- Navigation -->
-  <nav class="fixed top-0 left-0 w-full z-[100] transition-all duration-300" aria-label="Main navigation">
+  <nav class="fixed top-0 left-0 w-full z-[100] transition-all duration-300 glassmorphism" aria-label="Main navigation">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex items-center justify-between h-20">
         <div class="flex items-center">
@@ -523,13 +539,13 @@
           <div id="user-stats" class="hidden text-gray-800 text-sm mr-3">
             <span id="nav-user-name"></span>
           </div>
-          <button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition nav-button">
+          <button id="login-button" class="nav-button border-emerald">
             Sign In
           </button>
-          <button id="signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
+          <button id="signup-button" class="nav-button emerald">
             Sign Up
           </button>
-          <button id="profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
+          <button id="profile-button" class="hidden nav-button emerald">
             Profile
           </button>
         </div>
@@ -550,13 +566,13 @@
           <div id="mobile-user-stats" class="hidden text-gray-800 text-sm mb-2">
             <span id="mobile-nav-user-name" class="block mb-1"></span>
           </div>
-          <button id="mobile-login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition nav-button">
+          <button id="mobile-login-button" class="nav-button border-emerald">
             Sign In
           </button>
-          <button id="mobile-signup-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
+          <button id="mobile-signup-button" class="nav-button emerald">
             Sign Up
           </button>
-          <button id="mobile-profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
+          <button id="mobile-profile-button" class="hidden nav-button emerald">
             Profile
           </button>
         </div>
@@ -866,19 +882,7 @@
     </div>
   </footer>
 
-  <script type="module">
-    import {
-      saveUser,
-      getUser,
-      saveSavedChallenges,
-      getSavedChallenges,
-      saveCompletedChallenges,
-      getCompletedChallenges,
-      saveXP,
-      getXP,
-      getRandomChallenge
-    } from './dataManager.js';
-
+  <script>
     // App State
     const state = {
       currentUser: null,
@@ -891,6 +895,50 @@
 
     // Simulated total users for calculation (replace with actual user base in a real app)
     const TOTAL_USERS = 100;
+
+    // Mock dataManager.js functionality
+    function saveUser(user) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+
+    function getUser() {
+      const user = localStorage.getItem('currentUser');
+      return user ? JSON.parse(user) : null;
+    }
+
+    function saveSavedChallenges(challenges) {
+      localStorage.setItem('savedChallenges', JSON.stringify(challenges));
+    }
+
+    function getSavedChallenges() {
+      const challenges = localStorage.getItem('savedChallenges');
+      return challenges ? JSON.parse(challenges) : [];
+    }
+
+    function saveCompletedChallenges(count) {
+      localStorage.setItem('completedChallenges', count);
+    }
+
+    function getCompletedChallenges() {
+      return parseInt(localStorage.getItem('completedChallenges') || '0');
+    }
+
+    function saveXP(xp) {
+      localStorage.setItem('xp', xp);
+    }
+
+    function getXP() {
+      return parseInt(localStorage.getItem('xp') || '0');
+    }
+
+    function getRandomChallenge() {
+      const challenges = [
+        { challenge: "Use a reusable water bottle today", fact: "This can save 156 plastic bottles per year per person!" },
+        { challenge: "Walk or bike instead of driving", fact: "This reduces your carbon footprint by 0.5kg of CO2 per mile!" },
+        { challenge: "Turn off lights when leaving a room", fact: "This can save 100 kWh of electricity annually!" }
+      ];
+      return challenges[Math.floor(Math.random() * challenges.length)];
+    }
 
     // DOM Elements
     const authModal = document.getElementById('auth-modal');
@@ -994,25 +1042,11 @@
     function updateNavBackground() {
       window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-          nav.classList.add('glassmorphism', 'scrolled');
+          nav.classList.add('scrolled');
         } else {
-          nav.classList.remove('glassmorphism', 'scrolled');
+          nav.classList.remove('scrolled');
         }
       });
-    }
-
-    // Lazy-load hero background
-    function lazyLoadBackground() {
-      const heroBg = document.getElementById('hero-bg');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            heroBg.style.backgroundImage = "url('8172235.jpg')";
-            observer.unobserve(heroBg);
-          }
-        });
-      });
-      observer.observe(heroBg);
     }
 
     // Parallax effect for hero background
@@ -1147,24 +1181,11 @@
       return data ? JSON.parse(data) : [];
     }
 
-    // Display user name with badge in navigation
+    // Display user name in navigation
     function displayUserNameWithBadge() {
       if (state.currentUser) {
         navUserName.textContent = state.currentUser.name;
         mobileNavUserName.textContent = state.currentUser.name;
-        if (state.currentUser.badge === "topWarrior") {
-          const badgeImg = document.createElement('img');
-          badgeImg.src = 'eco-badge.png';
-          badgeImg.alt = 'Top Eco Warrior Badge';
-          badgeImg.className = 'badge-icon';
-          navUserName.appendChild(badgeImg);
-
-          const mobileBadgeImg = document.createElement('img');
-          mobileBadgeImg.src = 'eco-badge.png';
-          mobileBadgeImg.alt = 'Top Eco Warrior Badge';
-          mobileBadgeImg.className = 'badge-icon';
-          mobileNavUserName.appendChild(mobileBadgeImg);
-        }
         // Show user stats
         const userStats = document.getElementById('user-stats');
         const mobileUserStats = document.getElementById('mobile-user-stats');
@@ -1190,7 +1211,6 @@
           <h3 class="text-xl font-bold text-gray-800 mb-2">${place}</h3>
           <p class="text-gray-600">
             ${warrior.name}
-            ${warrior.badge === "topWarrior" ? '<img src="eco-badge.png" alt="Top Eco Warrior Badge" class="badge-icon inline" />' : ''}
             - ${warrior.xp} XP
           </p>
         `;
@@ -1287,10 +1307,6 @@
 
           document.getElementById('challenge-completed').classList.remove('hidden');
           alert("Great job completing today's challenge! 🌱 You've earned 10 XP!");
-          gtag('event', 'challenge_completed', {
-            'event_category': 'Engagement',
-            'event_label': state.currentChallenge
-          });
           updateAuthUI();
           displayUserNameWithBadge();
           populateEcoWarriors();
@@ -1397,10 +1413,6 @@
         if (feedback.trim()) {
           alert('Thank you for your feedback!');
           feedbackText.value = '';
-          gtag('event', 'feedback_submitted', {
-            'event_category': 'Engagement',
-            'event_label': 'Footer Feedback'
-          });
         }
       });
     }
