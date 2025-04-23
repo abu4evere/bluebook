@@ -3,12 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>GreenPledge - Eco Facts & Challenges</title>
   <title>GreenPledge - Your Eco Journey</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Join GreenPledge to take daily eco-friendly challenges and make a big impact on the planet with small actions.">
+  <meta name="keywords" content="sustainability, eco-friendly, daily challenges, green living, environment">
+  <meta name="author" content="GreenPledge Team">
+  <!-- Open Graph for Social Sharing -->
+  <meta property="og:title" content="GreenPledge - Small Actions, Big Impact">
+  <meta property="og:description" content="Transform your daily habits with micro-actions that create macro impact for our planet.">
+  <meta property="og:image" content="path/to/og-image.jpg">
+  <meta property="og:url" content="https://yourwebsite.com">
+  <meta property="og:type" content="website">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'YOUR_GA_ID');
+  </script>
+  <script defer src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.1/purify.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700&display=swap');
     
@@ -22,6 +40,10 @@
       --text-light: #6b7280;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
@@ -29,6 +51,26 @@
       margin: 0;
       overflow-x: hidden;
       color: var(--text);
+    }
+
+    body.dark-mode {
+      background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+      color: #e5e7eb;
+    }
+    body.dark-mode .glassmorphism {
+      background: rgba(31, 41, 55, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    body.dark-mode h1,
+    body.dark-mode h2,
+    body.dark-mode h3,
+    body.dark-mode h4,
+    body.dark-mode h5,
+    body.dark-mode h6 {
+      color: #e5e7eb;
+    }
+    body.dark-mode .text-gray-600 {
+      color: #d1d5db;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -41,6 +83,15 @@
       -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    }
+
+    @supports not (backdrop-filter: blur(15px)) {
+      .glassmorphism {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      body.dark-mode .glassmorphism {
+        background: rgba(31, 41, 55, 0.3);
+      }
     }
 
     .card-3d {
@@ -56,7 +107,7 @@
     .nav-link {
       position: relative;
       transition: color 0.3s ease;
-      color: #1f2937 !important; /* Black text at all times */
+      color: #1f2937 !important;
     }
 
     .nav-link::after {
@@ -71,7 +122,7 @@
     }
 
     .nav-link:hover {
-      color: #10b981 !important; /* Hover color remains green */
+      color: #10b981 !important;
     }
 
     .nav-link:hover::after {
@@ -92,7 +143,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: url('https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') no-repeat center center;
+      background: no-repeat center center;
       background-size: cover;
       transform: scale(1.1);
       transition: transform 0.1s ease;
@@ -104,7 +155,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(to bottom, rgba(0, 100, 0, 0.4), rgba(0, 128, 128, 0.6));
+      background: linear-gradient(to bottom, rgba(0, 100, 0, 0.4), rgba(0, 128, 128, 0.8));
     }
 
     .glow-btn {
@@ -205,51 +256,48 @@
       transition: background-color 0.3s ease;
     }
 
-    /* Nav Styles */
     .nav-logo-text {
-      color: #1f2937 !important; /* Black logo text at all times */
+      color: #1f2937 !important;
     }
 
     .nav-icon {
-      color: #10b981 !important; /* Keep icon color primary green */
+      color: #10b981 !important;
     }
 
     .nav-button {
-      color: #1f2937 !important; /* Black button text at all times */
+      color: #1f2937 !important;
     }
 
     .nav-button.bg-emerald-600\/90 {
-      background-color: #10b981 !important; /* Green background for contrast */
-      color: white !important; /* White text on green button */
+      background-color: #10b981 !important;
+      color: white !important;
     }
 
     .nav-button.bg-emerald-600\/90:hover {
-      background-color: #059669 !important; /* Darker green on hover */
+      background-color: #059669 !important;
     }
 
-    /* Glassmorphism on scroll, but no text color change */
     nav.scrolled {
-      /* Only apply glassmorphism, no text color changes */
+      /* Glassmorphism applied on scroll */
     }
 
-    /* Scrollable Testimonials */
     .testimonials-container {
       display: flex;
       overflow-x: auto;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
 
     .testimonials-container::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
+      display: none;
     }
 
     .testimonial-card {
       flex: 0 0 auto;
-      width: 300px; /* Fixed width for each card */
-      margin-right: 1.5rem; /* Gap between cards */
+      width: 300px;
+      margin-right: 1.5rem;
     }
 
     .scroll-btn {
@@ -273,6 +321,12 @@
       background-color: #d1d5db;
       cursor: not-allowed;
     }
+
+    @media (max-width: 640px) {
+      .hero-section h1 {
+        font-size: 2.5rem;
+      }
+    }
   </style>
 </head>
 <body class="overflow-x-hidden">
@@ -280,10 +334,10 @@
   <div id="auth-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-[1000] opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="w-full max-w-md p-4 transform scale-90 transition-transform duration-300">
       <!-- Login Modal -->
-      <div id="login-modal" class="glassmorphism rounded-2xl overflow-hidden">
+      <div id="login-modal" class="glassmorphism rounded-2xl overflow-hidden" role="dialog" aria-labelledby="modal-login-title">
         <div class="p-8">
           <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Welcome Back</h1>
+            <h1 id="modal-login-title" class="text-2xl font-bold text-gray-800">Welcome Back</h1>
             <button id="close-auth-modal" class="text-gray-500 hover:text-gray-700 transition-colors">
               <i class="fas fa-times text-xl"></i>
             </button>
@@ -295,6 +349,7 @@
                 type="email" 
                 id="modal-login-email" 
                 required
+                aria-required="true"
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 placeholder="your@email.com"
               >
@@ -305,6 +360,7 @@
                 type="password" 
                 id="modal-login-password" 
                 required
+                aria-required="true"
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 placeholder="••••••••"
               >
@@ -330,10 +386,10 @@
         </div>
       </div>
       <!-- Signup Modal -->
-      <div id="signup-modal" class="glassmorphism rounded-2xl overflow-hidden hidden">
+      <div id="signup-modal" class="glassmorphism rounded-2xl overflow-hidden hidden" role="dialog" aria-labelledby="modal-signup-title">
         <div class="p-8">
           <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Join GreenPledge</h1>
+            <h1 id="modal-signup-title" class="text-2xl font-bold text-gray-800">Join GreenPledge</h1>
             <button id="close-auth-signup" class="text-gray-500 hover:text-gray-700 transition-colors">
               <i class="fas fa-times text-xl"></i>
             </button>
@@ -345,6 +401,7 @@
                 type="text" 
                 id="modal-signup-name" 
                 required
+                aria-required="true"
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 placeholder="John Doe"
               >
@@ -355,6 +412,7 @@
                 type="email" 
                 id="modal-signup-email" 
                 required
+                aria-required="true"
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 placeholder="your@email.com"
               >
@@ -365,6 +423,7 @@
                 type="password" 
                 id="modal-signup-password" 
                 required
+                aria-required="true"
                 minlength="8"
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 placeholder="••••••••"
@@ -377,6 +436,7 @@
                 type="password" 
                 id="modal-signup-confirm-password" 
                 required
+                aria-required="true"
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 placeholder="••••••••"
               >
@@ -404,7 +464,7 @@
   </div>
 
   <!-- Navigation -->
-  <nav class="fixed top-0 left-0 w-full z-[100] transition-all duration-300">
+  <nav class="fixed top-0 left-0 w-full z-[100] transition-all duration-300" aria-label="Main navigation">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex items-center justify-between h-20">
         <div class="flex items-center">
@@ -425,6 +485,9 @@
         </div>
 
         <div class="hidden md:flex items-center space-x-3">
+          <div id="user-stats" class="hidden text-white text-sm mr-3">
+            <span id="user-xp">XP: 0</span> | <span id="user-challenges">Challenges: 0</span>
+          </div>
           <button id="login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition nav-button">
             Sign In
           </button>
@@ -433,6 +496,9 @@
           </button>
           <button id="profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
             Profile
+          </button>
+          <button id="theme-toggle" class="text-white nav-button ml-3">
+            <i class="fas fa-moon text-xl"></i>
           </button>
         </div>
       </div>
@@ -456,6 +522,9 @@
           </button>
           <button id="mobile-profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
             Profile
+          </button>
+          <button id="mobile-theme-toggle" class="text-white nav-button">
+            <i class="fas fa-moon text-xl"></i>
           </button>
         </div>
       </div>
@@ -515,6 +584,17 @@
               <button id="save-challenge-button" class="glow-btn px-6 py-3 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition">
                 <i class="fas fa-bookmark mr-2"></i> Save for Later
               </button>
+            </div>
+            <div id="challenge-completed" class="hidden flex items-center mt-4 text-green-600">
+              <i class="fas fa-trophy mr-2"></i> Challenge Completed!
+            </div>
+            <div class="mt-4 flex space-x-4">
+              <a href="https://twitter.com/intent/tweet?text=I just completed a challenge on GreenPledge! 🌱 Join me: yourwebsite.com" target="_blank" class="social-icon text-gray-600">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=yourwebsite.com" target="_blank" class="social-icon text-gray-600">
+                <i class="fab fa-facebook-f"></i>
+              </a>
             </div>
           </div>
           <div class="md:w-1/2">
@@ -685,10 +765,29 @@
     </div>
   </section>
 
+  <!-- Leaderboard Section -->
+  <section id="leaderboard-section" class="max-w-7xl mx-auto mb-20 py-20">
+    <h2 class="text-4xl font-bold text-center text-gray-800 mb-12 fade-in">Top Eco Warriors</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="glassmorphism card-3d rounded-2xl p-8 text-center">
+        <h3 class="text-xl font-bold text-gray-800 mb-2">🥇 1st Place</h3>
+        <p class="text-gray-600">Demo User - 150 XP</p>
+      </div>
+      <div class="glassmorphism card-3d rounded-2xl p-8 text-center">
+        <h3 class="text-xl font-bold text-gray-800 mb-2">🥈 2nd Place</h3>
+        <p class="text-gray-600">EcoFan - 120 XP</p>
+      </div>
+      <div class="glassmorphism card-3d rounded-2xl p-8 text-center">
+        <h3 class="text-xl font-bold text-gray-800 mb-2">🥉 3rd Place</h3>
+        <p class="text-gray-600">GreenStar - 100 XP</p>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="wave-footer bg-white/90 py-12 border-t border-gray-200 relative">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div class="grid md:grid-cols-5 gap-8 mb-8">
         <div class="fade-in">
           <h3 class="text-lg font-bold text-gray-800 mb-4">GreenPledge</h3>
           <p class="text-gray-600 mb-4">Making sustainability simple, one day at a time.</p>
@@ -724,6 +823,13 @@
             <button id="newsletter-submit" class="px-4 py-2 bg-green-600 text-white rounded-r-lg hover:bg-green-700 transition-colors">
               <i class="fas fa-paper-plane"></i>
             </button>
+          </div>
+        </div>
+        <div class="fade-in">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">Feedback</h3>
+          <div id="feedback-form" class="space-y-4">
+            <textarea id="feedback-text" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Share your thoughts..."></textarea>
+            <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">Submit</button>
           </div>
         </div>
       </div>
@@ -790,6 +896,10 @@
     const scrollLeftBtn = document.getElementById('scroll-left');
     const scrollRightBtn = document.getElementById('scroll-right');
     const testimonialsContainer = document.getElementById('testimonials-container');
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const feedbackForm = document.getElementById('feedback-form');
+    const feedbackText = document.getElementById('feedback-text');
 
     // Initialize the app
     function initApp() {
@@ -804,6 +914,7 @@
       updateNavBackground();
       setupScrollAnimations();
       updateTestimonialsScroll();
+      loadTheme();
     }
 
     // Update navigation background on scroll
@@ -815,6 +926,20 @@
           nav.classList.remove('glassmorphism', 'scrolled');
         }
       });
+    }
+
+    // Lazy-load hero background
+    function lazyLoadBackground() {
+      const heroBg = document.getElementById('hero-bg');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            heroBg.style.backgroundImage = "url('https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')";
+            observer.unobserve(heroBg);
+          }
+        });
+      });
+      observer.observe(heroBg);
     }
 
     // Parallax effect for hero background
@@ -853,17 +978,46 @@
       featuredChallenge.textContent = challenge;
       challengeImpactText.textContent = fact;
       progressBar.style.width = '0%'; // Reset progress bar
+      document.getElementById('challenge-completed').classList.add('hidden');
     }
 
     // Newsletter subscription handler
     function handleNewsletterSubmit() {
-      const email = newsletterEmail.value;
+      const email = DOMPurify.sanitize(newsletterEmail.value);
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         alert('Please enter a valid email address.');
         return;
       }
       alert('Thank you for subscribing to our newsletter! 🌱');
       newsletterEmail.value = '';
+    }
+
+    // Load theme from localStorage
+    function loadTheme() {
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.innerHTML = '<i class="fas fa-sun text-xl"></i>';
+        mobileThemeToggle.innerHTML = '<i class="fas fa-sun text-xl"></i>';
+      }
+    }
+
+    // Trap focus in modal
+    function trapFocus(modal) {
+      const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+          if (e.shiftKey && document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          } else if (!e.shiftKey && document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      });
     }
 
     // Set up event listeners
@@ -921,7 +1075,13 @@
         xp += 10;
         saveXP(xp);
 
+        document.getElementById('challenge-completed').classList.remove('hidden');
         alert("Great job completing today's challenge! 🌱 You've earned 10 XP!");
+        gtag('event', 'challenge_completed', {
+          'event_category': 'Engagement',
+          'event_label': state.currentChallenge
+        });
+        updateAuthUI();
         generateDailyChallenge();
       });
 
@@ -968,7 +1128,6 @@
 
       newsletterSubmit.addEventListener('click', handleNewsletterSubmit);
 
-      // Testimonials scroll buttons
       scrollLeftBtn.addEventListener('click', () => {
         testimonialsContainer.scrollBy({ left: -300, behavior: 'smooth' });
       });
@@ -978,36 +1137,78 @@
       });
 
       testimonialsContainer.addEventListener('scroll', updateTestimonialsScroll);
+
+      themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun text-xl"></i>' : '<i class="fas fa-moon text-xl"></i>';
+        mobileThemeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun text-xl"></i>' : '<i class="fas fa-moon text-xl"></i>';
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+      });
+
+      mobileThemeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document/body.classList.contains('dark-mode');
+        themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun text-xl"></i>' : '<i class="fas fa-moon text-xl"></i>';
+        mobileThemeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun text-xl"></i>' : '<i class="fas fa-moon text-xl"></i>';
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+      });
+
+      feedbackForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const feedback = DOMPurify.sanitize(feedbackText.value);
+        if (feedback.trim()) {
+          alert('Thank you for your feedback!');
+          feedbackText.value = '';
+          gtag('event', 'feedback_submitted', {
+            'event_category': 'Engagement',
+            'event_label': 'Footer Feedback'
+          });
+        }
+      });
     }
 
     // Show login modal
     function showLoginModal() {
       authModal.classList.remove('opacity-0', 'pointer-events-none');
-      authModal.classList.add('opacity-100', 'pointer-events-auto');
+      authModal.classList.add('opacity-100', 'pointer-events-auto', 'active');
       loginModal.classList.remove('hidden');
       signupModal.classList.add('hidden');
+      trapFocus(loginModal);
+      loginModal.querySelector('input').focus();
     }
 
     // Show signup modal
     function showSignupModal() {
       authModal.classList.remove('opacity-0', 'pointer-events-none');
-      authModal.classList.add('opacity-100', 'pointer-events-auto');
+      authModal.classList.add('opacity-100', 'pointer-events-auto', 'active');
       signupModal.classList.remove('hidden');
       loginModal.classList.add('hidden');
+      trapFocus(signupModal);
+      signupModal.querySelector('input').focus();
     }
 
     // Close modal
     function closeModal() {
-      authModal.classList.remove('opacity-100', 'pointer-events-auto');
+      authModal.classList.remove('opacity-100', 'pointer-events-auto', 'active');
       authModal.classList.add('opacity-0', 'pointer-events-none');
     }
 
     // Handle modal login
     function handleModalLogin(e) {
       e.preventDefault();
-      const email = document.getElementById('modal-login-email').value;
+      const email = DOMPurify.sanitize(document.getElementById('modal-login-email').value);
       const password = document.getElementById('modal-login-password').value;
-      
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      if (!password || password.length <  Ascendancy8) {
+        alert('Password must be at least 8 characters long.');
+        return;
+      }
+
       state.currentUser = {
         name: "Demo User",
         email: email,
@@ -1027,11 +1228,23 @@
     // Handle modal signup
     function handleModalSignup(e) {
       e.preventDefault();
-      const name = document.getElementById('modal-signup-name').value;
-      const email = document.getElementById('modal-signup-email').value;
+      const name = DOMPurify.sanitize(document.getElementById('modal-signup-name').value);
+      const email = DOMPurify.sanitize(document.getElementById('modal-signup-email').value);
       const password = document.getElementById('modal-signup-password').value;
       const confirmPassword = document.getElementById('modal-signup-confirm-password').value;
 
+      if (!name || name.trim().length < 2) {
+        alert('Please enter a valid name (at least 2 characters).');
+        return;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      if (!password || password.length < 8) {
+        alert('Password must be at least 8 characters long.');
+        return;
+      }
       if (password !== confirmPassword) {
         alert("Passwords don't match!");
         return;
@@ -1064,6 +1277,12 @@
         mobileProfileButton.classList.remove('hidden');
         tryChallengeButton.textContent = "I Did This!";
         saveChallengeButton.textContent = "Save Challenge";
+
+        // Show user stats
+        const userStats = document.getElementById('user-stats');
+        userStats.classList.remove('hidden');
+        document.getElementById('user-xp').textContent = `XP: ${getXP()}`;
+        document.getElementById('user-challenges').textContent = `Challenges: ${getCompletedChallenges()}`;
       } else {
         loginButton.classList.remove('hidden');
         signupButton.classList.remove('hidden');
@@ -1073,6 +1292,7 @@
         mobileProfileButton.classList.add('hidden');
         tryChallengeButton.textContent = "Try Challenge";
         saveChallengeButton.textContent = "Save for Later";
+        document.getElementById('user-stats').classList.add('hidden');
       }
     }
 
@@ -1089,6 +1309,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       initApp();
       setupParallax();
+      lazyLoadBackground();
     });
   </script>
 </body>
