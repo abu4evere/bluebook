@@ -37,7 +37,6 @@
       --accent: #34d399;
       --background: #f0fdf4;
       --text: #1f2937;
-      --text-light: #6b7280;
     }
 
     html {
@@ -51,26 +50,6 @@
       margin: 0;
       overflow-x: hidden;
       color: var(--text);
-    }
-
-    body.dark-mode {
-      background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
-      color: #e5e7eb;
-    }
-    body.dark-mode .glassmorphism {
-      background: rgba(31, 41, 55, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    body.dark-mode h1,
-    body.dark-mode h2,
-    body.dark-mode h3,
-    body.dark-mode h4,
-    body.dark-mode h5,
-    body.dark-mode h6 {
-      color: #e5e7eb;
-    }
-    body.dark-mode .text-gray-600 {
-      color: #d1d5db;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -88,9 +67,6 @@
     @supports not (backdrop-filter: blur(15px)) {
       .glassmorphism {
         background: rgba(255, 255, 255, 0.3);
-      }
-      body.dark-mode .glassmorphism {
-        background: rgba(31, 41, 55, 0.3);
       }
     }
 
@@ -155,7 +131,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(to bottom, rgba(0, 100, 0, 0.4), rgba(0, 128, 128, 0.8));
+      background: linear-gradient(to bottom, rgba(0, 128, 0, 0.3), rgba(0, 139, 139, 0.7));
     }
 
     .glow-btn {
@@ -548,9 +524,6 @@
           <button id="profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
             Profile
           </button>
-          <button id="theme-toggle" class="text-white nav-button ml-3">
-            <i class="fas fa-moon text-xl"></i>
-          </button>
         </div>
       </div>
 
@@ -573,9 +546,6 @@
           </button>
           <button id="mobile-profile-button" class="hidden px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
             Profile
-          </button>
-          <button id="mobile-theme-toggle" class="text-white nav-button">
-            <i class="fas fa-moon text-xl"></i>
           </button>
         </div>
       </div>
@@ -948,8 +918,6 @@
     const scrollLeftBtn = document.getElementById('scroll-left');
     const scrollRightBtn = document.getElementById('scroll-right');
     const testimonialsContainer = document.getElementById('testimonials-container');
-    const themeToggle = document.getElementById('theme-toggle');
-    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
     const feedbackForm = document.getElementById('feedback-form');
     const feedbackText = document.getElementById('feedback-text');
     const photoUploadModal = document.getElementById('photo-upload-modal');
@@ -977,7 +945,6 @@
       updateNavBackground();
       setupScrollAnimations();
       updateTestimonialsScroll();
-      loadTheme();
     }
 
     // Update navigation background on scroll
@@ -997,7 +964,7 @@
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            heroBg.style.backgroundImage = "url('https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')";
+            heroBg.style.backgroundImage = "url('https://images.unsplash.com/photo-1501854140801-50d01698902b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')";
             observer.unobserve(heroBg);
           }
         });
@@ -1053,15 +1020,6 @@
       }
       alert('Thank you for subscribing to our newsletter! 🌱');
       newsletterEmail.value = '';
-    }
-
-    // Load theme from localStorage
-    function loadTheme() {
-      if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeToggle.innerHTML = '<i class="fas fa-sun text-xl"></i>';
-        mobileThemeToggle.innerHTML = '<i class="fas fa-sun text-xl"></i>';
-      }
     }
 
     // Trap focus in modal
@@ -1288,22 +1246,6 @@
       });
 
       testimonialsContainer.addEventListener('scroll', updateTestimonialsScroll);
-
-      themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun text-xl"></i>' : '<i class="fas fa-moon text-xl"></i>';
-        mobileThemeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun text-xl"></i>' : '<i class="fas fa-moon text-xl"></i>';
-        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-      });
-
-      mobileThemeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun text-xl"></i>' : '<i class="fas fa-moon text-xl"></i>';
-        mobileThemeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun text-xl"></i>' : '<i class="fas fa-moon text-xl"></i>';
-        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-      });
 
       feedbackForm.addEventListener('submit', (e) => {
         e.preventDefault();
