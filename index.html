@@ -784,7 +784,7 @@
           </div>
           <p class="text-gray-600 italic mb-6">"The tips and challenges are practical and fun. I’ve learned so much about sustainability!"</p>
           <div class="flex items-center">
-            <div class="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold mr-3 avatar-zoom">Z</div>
+            <div class="w-10 h-10 rounded-full bg-teal-500 flexed items-center justify-center text-white font-bold mr-3 avatar-zoom">Z</div>
             <div>
               <h4 class="font-bold text-gray-800">Zarina</h4>
               <p class="text-sm text-gray-500">Member since 2024</p>
@@ -1313,6 +1313,22 @@
           alert("Challenge saved to your profile! 📌");
         } else {
           alert("You've already saved this challenge!");
+        }
+      });
+
+      ctaSignupButton.addEventListener('click', () => {
+        if (!state.isAuthenticated) {
+          showSignupModal();
+        } else {
+          const targetElement = document.getElementById('challenges-section');
+          if (targetElement) {
+            const headerHeight = nav.offsetHeight;
+            const targetPosition = targetElement.offsetTop - headerHeight;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
         }
       });
 
