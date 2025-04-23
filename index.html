@@ -508,6 +508,7 @@
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
+          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" id="reward-shop-link">Reward Shop</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link">About</a>
         </div>
 
@@ -537,6 +538,7 @@
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
+          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" id="mobile-reward-shop-link">Reward Shop</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link">About</a>
           <button id="mobile-login-button" class="px-5 py-2 text-emerald-300 hover:text-white border border-emerald-300/50 rounded-full font-medium hover:bg-emerald-600/30 transition nav-button">
             Sign In
@@ -932,6 +934,8 @@
     const photoPreview = document.getElementById('photo-preview');
     const submitPhotoButton = document.getElementById('submit-photo');
     const cancelPhotoButton = document.getElementById('cancel-photo');
+    const rewardShopLink = document.getElementById('reward-shop-link');
+    const mobileRewardShopLink = document.getElementById('mobile-reward-shop-link');
 
     // Initialize the app
     function initApp() {
@@ -1255,17 +1259,40 @@
         link.addEventListener('click', function(e) {
           e.preventDefault();
           const targetId = this.getAttribute('data-target');
-          const targetElement = document.getElementById(targetId);
-          if (targetElement) {
-            const headerHeight = nav.offsetHeight;
-            const targetPosition = targetElement.offsetTop - headerHeight;
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
-            mobileMenu.classList.add('translate-x-full');
+          if (targetId) {
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+              const headerHeight = nav.offsetHeight;
+              const targetPosition = targetElement.offsetTop - headerHeight;
+              window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+              });
+              mobileMenu.classList.add('translate-x-full');
+            }
           }
         });
+      });
+
+      rewardShopLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!state.isAuthenticated) {
+          showLoginModal();
+          alert("Please log in to access the Reward Shop!");
+          return;
+        }
+        window.open('rewards.html', '_blank');
+      });
+
+      mobileRewardShopLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!state.isAuthenticated) {
+          showLoginModal();
+          alert("Please log in to access the Reward Shop!");
+          return;
+        }
+        window.open('rewards.html', '_blank');
+        mobileMenu.classList.add('translate-x-full');
       });
 
       newsletterSubmit.addEventListener('click', handleNewsletterSubmit);
