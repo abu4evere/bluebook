@@ -260,6 +260,7 @@
           <a href="index.html#challenges-section" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
           <a href="index.html#facts-section" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
           <a href="index.html#community-section" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
+          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" id="reward-shop-link">Reward Shop</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link">About</a>
         </div>
 
@@ -280,6 +281,7 @@
           <a href="index.html#challenges-section" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="challenges-section">Challenges</a>
           <a href="index.html#facts-section" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="facts-section">Facts</a>
           <a href="index.html#community-section" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
+          <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" id="mobile-reward-shop-link">Reward Shop</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link">About</a>
           <button id="mobile-logout-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
             Logout
@@ -472,6 +474,26 @@
         </div>
       </div>
     </div>
+
+    <!-- Redeemed Rewards Section -->
+    <div class="glassmorphism card-3d rounded-2xl overflow-hidden mb-8 fade-in">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-bold text-gray-800">
+            <i class="fas fa-gift mr-2 text-purple-600 gradient-icon"></i> Redeemed Rewards
+          </h2>
+          <button id="visit-reward-shop" class="glow-btn px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+            <i class="fas fa-shopping-bag mr-2"></i> Visit Reward Shop
+          </button>
+        </div>
+        
+        <div id="redeemed-rewards-list" class="space-y-4">
+          <div class="text-center py-8 text-gray-500" id="no-rewards-message">
+            You haven't redeemed any rewards yet. Visit the Reward Shop to exchange your XP for eco-friendly items!
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- Footer -->
@@ -554,7 +576,8 @@
       completedChallenges: 0,
       xp: 0,
       memberSince: new Date().getFullYear(),
-      currentChallengeIndex: null
+      currentChallengeIndex: null,
+      redeemedRewards: []
     };
 
     // DOM Elements
@@ -593,6 +616,21 @@
     const photoPreview = document.getElementById('photo-preview');
     const previewImage = document.getElementById('preview-image');
     const confirmPhoto = document.getElementById('confirm-photo');
+    const rewardShopLink = document.getElementById('reward-shop-link');
+    const mobileRewardShopLink = document.getElementById('mobile-reward-shop-link');
+    const redeemedRewardsList = document.getElementById('redeemed-rewards-list');
+    const noRewardsMessage = document.getElementById('no-rewards-message');
+    const visitRewardShopBtn = document.getElementById('visit-reward-shop');
+
+    // Data Management for Redeemed Rewards (should be in dataManager.js)
+    function saveRedeemedRewards(rewards) {
+      localStorage.setItem('redeemedRewards', JSON.stringify(rewards));
+    }
+
+    function getRedeemedRewards() {
+      const data = localStorage.getItem('redeemedRewards');
+      return data ? JSON.parse(data) : [];
+    }
 
     // Initialize the app
     function initApp() {
@@ -615,6 +653,12 @@
 
       state.completedChallenges = getCompletedChallenges();
       state.xp = getXP();
+
+      // Load redeemed rewards
+      state.redeemedRewards = getRedeemedRewards().filter(
+        reward => reward.user === state.currentUser.name
+      );
+      renderRedeemedRewards();
 
       updateProfileInfo();
       setupEventListeners();
@@ -688,7 +732,22 @@
       commentForm.addEventListener('submit', handleCommentSubmit);
 
       redeemXPBtn.addEventListener('click', () => {
-        alert('XP redemption coming soon! Stay tuned for rewards.');
+        window.open('rewards.html', '_blank');
+      });
+
+      rewardShopLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('rewards.html', '_blank');
+      });
+
+      mobileRewardShopLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('rewards.html', '_blank');
+        mobileMenu.classList.add('translate-x-full');
+      });
+
+      visitRewardShopBtn.addEventListener('click', () => {
+        window.open('rewards.html', '_blank');
       });
 
       closePhotoModal.addEventListener('click', closePhotoModalFn);
@@ -702,8 +761,9 @@
 
       document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function(e) {
-          e.preventDefault();
           const targetId = this.getAttribute('data-target');
+          if (!targetId) return; // Skip Reward Shop link
+          e.preventDefault();
           if (targetId === 'hero') {
             window.location.href = 'index.html';
           } else {
@@ -926,6 +986,36 @@
           saveComments(state.comments);
           renderComments();
         });
+      });
+    }
+
+    // Render redeemed rewards
+    function renderRedeemedRewards() {
+      if (state.redeemedRewards.length === 0) {
+        noRewardsMessage.classList.remove('hidden');
+        redeemedRewardsList.innerHTML = '';
+        return;
+      }
+      
+      noRewardsMessage.classList.add('hidden');
+      redeemedRewardsList.innerHTML = '';
+      
+      state.redeemedRewards.forEach((reward, index) => {
+        const rewardEl = document.createElement('div');
+        rewardEl.className = 'bg-white rounded-lg p-4 flex justify-between items-center';
+        rewardEl.innerHTML = `
+          <div class="flex items-center">
+            <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
+              <i class="fas fa-gift"></i>
+            </div>
+            <div>
+              <p class="text-gray-700 font-semibold">${reward.reward}</p>
+              <p class="text-sm text-gray-500">Redeemed on ${reward.date}</p>
+            </div>
+          </div>
+        `;
+        
+        redeemedRewardsList.appendChild(rewardEl);
       });
     }
 
