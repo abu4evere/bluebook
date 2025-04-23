@@ -202,6 +202,13 @@
     nav.scrolled {
       /* Only apply glassmorphism, no text color changes */
     }
+
+    .badge-icon {
+      width: 20px;
+      height: 20px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body class="overflow-x-hidden">
@@ -265,6 +272,9 @@
         </div>
 
         <div class="hidden md:flex items-center space-x-3">
+          <div id="user-stats" class="hidden text-white text-sm mr-3">
+            <span id="nav-user-name"></span>
+          </div>
           <button id="logout-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
             Logout
           </button>
@@ -283,6 +293,9 @@
           <a href="index.html#community-section" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" data-target="community-section">Community</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link" id="mobile-reward-shop-link">Reward Shop</a>
           <a href="#" class="text-white/90 hover:text-emerald-300 transition-colors nav-link">About</a>
+          <div id="mobile-user-stats" class="hidden text-white text-sm mb-2">
+            <span id="mobile-nav-user-name" class="block mb-1"></span>
+          </div>
           <button id="mobile-logout-button" class="px-5 py-2 bg-emerald-600/90 text-white rounded-full font-medium hover:bg-emerald-700 transition nav-button">
             Logout
           </button>
@@ -621,6 +634,8 @@
     const redeemedRewardsList = document.getElementById('redeemed-rewards-list');
     const noRewardsMessage = document.getElementById('no-rewards-message');
     const visitRewardShopBtn = document.getElementById('visit-reward-shop');
+    const navUserName = document.getElementById('nav-user-name');
+    const mobileNavUserName = document.getElementById('mobile-nav-user-name');
 
     // Data Management for Redeemed Rewards (should be in dataManager.js)
     function saveRedeemedRewards(rewards) {
@@ -642,6 +657,12 @@
 
       state.currentUser = loggedInUser;
 
+      // Update user object with badge if not present
+      if (!state.currentUser.badge) {
+        state.currentUser.badge = state.xp >= 100 ? "topWarrior" : "none";
+        saveUser(state.currentUser);
+      }
+
       // Load saved data
       state.savedChallenges = getSavedChallenges();
       renderSavedChallenges();
@@ -661,6 +682,7 @@
       renderRedeemedRewards();
 
       updateProfileInfo();
+      displayUserNameWithBadge();
       setupEventListeners();
       generateDailyChallenge();
       updateNavBackground();
@@ -690,6 +712,30 @@
       }, { threshold: 0.2 });
 
       elements.forEach(element => observer.observe(element));
+    }
+
+    // Display user name with badge in navigation
+    function displayUserNameWithBadge() {
+      if (state.currentUser) {
+        navUserName.textContent = state.currentUser.name;
+        mobileNavUserName.textContent = state.currentUser.name;
+        if (state.currentUser.badge === "topWarrior") {
+          const badgeImg = document.createElement('img');
+          badgeImg.src = 'eco-badge.png';
+          badgeImg.alt = 'Top Eco Warrior Badge';
+          badgeImg.className = 'badge-icon';
+          navUserName.appendChild(badgeImg);
+
+          const mobileBadgeImg = document.createElement('img');
+          mobileBadgeImg.src = 'eco-badge.png';
+          mobileBadgeImg.alt = 'Top Eco Warrior Badge';
+          mobileBadgeImg.className = 'badge-icon';
+          mobileNavUserName.appendChild(mobileBadgeImg);
+        }
+        // Show user stats
+        document.getElementById('user-stats').classList.remove('hidden');
+        document.getElementById('mobile-user-stats').classList.remove('hidden');
+      }
     }
 
     // Update profile information
@@ -849,6 +895,11 @@
         saveCompletedChallenges(state.completedChallenges);
         saveXP(state.xp);
         
+        // Update badge status
+        state.currentUser.badge = state.xp >= 100 ? "topWarrior" : "none";
+        saveUser(state.currentUser);
+        displayUserNameWithBadge();
+
         updateProfileInfo();
         closePhotoModalFn();
         alert("Challenge completed! You've earned 10 XP! 🌱");
