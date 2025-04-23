@@ -322,6 +322,13 @@
       cursor: not-allowed;
     }
 
+    .photo-preview {
+      max-width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      margin-top: 1rem;
+    }
+
     @media (max-width: 640px) {
       .hero-section h1 {
         font-size: 2.5rem;
@@ -456,6 +463,50 @@
             <div class="text-center text-sm text-gray-600 mt-4">
               Already have an account? 
               <a href="#" id="show-modal-login" class="text-green-600 font-medium hover:text-green-800">Log in</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo Upload Modal -->
+  <div id="photo-upload-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-[1000] opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="w-full max-w-md p-4 transform scale-90 transition-transform duration-300">
+      <div class="glassmorphism rounded-2xl overflow-hidden" role="dialog" aria-labelledby="photo-upload-title">
+        <div class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h1 id="photo-upload-title" class="text-2xl font-bold text-gray-800">Upload Proof</h1>
+            <button id="close-photo-upload-modal" class="text-gray-500 hover:text-gray-700 transition-colors">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          <div class="space-y-4">
+            <p class="text-gray-600">Please upload a photo to prove you completed the challenge.</p>
+            <div>
+              <input 
+                type="file" 
+                id="challenge-photo" 
+                accept="image/*" 
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              >
+            </div>
+            <div id="photo-preview-container" class="hidden">
+              <img id="photo-preview" class="photo-preview" src="" alt="Uploaded photo preview">
+            </div>
+            <div class="flex space-x-4">
+              <button 
+                id="submit-photo"
+                class="w-full glow-btn px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium transition-all hover:scale-[1.02]"
+              >
+                Submit Proof
+              </button>
+              <button 
+                id="cancel-photo"
+                class="w-full glow-btn px-6 py-3 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
@@ -862,7 +913,8 @@
       currentUser: null,
       isAuthenticated: false,
       currentChallenge: null,
-      currentFact: null
+      currentFact: null,
+      completedChallengesWithProof: [] // Array to store completed challenges with photo proof
     };
 
     // DOM Elements
@@ -900,6 +952,13 @@
     const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
     const feedbackForm = document.getElementById('feedback-form');
     const feedbackText = document.getElementById('feedback-text');
+    const photoUploadModal = document.getElementById('photo-upload-modal');
+    const closePhotoUploadModal = document.getElementById('close-photo-upload-modal');
+    const challengePhotoInput = document.getElementById('challenge-photo');
+    const photoPreviewContainer = document.getElementById('photo-preview-container');
+    const photoPreview = document.getElementById('photo-preview');
+    const submitPhotoButton = document.getElementById('submit-photo');
+    const cancelPhotoButton = document.getElementById('cancel-photo');
 
     // Initialize the app
     function initApp() {
@@ -908,6 +967,10 @@
         state.currentUser = loggedInUser;
         state.isAuthenticated = true;
         updateAuthUI();
+      }
+      const storedCompletedChallenges = getCompletedChallengesWithProof();
+      if (storedCompletedChallenges) {
+        state.completedChallengesWithProof = storedCompletedChallenges;
       }
       generateDailyChallenge();
       setupEventListeners();
@@ -1020,6 +1083,63 @@
       });
     }
 
+    // Show photo upload modal
+    function showPhotoUploadModal() {
+      photoUploadModal.classList.remove('opacity-0', 'pointer-events-none');
+      photoUploadModal.classList.add('opacity-100', 'pointer-events-auto');
+      trapFocus(photoUploadModal);
+      challengePhotoInput.focus();
+    }
+
+    // Close photo upload modal
+    function closePhotoUploadModalHandler() {
+      photoUploadModal.classList.remove('opacity-100', 'pointer-events-auto');
+      photoUploadModal.classList.add('opacity-0', 'pointer-events-none');
+      photoPreviewContainer.classList.add('hidden');
+      photoPreview.src = '';
+      challengePhotoInput.value = '';
+    }
+
+    // Handle photo upload and preview
+    function handlePhotoUpload() {
+      const file = challengePhotoInput.files[0];
+      if (file) {
+        if (!file.type.startsWith('image/')) {
+          alert('Please upload a valid image file.');
+          challengePhotoInput.value = '';
+          return;
+        }
+        if (file.size > 5 * 1024 * 1024) { // 5MB limit
+          alert('File size exceeds 5MB. Please upload a smaller image.');
+          challengePhotoInput.value = '';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          photoPreview.src = e.target.result;
+          photoPreviewContainer.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Save completed challenge with photo proof
+    function saveCompletedChallengeWithProof(photoData) {
+      const challengeEntry = {
+        challenge: state.currentChallenge,
+        photo: photoData,
+        date: new Date().toISOString()
+      };
+      state.completedChallengesWithProof.push(challengeEntry);
+      localStorage.setItem('completedChallengesWithProof', JSON.stringify(state.completedChallengesWithProof));
+    }
+
+    // Retrieve completed challenges with proof
+    function getCompletedChallengesWithProof() {
+      const data = localStorage.getItem('completedChallengesWithProof');
+      return data ? JSON.parse(data) : [];
+    }
+
     // Set up event listeners
     function setupEventListeners() {
       loginButton.addEventListener('click', showLoginModal);
@@ -1046,6 +1166,9 @@
         if (e.key === 'Escape' && authModal.classList.contains('active')) {
           closeModal();
         }
+        if (e.key === 'Escape' && photoUploadModal.classList.contains('opacity-100')) {
+          closePhotoUploadModalHandler();
+        }
       });
 
       showModalSignup.addEventListener('click', (e) => {
@@ -1067,22 +1190,50 @@
           alert("Please log in to track your challenges!");
           return;
         }
-        let completedChallenges = getCompletedChallenges();
-        completedChallenges++;
-        saveCompletedChallenges(completedChallenges);
+        showPhotoUploadModal();
+      });
 
-        let xp = getXP();
-        xp += 10;
-        saveXP(xp);
+      closePhotoUploadModal.addEventListener('click', closePhotoUploadModalHandler);
+      cancelPhotoButton.addEventListener('click', closePhotoUploadModalHandler);
 
-        document.getElementById('challenge-completed').classList.remove('hidden');
-        alert("Great job completing today's challenge! 🌱 You've earned 10 XP!");
-        gtag('event', 'challenge_completed', {
-          'event_category': 'Engagement',
-          'event_label': state.currentChallenge
-        });
-        updateAuthUI();
-        generateDailyChallenge();
+      photoUploadModal.addEventListener('click', (e) => {
+        if (e.target === photoUploadModal) {
+          closePhotoUploadModalHandler();
+        }
+      });
+
+      challengePhotoInput.addEventListener('change', handlePhotoUpload);
+
+      submitPhotoButton.addEventListener('click', () => {
+        const file = challengePhotoInput.files[0];
+        if (!file) {
+          alert('Please upload a photo to submit proof.');
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const photoData = e.target.result;
+          saveCompletedChallengeWithProof(photoData);
+
+          let completedChallenges = getCompletedChallenges();
+          completedChallenges++;
+          saveCompletedChallenges(completedChallenges);
+
+          let xp = getXP();
+          xp += 10;
+          saveXP(xp);
+
+          document.getElementById('challenge-completed').classList.remove('hidden');
+          alert("Great job completing today's challenge! 🌱 You've earned 10 XP!");
+          gtag('event', 'challenge_completed', {
+            'event_category': 'Engagement',
+            'event_label': state.currentChallenge
+          });
+          updateAuthUI();
+          generateDailyChallenge();
+          closePhotoUploadModalHandler();
+        };
+        reader.readAsDataURL(file);
       });
 
       saveChallengeButton.addEventListener('click', () => {
@@ -1148,7 +1299,7 @@
 
       mobileThemeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
-        const isDarkMode = document/body.classList.contains('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
         themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun text-xl"></i>' : '<i class="fas fa-moon text-xl"></i>';
         mobileThemeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun text-xl"></i>' : '<i class="fas fa-moon text-xl"></i>';
         localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
@@ -1204,7 +1355,7 @@
         alert('Please enter a valid email address.');
         return;
       }
-      if (!password || password.length <  Ascendancy8) {
+      if (!password || password.length < 8) {
         alert('Password must be at least 8 characters long.');
         return;
       }
