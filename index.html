@@ -39,7 +39,11 @@
       --background: #f0fdf4;
       --text: #1f2937;
     }
-
+    @supports not (backdrop-filter: blur(15px)) {
+    nav.scrolled {
+        background: rgba(255, 255, 255, 0.4); /* Fallback for browsers without backdrop-filter */
+    }
+}
     html {
       scroll-behavior: smooth;
     }
@@ -58,7 +62,7 @@
     }
 
     .glassmorphism {
-      background: rgba(255, 255, 255, 0.2); /* Slightly more opaque for better readability */
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -67,7 +71,7 @@
 
     @supports not (backdrop-filter: blur(15px)) {
       .glassmorphism {
-        background: rgba(255, 255, 255, 0.4); /* Adjusted fallback */
+        background: rgba(255, 255, 255, 0.3);
       }
     }
 
@@ -84,7 +88,7 @@
     .nav-link {
       position: relative;
       transition: color 0.3s ease;
-      color: #ffffff; /* Solid white for better contrast */
+      color: #1f2937;
     }
 
     .nav-link::after {
@@ -121,7 +125,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: linear-gradient(45deg, #2ecc71, #27ae60) no-repeat center center; /* Added gradient as fallback */
+      background: no-repeat center center;
       background-size: cover;
       transform: scale(1.1);
       transition: transform 0.1s ease;
@@ -234,22 +238,8 @@
       transition: background-color 0.3s ease;
     }
 
-    nav.scrolled {
-      background: rgba(255, 255, 255, 0.2); /* Apply glassmorphism effect on scroll */
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    @supports not (backdrop-filter: blur(15px)) {
-      nav.scrolled {
-        background: rgba(255, 255, 255, 0.4); /* Fallback for browsers without backdrop-filter */
-      }
-    }
-
     .nav-logo-text {
-      color: #ffffff; /* Solid white for better contrast */
+      color: #1f2937;
     }
 
     .nav-icon {
@@ -257,7 +247,7 @@
     }
 
     .nav-button {
-      color: #ffffff; /* Solid white for better contrast */
+      color: #1f2937;
       padding: 0.5rem 1.25rem;
       border-radius: 9999px;
       font-weight: 500;
@@ -282,6 +272,14 @@
       background-color: rgba(16, 185, 129, 0.3);
       color: white;
     }
+
+    nav.scrolled {
+    background: rgba(255, 255, 255, 0.2); /* Apply glassmorphism effect on scroll */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
     .testimonials-container {
       display: flex;
@@ -1373,7 +1371,7 @@
           e.preventDefault();
           const targetElement = document.getElementById(targetId);
           if (targetElement) {
-            const headerHeight = nav 1000%;
+            const headerHeight = nav.offsetHeight;
             const targetPosition = targetElement.offsetTop - headerHeight;
             window.scrollTo({
               top: targetPosition,
@@ -1531,53 +1529,52 @@
       }, 300);
     }
 
-  
-     // Update UI based on auth state
-     function updateAuthUI() {
-       if (state.isAuthenticated) {
-         loginButton.classList.add('hidden');
-         signupButton.classList.add('hidden');
-         mobileLoginButton.classList.add('hidden');
-         mobileSignupButton.classList.add('hidden');
-         profileButton.classList.remove('hidden');
-         mobileProfileButton.classList.remove('hidden');
-         tryChallengeButton.textContent = "I Did This!";
-         saveChallengeButton.textContent = "Save Challenge";
- 
-         // Show user stats (only the name now)
-         const userStats = document.getElementById('user-stats');
-         const mobileUserStats = document.getElementById('mobile-user-stats');
-         userStats.classList.remove('hidden');
-         mobileUserStats.classList.remove('hidden');
-       } else {
-         loginButton.classList.remove('hidden');
-         signupButton.classList.remove('hidden');
-         mobileLoginButton.classList.remove('hidden');
-         mobileSignupButton.classList.remove('hidden');
-         profileButton.classList.add('hidden');
-         mobileProfileButton.classList.add('hidden');
-         tryChallengeButton.textContent = "Try Challenge";
-         saveChallengeButton.textContent = "Save for Later";
-         document.getElementById('user-stats').classList.add('hidden');
-         document.getElementById('mobile-user-stats').classList.add('hidden');
-       }
-     }
- 
-     // Update scroll button states
-     function updateTestimonialsScroll() {
-       const scrollLeft = testimonialsContainer.scrollLeft;
-       const maxScroll = testimonialsContainer.scrollWidth - testimonialsContainer.clientWidth;
- 
-       scrollLeftBtn.classList.toggle('disabled', scrollLeft <= 0);
-       scrollRightBtn.classList.toggle('disabled', scrollLeft >= maxScroll - 1);
-     }
- 
-     // Initialize the app
-     window.addEventListener('DOMContentLoaded', () => {
-       initApp();
-       setupParallax();
-       lazyLoadBackground();
-     });
-   </script>
- </body>
- </html>
+    // Update UI based on auth state
+    function updateAuthUI() {
+      if (state.isAuthenticated) {
+        loginButton.classList.add('hidden');
+        signupButton.classList.add('hidden');
+        mobileLoginButton.classList.add('hidden');
+        mobileSignupButton.classList.add('hidden');
+        profileButton.classList.remove('hidden');
+        mobileProfileButton.classList.remove('hidden');
+        tryChallengeButton.textContent = "I Did This!";
+        saveChallengeButton.textContent = "Save Challenge";
+
+        // Show user stats (only the name now)
+        const userStats = document.getElementById('user-stats');
+        const mobileUserStats = document.getElementById('mobile-user-stats');
+        userStats.classList.remove('hidden');
+        mobileUserStats.classList.remove('hidden');
+      } else {
+        loginButton.classList.remove('hidden');
+        signupButton.classList.remove('hidden');
+        mobileLoginButton.classList.remove('hidden');
+        mobileSignupButton.classList.remove('hidden');
+        profileButton.classList.add('hidden');
+        mobileProfileButton.classList.add('hidden');
+        tryChallengeButton.textContent = "Try Challenge";
+        saveChallengeButton.textContent = "Save for Later";
+        document.getElementById('user-stats').classList.add('hidden');
+        document.getElementById('mobile-user-stats').classList.add('hidden');
+      }
+    }
+
+    // Update scroll button states
+    function updateTestimonialsScroll() {
+      const scrollLeft = testimonialsContainer.scrollLeft;
+      const maxScroll = testimonialsContainer.scrollWidth - testimonialsContainer.clientWidth;
+
+      scrollLeftBtn.classList.toggle('disabled', scrollLeft <= 0);
+      scrollRightBtn.classList.toggle('disabled', scrollLeft >= maxScroll - 1);
+    }
+
+    // Initialize the app
+    window.addEventListener('DOMContentLoaded', () => {
+      initApp();
+      setupParallax();
+      lazyLoadBackground();
+    });
+  </script>
+</body>
+</html>
