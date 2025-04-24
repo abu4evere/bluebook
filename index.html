@@ -39,11 +39,8 @@
       --background: #f0fdf4;
       --text: #1f2937;
     }
-    @supports not (backdrop-filter: blur(15px)) {
-    nav.scrolled {
-        background: rgba(255, 255, 255, 0.4); /* Fallback for browsers without backdrop-filter */
-    }
-}
+   
+
     html {
       scroll-behavior: smooth;
     }
@@ -231,11 +228,14 @@
 
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 100;
-      transition: background-color 0.3s ease;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+  background: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
     }
 
     .nav-logo-text {
@@ -274,11 +274,11 @@
     }
 
     nav.scrolled {
-    background: rgba(255, 255, 255, 0.2); /* Apply glassmorphism effect on scroll */
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
     .testimonials-container {
@@ -522,7 +522,7 @@
   </div>
 
   <!-- Navigation -->
-  <nav class="fixed top-0 left-0 w-full z-[100] transition-all duration-300 glassmorphism" aria-label="Main navigation">
+  <nav class="fixed top-0 left-0 w-full z-[100] transition-all duration-300" aria-label="Main navigation">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex items-center justify-between h-20">
         <div class="flex items-center">
@@ -1048,14 +1048,14 @@
 
     // Update navigation background on scroll
     function updateNavBackground() {
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-          nav.classList.add('scrolled');
-        } else {
-          nav.classList.remove('scrolled');
-        }
-      });
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
     }
+  });
+}
 
     // Parallax effect for hero background
     function setupParallax() {
